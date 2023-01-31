@@ -86,9 +86,9 @@ export default {
       try {
         const response = await this.axios.get('/user');
         const {
-          data: { data },
+          data,
         } = response;
-        this.userData({ data });
+        this.userData(data);
         this.userIsAuthenticated(true);
         this.showBtn = true;
       } catch (error) {
