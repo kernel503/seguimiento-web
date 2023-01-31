@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer app v-model="drawer">
+    <v-navigation-drawer app v-model="drawer" v-if="isAuthenticated">
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="text-h6 text-center"> Seguimiento </v-list-item-title>
