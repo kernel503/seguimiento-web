@@ -1,10 +1,10 @@
 <template>
   <v-app>
-    <v-navigation-drawer app v-model="drawer" v-if="isAuthenticated">
+    <v-navigation-drawer app v-model="drawer">
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="text-h6 text-center mb-0 pb-0"> Seguimiento </v-list-item-title>
-          <v-list-item-subtitle class="text-h4 text-center mt-0 pt-0"> 🚲 </v-list-item-subtitle>
+          <v-list-item-title class="text-h6"> Application </v-list-item-title>
+          <v-list-item-subtitle> subtext </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
@@ -12,36 +12,37 @@
 
       <v-list dense nav>
         <template v-for="item in items">
-          <v-list-group nav v-if="item.children" :key="item.index">
+          <v-list-group v-if="item.children" :key="item.index">
             <template v-slot:activator>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
+              <v-list-item-title class="text-capitalize">{{
+                item.title
+              }}</v-list-item-title>
             </template>
 
             <template #prependIcon>
               <v-icon>{{ item.icon }}</v-icon>
             </template>
-            <template>
-              <v-list-item
-                v-for="(child, j) in item.children"
-                :key="j"
-                :to="item.path"
-                class="ml-4"
-              >
-                <v-list-item-icon>
-                  <v-icon>{{ child.icon }} </v-icon>
-                </v-list-item-icon>
-                <v-list-item-title>
-                  <span>{{ child.title }}</span>
-                </v-list-item-title>
-              </v-list-item>
-            </template>
+
+            <v-list-item
+              v-for="(child, j) in item.children"
+              :key="j"
+              :to="child.path"
+              class="ml-4"
+            >
+              <v-list-item-icon>
+                <v-icon>{{ child.icon }} </v-icon>
+              </v-list-item-icon>
+              <v-list-item-title class="text-capitalize">
+                <span>{{ child.title }}</span>
+              </v-list-item-title>
+            </v-list-item>
           </v-list-group>
 
           <v-list-item v-else :key="item.title" :to="item.path">
             <v-list-item-icon>
               <v-icon>{{ item.icon }} </v-icon>
             </v-list-item-icon>
-            <v-list-item-title>
+            <v-list-item-title class="text-capitalize">
               <span>{{ item.title }}</span>
             </v-list-item-title>
           </v-list-item>
@@ -49,7 +50,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app absolute>
+    <v-app-bar app>
       <v-app-bar-nav-icon @click="drawer = !drawer" v-if="isAuthenticated"></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
 
@@ -103,13 +104,12 @@ export default {
   data: () => ({
     items: [
       { title: 'Dashboard', icon: 'mdi-view-dashboard', path: 'dashboard' },
-
       {
         title: 'Administración',
         icon: 'mdi-database',
         children: [
-          { title: 'Usuarios', icon: 'mdi-account-multiple', path: 'login' },
-          { title: 'Permisos', icon: 'mdi-security', path: 'dashboard' },
+          { title: 'Usuarios', icon: 'mdi-account-multiple', path: 'usuarios' },
+          { title: 'Permisos', icon: 'mdi-security', path: '/usuario/formulario' },
           { title: 'Roles', icon: 'mdi-account-check', path: 'dashboard' },
         ],
       },
