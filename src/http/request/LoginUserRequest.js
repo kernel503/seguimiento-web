@@ -13,6 +13,6 @@ schema.validate({ username: 'abc', birth_year: 1994 });
 
 const LoginUserRequest = (payload) => {
   schema.validate(payload);
-}
+};
 
-export default LoginUserRequest
+export default LoginUserRequest;
