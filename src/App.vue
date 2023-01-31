@@ -103,14 +103,14 @@ export default {
 
   data: () => ({
     items: [
-      { title: 'Dashboard', icon: 'mdi-view-dashboard', path: 'dashboard' },
+      { title: 'Dashboard', icon: 'mdi-view-dashboard', path: { name: 'dashboard' } },
       {
         title: 'Administración',
         icon: 'mdi-database',
         children: [
-          { title: 'Usuarios', icon: 'mdi-account-multiple', path: 'usuarios' },
-          { title: 'Permisos', icon: 'mdi-security', path: '/usuario/formulario' },
-          { title: 'Roles', icon: 'mdi-account-check', path: 'dashboard' },
+          { title: 'Usuarios', icon: 'mdi-account-multiple', path: { name: 'usuario-formulario' } },
+          { title: 'Permisos', icon: 'mdi-security', path: { name: 'usuario-formulario' } },
+          { title: 'Roles', icon: 'mdi-account-check', path: { name: 'usuario-formulario' } },
         ],
       },
     ],
