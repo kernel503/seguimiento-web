@@ -1,41 +1,26 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+// import store from '@/store/user';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
-    name: 'Dashboard',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+    name: 'dashboard',
     component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
   },
   {
     path: '/login',
     name: 'login',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+    meta: { requiresAuth: false },
     component: () => import(/* webpackChunkName: "login" */ '@/components/users/LoginForm.vue'),
   },
   {
     path: '/usuario/formulario',
     name: 'usuario-formulario',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "usuario-formulario" */ '@/components/users/CreateUserFom.vue'),
   },
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-  // },
 ];
 
 const router = new VueRouter({
@@ -43,5 +28,11 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
+// router.beforeEach(() => {
+//   // const value = store.state().isAuthenticated;
+//   console.log(store);
+//   return true;
+// });
 
 export default router;

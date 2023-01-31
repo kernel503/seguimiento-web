@@ -1,10 +1,10 @@
 <template>
   <v-app>
-    <v-navigation-drawer app v-model="drawer">
+    <v-navigation-drawer app v-model="drawer" v-if="isAuthenticated">
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="text-h6"> Application </v-list-item-title>
-          <v-list-item-subtitle> subtext </v-list-item-subtitle>
+          <v-list-item-title class="text-h6 text-center mb-0 pb-0"> Seguimiento </v-list-item-title>
+          <v-list-item-subtitle class="text-h4 text-center mt-0 pt-0"> 🚲 </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
@@ -12,36 +12,36 @@
 
       <v-list dense nav>
         <template v-for="item in items">
-          <v-list-group v-if="item.children" :key="item.index">
+          <v-list-group nav v-if="item.children" :key="item.index">
             <template v-slot:activator>
-              <v-list-item-title class="text-capitalize">{{ item.title }}</v-list-item-title>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
             </template>
 
             <template #prependIcon>
               <v-icon>{{ item.icon }}</v-icon>
             </template>
-
-            <v-list-item
-              v-for="(child, j) in item.children"
-              :key="j"
-              :to="item.uri + child.uri"
-              active-class="white--text blue"
-              class="ml-4"
-            >
-              <v-list-item-icon>
-                <v-icon>{{ child.icon }} </v-icon>
-              </v-list-item-icon>
-              <v-list-item-title class="text-capitalize">
-                <span>{{ child.title }}</span>
-              </v-list-item-title>
-            </v-list-item>
+            <template>
+              <v-list-item
+                v-for="(child, j) in item.children"
+                :key="j"
+                :to="item.path"
+                class="ml-4"
+              >
+                <v-list-item-icon>
+                  <v-icon>{{ child.icon }} </v-icon>
+                </v-list-item-icon>
+                <v-list-item-title>
+                  <span>{{ child.title }}</span>
+                </v-list-item-title>
+              </v-list-item>
+            </template>
           </v-list-group>
 
-          <v-list-item v-else :key="item.title" :to="item.uri" active-class="white--text blue">
+          <v-list-item v-else :key="item.title" :to="item.path">
             <v-list-item-icon>
               <v-icon>{{ item.icon }} </v-icon>
             </v-list-item-icon>
-            <v-list-item-title class="text-capitalize">
+            <v-list-item-title>
               <span>{{ item.title }}</span>
             </v-list-item-title>
           </v-list-item>
@@ -49,9 +49,18 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+    <v-app-bar app absolute>
+      <v-app-bar-nav-icon @click="drawer = !drawer" v-if="isAuthenticated"></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
+
+      <template v-if="isAuthenticated">
+        <v-btn icon class="mx-2" plain @click="logout"> <v-icon> mdi-logout </v-icon> </v-btn>
+      </template>
+
+      <template v-else>
+        <v-btn class="mx-2" plain :to="{ name: 'login' }"> Ingresar </v-btn>
+        <v-btn color="primary"> Registrarse </v-btn>
+      </template>
     </v-app-bar>
 
     <v-main>
@@ -65,22 +74,61 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+
 export default {
   name: 'App',
   // components: { BarNavigation, MainContainer, NavigationDrawer },
+  async created() {
+    const hasToken = !!localStorage.getItem('token') || false;
+    if (hasToken) {
+      try {
+        const response = await this.axios.get('/user');
+        const {
+          data: { data },
+        } = response;
+        this.userData({ data });
+        this.userIsAuthenticated(true);
+        this.showBtn = true;
+      } catch (error) {
+        this.userData(null);
+        this.userIsAuthenticated(false);
+        this.showBtn = true;
+      }
+    }
+  },
+
+  mounted() {},
 
   data: () => ({
     items: [
-      { title: 'Dashboard', icon: 'mdi-view-dashboard' },
+      { title: 'Dashboard', icon: 'mdi-view-dashboard', path: { name: 'dashboard' } },
 
       {
         title: 'Administración',
-        icon: 'mdi-image',
-        children: [{ title: 'Usuarios', icon: 'mdi-account-multiple' }],
+        icon: 'mdi-database',
+        children: [
+          { title: 'Usuarios', icon: 'mdi-account-multiple', path: { name: 'login' } },
+          { title: 'Permisos', icon: 'mdi-security', path: { name: 'dashboard' } },
+          { title: 'Roles', icon: 'mdi-account-check', path: { name: 'dashboard' } },
+        ],
       },
     ],
+    showBtn: false,
     right: null,
     drawer: null,
   }),
+
+  methods: {
+    logout() {
+      localStorage.removeItem('token');
+      this.userIsAuthenticated(false);
+    },
+    ...mapActions('user', ['userIsAuthenticated', 'userData']),
+  },
+
+  computed: {
+    ...mapState('user', ['data', 'isAuthenticated']),
+  },
 };
 </script>

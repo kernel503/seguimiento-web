@@ -1,7 +1,7 @@
 <template>
   <v-card class="mx-auto" max-width="500">
     <v-form ref="form" v-model="valid" lazy-validation>
-      <v-card-title> Ingresar ✨ </v-card-title>
+      <v-card-title> Iniciar sesión ✨ </v-card-title>
       <v-card-text class="mb-0 pb-0">
         <v-text-field :rules="[emailRule]" v-model="form.email" outlined required>
           <template #label>
@@ -32,32 +32,38 @@
   </v-card>
 </template>
 <script>
-import { alphaString, string } from '../../http/request/Validation';
+import { alphaString, string } from '../../http/Validation';
 
 export default {
   name: 'LoginForm',
-  created() {
-    // console.log(stringMandatory("Mensaje de error"));
-  },
+
   data: () => ({
     showPassword: false,
     valid: false,
     form: { email: 'developer@gmail.com', password: 'password' },
   }),
+
   methods: {
     passwordRule: alphaString('El campo contraseña es requerido.'),
     emailRule: string('El campo correo electrónico es requerido.'),
-    async login() {
-      this.$refs.form.validate();
-      // this.$refs.form.reset();
 
-      // const response = await this.axios.post('/sanctum/token', {
-      //   ...this.form,
-      // });
-      // const {
-      //   data: { token },
-      // } = response;
-      // localStorage.setItem('token', token);
+    async login() {
+      const isValid = this.$refs.form.validate();
+      if (isValid) {
+        try {
+          const response = await this.axios.post('/sanctum/token', {
+            ...this.form,
+          });
+          const {
+            data: { token },
+          } = response;
+          localStorage.setItem('token', token);
+          this.$router.push('dashboard');
+          window.location.reload();
+        } catch (error) {
+          this.$toast.error('Error al iniciar sesión.');
+        }
+      }
     },
   },
 };
