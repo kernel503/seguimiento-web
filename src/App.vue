@@ -111,8 +111,24 @@ export default {
           { title: 'Usuarios', icon: 'mdi-account-multiple', path: { name: 'usuario-formulario' } },
           { title: 'Permisos', icon: 'mdi-security', path: { name: 'usuario-formulario' } },
           { title: 'Roles', icon: 'mdi-account-check', path: { name: 'usuario-formulario' } },
+          {
+            title: 'Medios desplazamiento',
+            icon: 'mdi-train-car',
+            path: { name: 'administracion-medios-desplazamiento' },
+          },
+          {
+            title: 'Incidentes',
+            icon: 'mdi-alert',
+            path: { name: 'administracion-incidentes' },
+          },
+          {
+            title: 'Marcadores',
+            icon: 'mdi-map-marker-star',
+            path: { name: 'administracion-marcadores' },
+          },
         ],
       },
+
     ],
     showBtn: false,
     right: null,
