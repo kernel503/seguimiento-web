@@ -12,7 +12,7 @@
           required
         >
           <template #label>
-            Nombre de {{ title }}
+            {{ title }}
             <span class="red--text"><strong>* </strong></span>
           </template>
         </v-text-field>
@@ -33,7 +33,7 @@
 </template>
 <script>
 import MdiExplorer from '../mdiExplorer/MdiExplorer.vue';
-import { string } from '../../http/Validation';
+import { string, email } from '../../http/Validation';
 
 export default {
   name: 'AdministracionForm',
@@ -51,12 +51,6 @@ export default {
   },
   components: { MdiExplorer },
 
-  mounted() {
-    if (this.payload) {
-      this.form = this.payload;
-    }
-  },
-
   data: () => ({
     valid: false,
     form: { nombre: '', icono: '' },
@@ -72,22 +66,32 @@ export default {
 
       if (this.payload) {
         try {
-          this.axios.put(`${this.path}/${this.payload.id}`, this.form);
+          await this.axios.put(`${this.path}/${this.payload.id}`, this.form);
+          this.$emit('reload');
+          this.$emit('show-form', false);
         } catch (error) {
-          this.$toast.error('Error al actualizar');
+          this.$toast.error('Error al actualizar.');
         }
       } else {
         try {
-          this.axios.post(this.path, this.form);
-          this.$emit('show-form', false);
+          await this.axios.post(this.path, this.form);
           this.$emit('reload');
+          this.$emit('show-form', false);
         } catch (error) {
-          this.$toast.error('Error al crear');
+          this.$toast.error('Error al crear.');
         }
       }
     },
-    iconoRule: string('El icono es requerido.'),
-    nombreRule: string('El campo incidente es requerido.'),
+    iconoRule: email('Debe seleccionar un icono.'),
+    nombreRule: string('Debe agregar el nombre.'),
+  },
+
+  watch: {
+    payload(newValue) {
+      if (newValue) {
+        this.form = { ...newValue };
+      }
+    },
   },
 };
 </script>

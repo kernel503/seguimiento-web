@@ -22,4 +22,16 @@ export function string(message = 'Campo requerido.') {
   return validate(schema);
 }
 
-// export default { stringMandatory };
+export function integer(message = 'Campo requerido.') {
+  const schema = Joi.number().integer().min(0).required()
+    .error(new Error(message));
+
+  return validate(schema);
+}
+
+export function email(message = 'Campo requerido.') {
+  const schema = Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'sv'] } }).required()
+    .error(new Error(message));
+
+  return validate(schema);
+}

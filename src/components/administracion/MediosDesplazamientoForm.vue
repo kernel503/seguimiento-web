@@ -1,5 +1,5 @@
 <template>
-  <AdministracionForm title="medios de desplazamiento" path="medios-desplazamiento" />
+  <AdministracionForm title="Nombre del medio de desplazamiento" path="medios-desplazamiento" />
 </template>
 <script>
 import AdministracionForm from './AdministracionForm.vue';

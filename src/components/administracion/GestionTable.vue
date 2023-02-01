@@ -5,13 +5,17 @@
         <v-toolbar-title>Incidentes</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
+        <v-btn color="primary" dark class="mb-2" @click="openDialog">
+          Nuevo registro
+        </v-btn>
         <v-dialog v-model="dialog" max-width="500px">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-              Nuevo registro
-            </v-btn>
-          </template>
-          <administracion-form :path="path" @show-form="showForm" @reload="initialize" />
+          <administracion-form
+            :path="path"
+            :payload="selectedItem"
+            title="Incidentes"
+            @show-form="showForm"
+            @reload="initialize"
+          />
         </v-dialog>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
@@ -20,8 +24,8 @@
             </v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+              <v-btn color="blue darken-1" text @click="closeDelete">Cancelar</v-btn>
+              <v-btn color="blue darken-1" text @click="deleteItemConfirm">ACeptar</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
@@ -71,21 +75,8 @@ export default {
       },
     ],
     items: [],
+    selectedItem: null,
     editedIndex: -1,
-    editedItem: {
-      name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
-    },
-    defaultItem: {
-      name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
-    },
   }),
 
   computed: {
@@ -111,9 +102,13 @@ export default {
 
   methods: {
     showForm(payload) {
-      console.log(payload);
       this.dialog = payload;
+      this.$nextTick(() => {
+        this.editedIndex = -1;
+        this.selectedItem = null;
+      });
     },
+
     async initialize() {
       try {
         const {
@@ -125,47 +120,44 @@ export default {
       }
     },
 
+    openDialog() {
+      this.dialog = true;
+      this.selectedItem = null;
+    },
     editItem(item) {
-      this.editedIndex = this.items.indexOf(item);
-      this.editedItem = { ...item };
+      console.log('Editar');
+      console.log(item);
+      this.selectedItem = { icono: item.icono, nombre: item.nombre, id: item.id };
       this.dialog = true;
     },
 
-    deleteItem(item) {
-      this.editedIndex = this.items.indexOf(item);
-      this.editedItem = { ...item };
-      this.dialogDelete = true;
-    },
-
-    deleteItemConfirm() {
-      this.items.splice(this.editedIndex, 1);
+    async deleteItemConfirm() {
+      try {
+        await this.axios.delete(`${this.path}/${this.selectedItem.id}`);
+        this.initialize();
+      } catch (error) {
+        this.$toast.error('Error al eliminar el registro.');
+      }
       this.closeDelete();
     },
 
     close() {
       this.dialog = false;
       this.$nextTick(() => {
-        this.editedItem = { ...this.defaultItem };
         this.editedIndex = -1;
+        this.selectedItem = null;
       });
     },
 
     closeDelete() {
       this.dialogDelete = false;
-      this.$nextTick(() => {
-        this.editedItem = { ...this.defaultItem };
-        this.editedIndex = -1;
-      });
     },
 
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.items[this.editedIndex], this.editedItem);
-      } else {
-        this.items.push(this.editedItem);
-      }
-      this.close();
+    deleteItem(item) {
+      this.selectedItem = item;
+      this.dialogDelete = true;
     },
+
   },
 };
 </script>

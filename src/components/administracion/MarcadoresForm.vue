@@ -1,5 +1,5 @@
 <template>
-  <AdministracionForm title="marcador" path="marcadores"/>
+  <AdministracionForm title="Nombre del marcador" path="marcadores"/>
 </template>
 <script>
 import AdministracionForm from './AdministracionForm.vue';

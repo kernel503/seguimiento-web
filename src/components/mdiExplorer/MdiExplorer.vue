@@ -38,7 +38,7 @@ export default {
       if (this.value) {
         this.iconSelected = this.value;
       }
-    }, 1000);
+    }, 500);
   },
   methods: {},
   watch: {
