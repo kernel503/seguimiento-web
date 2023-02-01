@@ -1,7 +1,7 @@
 <template>
   <v-form ref="form" v-model="valid">
     <v-card class="mx-auto" max-width="500">
-      <v-card-title> Crear una cuenta ✨ </v-card-title>
+      <v-card-title> Crear cuenta</v-card-title>
       <v-card-text class="mb-0 pb-0">
         <v-text-field v-model="form.email" outlined required :rules="[emailRule]">
           <template #label>

@@ -139,6 +139,7 @@ export default {
     logout() {
       localStorage.removeItem('token');
       this.userIsAuthenticated(false);
+      this.$router.push({ name: 'login' });
     },
     ...mapActions('user', ['userIsAuthenticated', 'userData']),
   },

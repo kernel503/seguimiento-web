@@ -33,7 +33,7 @@
 </template>
 <script>
 import MdiExplorer from '../mdiExplorer/MdiExplorer.vue';
-import { string, email } from '../../http/Validation';
+import { string } from '../../http/Validation';
 
 export default {
   name: 'AdministracionForm',
@@ -82,7 +82,7 @@ export default {
         }
       }
     },
-    iconoRule: email('Debe seleccionar un icono.'),
+    iconoRule: string('Debe seleccionar un icono.'),
     nombreRule: string('Debe agregar el nombre.'),
   },
 
