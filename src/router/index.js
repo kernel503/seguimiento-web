@@ -48,6 +48,13 @@ const routes = [
           /* webpackChunkName: "marcadores" */ '@/components/administracion/MarcadoresForm.vue'
         ),
       },
+      {
+        path: 'table',
+        name: 'administracion-marcadores',
+        component: () => import(
+          /* webpackChunkName: "marcadores" */ '@/components/administracion/FilteredTable.vue'
+        ),
+      },
     ],
   },
 ];
