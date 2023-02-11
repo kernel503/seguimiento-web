@@ -1,5 +1,6 @@
 <template>
-  <v-data-table :headers="headers" :items="items" sort-by="id" class="elevation-1">
+  <v-data-table :headers="headers" :items="items"
+  :loading="items.length==0?true:false" sort-by="id" class="elevation-1">
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>Incidentes</v-toolbar-title>
