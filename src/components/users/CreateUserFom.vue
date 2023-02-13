@@ -3,9 +3,15 @@
     <v-card class="mx-auto" max-width="500">
       <v-card-title> Crear cuenta</v-card-title>
       <v-card-text class="mb-0 pb-0">
-        <v-text-field v-model="form.email" outlined required :rules="[emailRule]">
+        <v-text-field
+          v-model="form.email"
+          outlined
+          required
+          :rules="[emailRule]"
+        >
           <template #label>
-            Correo electrónico <span class="red--text"><strong>* </strong></span>
+            Correo electrónico
+            <span class="red--text"><strong>* </strong></span>
           </template>
         </v-text-field>
         <v-text-field
@@ -14,7 +20,7 @@
           outlined
         ></v-text-field>
         <v-autocomplete
-          v-model="form.roles"
+          v-model="form.rol"
           :rules="[integerRule]"
           item-text="name"
           item-value="id"
@@ -64,7 +70,7 @@ export default {
     form: {
       email: '',
       nombre_usuario: '',
-      roles: null,
+      rol: null,
       password: '',
     },
   }),
@@ -73,24 +79,35 @@ export default {
     emailRule: email('Debe agregar un correo.'),
     fieldRule: string('Debe completar el campo.'),
     integerRule: integer('Debe seleccionar un rol.'),
+
     async obtenerRoles() {
       const response = await this.axios.get('/roles');
       const {
         data: { data },
       } = response;
-      this.roles = data;
+
+      this.roles = data.slice(this.$route.name === 'signup' ? 1 : 0);
     },
 
     async crearUsuario() {
-      const isValid = this.$refs.form.validate();
-      if (!isValid) return;
+      if (!this.$refs.form.validate()) return;
 
       try {
-        await this.axios.post('/usuario', { ...this.form });
+        const path = this.$route.name === 'signup'
+          ? '/usuario' : '/usuario/admin';
+
+        const { data } = await this.axios.post(path, { ...this.form });
+
         this.$refs.form.reset();
-        this.$toast.success('Usuario creado.');
+
+        const message = `La cuenta ${data.usuario.email} está ${data.estado_cuenta}`;
+        this.$toast.info(message);
       } catch (error) {
-        this.$toast.error('Error crear el usuario.');
+        if (error.response.status === 422) {
+          this.$toast.error(error.response.data.message);
+          return;
+        }
+        this.$toast.error('No se pudo registrar la cuenta, intente de nuevo.');
       }
     },
   },

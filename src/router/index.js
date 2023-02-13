@@ -18,13 +18,19 @@ const routes = [
     component: () => import(/* webpackChunkName: "login" */ '@/components/users/LoginForm.vue'),
   },
   {
+    path: '/signup',
+    name: 'signup',
+    meta: { requiresAuth: false },
+    component: () => import(/* webpackChunkName: "login" */ '@/components/users/CreateUserFom.vue'),
+  },
+  {
     path: '/administracion',
     name: 'administracion',
     component: () => import(/* webpackChunkName: "administracion" */ '@/views/Administracion.vue'),
     children: [
       {
-        path: '/usuario',
-        name: 'usuario-formulario',
+        path: 'usuario',
+        name: 'usuario-administracion',
         component: () => import(/* webpackChunkName: "usuario-formulario" */ '@/components/users/CreateUserFom.vue'),
       },
       {
