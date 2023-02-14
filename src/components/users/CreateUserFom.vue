@@ -46,7 +46,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn @click="crearUsuario" color="blue darken-1" x-large dark>
+        <v-btn @click="crearUsuario" color="blue darken-1" dark>
           <v-icon left> mdi-account-plus </v-icon>
           Crear usuario
         </v-btn>

@@ -30,6 +30,7 @@
           @change="cambiarEstado($event, seccion.etiqueta)"
           color="primary"
           hide-details
+          v-model="seccion.seleccionado"
         ></v-checkbox>
       </v-card-title>
       <v-card-text>
@@ -76,7 +77,7 @@ const filtros = {
 };
 
 export default {
-  name: 'AdministracionRoles',
+  name: 'RolesCrearForm',
   created() {
     this.loadCards();
   },

@@ -23,7 +23,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn @click="login" color="blue darken-1" x-large dark>
+        <v-btn @click="login" color="blue darken-1" dark>
           <v-icon left> mdi-login-variant </v-icon>
           Ingresar
         </v-btn>

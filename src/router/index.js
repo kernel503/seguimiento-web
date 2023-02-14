@@ -26,7 +26,7 @@ const routes = [
   {
     path: '/administracion',
     name: 'administracion',
-    component: () => import(/* webpackChunkName: "administracion" */ '@/views/Administracion.vue'),
+    component: () => import(/* webpackChunkName: "administracion" */ '@/views/administracion/Base.vue'),
     children: [
       {
         path: 'usuario',
@@ -37,12 +37,12 @@ const routes = [
       {
         path: 'roles',
         name: 'web:administracion:roles',
-        component: () => import(/* webpackChunkName: "administracion:roles" */ '@/components/administracion/Roles.vue'),
+        component: () => import(/* webpackChunkName: "administracion:roles" */ '@/views/administracion/Roles.vue'),
       },
       {
         path: 'permisos',
         name: 'web:administracion:permisos',
-        component: () => import(/* webpackChunkName: "administracion:permisos" */ '@/components/administracion/Roles.vue'),
+        component: () => import(/* webpackChunkName: "administracion:permisos" */ '@/components/users/CreateUserFom.vue'),
       },
       {
         path: 'medios-desplazamiento',
