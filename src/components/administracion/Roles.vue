@@ -1,22 +1,27 @@
 <template>
   <div>
-    <div>
-      <v-form ref="form" v-model="valid" lazy-validation>
-        <v-text-field
-          :rules="[nombreRol]"
-          v-model="nombre_rol"
-          outlined
-          required
-          label="Nombre del rol"
+    <v-row>
+      <v-col cols="12" sm="10" md="8" lg="6">
+        <v-form
+          ref="form"
+          v-model="valid"
+          lazy-validation
+          @submit.prevent="create"
         >
-        </v-text-field>
-      </v-form>
-      <v-spacer></v-spacer>
-      <v-btn @click="create" color="blue darken-1" dark>
-        <v-icon left> mdi-pencil </v-icon>
-        Crear
-      </v-btn>
-    </div>
+          <v-text-field
+            class="mb-0 pb-0 mt-2"
+            :rules="[nombreRol]"
+            v-model="nombre_rol"
+            outlined
+            required
+            label="Nombre del rol"
+            append-icon="mdi-account-plus-outline"
+            @click:append="create"
+          >
+          </v-text-field>
+        </v-form>
+      </v-col>
+    </v-row>
     <v-card v-for="seccion in secciones" :key="seccion.etiqueta" class="mt-3">
       <v-card-title class="m-0 p-0">
         <v-checkbox
@@ -72,10 +77,8 @@ const filtros = {
 
 export default {
   name: 'AdministracionRoles',
-  async created() {
-    await this.cargarRoles(filtros.web, 'Componente web');
-    await this.cargarRoles(filtros.api, 'Servicios API REST');
-    await this.cargarRoles(filtros.otro, 'Otros permisos');
+  created() {
+    this.loadCards();
   },
   data() {
     return {
@@ -128,6 +131,12 @@ export default {
       });
     },
 
+    loadCards() {
+      this.cargarRoles(filtros.web, 'Componente web');
+      this.cargarRoles(filtros.api, 'Servicios API REST');
+      this.cargarRoles(filtros.otro, 'Otros permisos');
+    },
+
     async create() {
       const isValid = this.$refs.form.validate();
 
@@ -147,6 +156,7 @@ export default {
         });
         this.$toast.success(`Rol ${name} creado`);
         this.$refs.form.reset();
+        this.limpiarSeleccion();
       } catch (error) {
         if (error.response.status === 422) {
           this.$toast.error(error?.response?.data?.message);
@@ -154,6 +164,13 @@ export default {
         }
         this.$toast.error('Error al realizar la petición.');
       }
+    },
+
+    limpiarSeleccion() {
+      this.secciones = this.secciones.map((seccion) => {
+        const permisos = seccion.permisos.map((permiso) => ({ ...permiso, seleccionado: false }));
+        return { ...seccion, permisos, seleccionado: false };
+      });
     },
 
     obtenerRoles() {
