@@ -132,32 +132,32 @@ export default {
           {
             title: 'Usuarios',
             icon: 'mdi-account-multiple',
-            path: { name: 'administracion:usuarios' },
+            path: { name: 'web:administracion:usuarios' },
           },
           {
             title: 'Permisos',
             icon: 'mdi-security',
-            path: { name: 'administracion:permisos' },
+            path: { name: 'web:administracion:permisos' },
           },
           {
             title: 'Roles',
             icon: 'mdi-account-check',
-            path: { name: 'administracion:roles' },
+            path: { name: 'web:administracion:roles' },
           },
           {
             title: 'Medios desplazamiento',
             icon: 'mdi-train-car',
-            path: { name: 'administracion:medios-desplazamiento' },
+            path: { name: 'web:administracion:medios-desplazamiento' },
           },
           {
             title: 'Incidentes',
             icon: 'mdi-alert',
-            path: { name: 'administracion:incidentes' },
+            path: { name: 'web:administracion:incidentes' },
           },
           {
             title: 'Marcadores',
             icon: 'mdi-map-marker-star',
-            path: { name: 'administracion:marcadores' },
+            path: { name: 'web:administracion:marcadores' },
           },
         ],
       },
