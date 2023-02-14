@@ -7,6 +7,7 @@ import store from './store';
 import vuetify from './plugins/vuetify';
 import instance from './plugins/axiosInstance';
 import 'vue-toastification/dist/index.css';
+import 'leaflet/dist/leaflet.css';
 
 const toastOptions = {};
 

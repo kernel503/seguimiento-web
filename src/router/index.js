@@ -74,6 +74,19 @@ const routes = [
       },
     ],
   },
+
+  {
+    path: '/desplazamiento',
+    name: 'desplazamiento',
+    component: () => import(/* webpackChunkName: "administracion" */ '@/views/desplazamiento/Base.vue'),
+    children: [
+      {
+        path: 'registrados/:uuid',
+        name: 'web:desplazamiento:movil',
+        component: () => import(/* webpackChunkName: "web:desplazamiento:movil" */ '@/components/desplazamiento/GeoJson.vue'),
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({
