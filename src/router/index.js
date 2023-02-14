@@ -30,28 +30,39 @@ const routes = [
     children: [
       {
         path: 'usuario',
-        name: 'usuario-administracion',
-        component: () => import(/* webpackChunkName: "usuario-formulario" */ '@/components/users/CreateUserFom.vue'),
+        name: 'web:administracion:usuarios',
+        component: () => import(/* webpackChunkName: "administracion:usuario" */ '@/components/users/CreateUserFom.vue'),
+      },
+
+      {
+        path: 'roles',
+        name: 'web:administracion:roles',
+        component: () => import(/* webpackChunkName: "administracion:roles" */ '@/components/administracion/Roles.vue'),
+      },
+      {
+        path: 'permisos',
+        name: 'web:administracion:permisos',
+        component: () => import(/* webpackChunkName: "administracion:permisos" */ '@/components/administracion/Roles.vue'),
       },
       {
         path: 'medios-desplazamiento',
-        name: 'administracion-medios-desplazamiento',
+        name: 'web:administracion:medios-desplazamiento',
         component: () => import(
-          /* webpackChunkName: "medios-desplazamiento" */ '@/components/administracion/MediosDesplazamientoForm.vue'
+          /* webpackChunkName: "administracion:medios-desplazamiento" */ '@/components/administracion/MediosDesplazamientoForm.vue'
         ),
       },
       {
         path: 'incidentes',
-        name: 'administracion-incidentes',
+        name: 'web:administracion:incidentes',
         component: () => import(
-          /* webpackChunkName: "incidentes" */ '@/components/administracion/GestionTable.vue'
+          /* webpackChunkName: "administracion:incidentes" */ '@/components/administracion/GestionTable.vue'
         ),
       },
       {
         path: 'marcadores',
-        name: 'administracion-marcadores',
+        name: 'web:administracion:marcadores',
         component: () => import(
-          /* webpackChunkName: "marcadores" */ '@/components/administracion/MarcadoresForm.vue'
+          /* webpackChunkName: "administracion:marcadores" */ '@/components/administracion/MarcadoresForm.vue'
         ),
       },
       {
