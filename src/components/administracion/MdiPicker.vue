@@ -4,7 +4,7 @@
       <v-card-title>
         {{ value.length === 3 ? 'Editar registro' : 'Crear registro' }}
       </v-card-title>
-      <v-card-text class="mb-0 pb-0">
+      <v-card-text class="mb-0 pb-0" @keyup.enter="submit">
         <v-text-field :rules="[nombreRule]" v-model="nombre" outlined required>
           <template #label>
             {{ title }}
@@ -12,7 +12,7 @@
           </template>
         </v-text-field>
 
-        <MdiExplorer :rules="[iconoRule]" v-model="icono" />
+        <MdiExplorer :rules="[iconoRule]" v-model="icono" @submit="$emit('submit')" />
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>

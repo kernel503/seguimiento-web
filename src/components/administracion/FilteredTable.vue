@@ -7,7 +7,7 @@
   >
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>
+        <v-toolbar-title class="text-capitalize">
           {{ toolbarTitle }}
         </v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
