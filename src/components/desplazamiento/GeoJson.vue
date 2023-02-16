@@ -4,7 +4,13 @@
     <l-polyline
       :lat-lngs="polyline.latlngs"
       :color="polyline.color"
-      weight="5"
+      weight="15"
+    ></l-polyline>
+
+    <l-polyline
+      :lat-lngs="polyline.latlngs"
+      color="red"
+      weight="6"
     ></l-polyline>
   </l-map>
 </template>
@@ -34,8 +40,13 @@ export default {
   async created() {
     const { uuid } = this.$route.params;
 
-    const { data: { desplazamiento } } = await this.axios.get(`desplazamiento/${uuid}`);
-    this.polyline.latlngs = desplazamiento.map((point) => [point.latitud, point.longitud]);
+    const {
+      data: { desplazamiento },
+    } = await this.axios.get(`desplazamiento/${uuid}`);
+    this.polyline.latlngs = desplazamiento.map((point) => [
+      point.latitud,
+      point.longitud,
+    ]);
   },
 };
 </script>

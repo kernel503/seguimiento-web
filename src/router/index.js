@@ -48,21 +48,21 @@ const routes = [
         path: 'medios-desplazamiento',
         name: 'web:administracion:medios-desplazamiento',
         component: () => import(
-          /* webpackChunkName: "administracion:medios-desplazamiento" */ '@/components/administracion/MediosDesplazamientoForm.vue'
+          /* webpackChunkName: "administracion:medios-desplazamiento" */ '@/components/administracion/GestionIconos.vue'
         ),
       },
       {
         path: 'incidentes',
         name: 'web:administracion:incidentes',
         component: () => import(
-          /* webpackChunkName: "administracion:incidentes" */ '@/components/administracion/GestionTable.vue'
+          /* webpackChunkName: "administracion:incidentes" */ '@/components/administracion/GestionIconos.vue'
         ),
       },
       {
         path: 'marcadores',
         name: 'web:administracion:marcadores',
         component: () => import(
-          /* webpackChunkName: "administracion:marcadores" */ '@/components/administracion/MarcadoresForm.vue'
+          /* webpackChunkName: "administracion:marcadores" */ '@/components/administracion/GestionIconos.vue'
         ),
       },
       {

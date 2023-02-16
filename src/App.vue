@@ -159,6 +159,11 @@ export default {
             icon: 'mdi-map-marker-star',
             path: { name: 'web:administracion:marcadores' },
           },
+          {
+            title: 'Clasificación Vehicular',
+            icon: 'mdi-car-info',
+            path: { name: 'web:administracion:marcadores' },
+          },
         ],
       },
       {
