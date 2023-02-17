@@ -43,12 +43,12 @@
     <v-dialog v-model="dialogRestore" max-width="600">
       <v-card v-if="initialForm.length">
         <v-card-title class="text-center">
-          ¿Seguro que quieres borrar el registro
-          {{ initialForm[0].toLocaleLowerCase() }}?
+          Restaurar el registro
+          {{ initialForm[0].toLocaleLowerCase() }}
         </v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="red darken-1" text @click="deleteItem">Aceptar</v-btn>
+          <v-btn color="red darken-1" text @click="restoreItem">Aceptar</v-btn>
           <v-btn color="gray darken-1" text @click="dialogRestore = false">
             Cancelar
           </v-btn>
@@ -143,8 +143,8 @@ export default {
       this.dialog = false;
       this.initialForm = [];
     },
-    async restore(payload) {
-      const { id } = payload;
+    async restoreItem() {
+      const id = this.initialForm.at(2);
       try {
         await this.axios.post(`${this.path}/${id}/restore`);
         this.$toast.info('Registro restaurado.');
@@ -152,6 +152,11 @@ export default {
         this.$toast.error('Error al actualizar el medio de desplazamiento.');
       }
       this.obtenerItems();
+      this.dialogRestore = false;
+    },
+    async restore(payload) {
+      this.dialogRestore = true;
+      this.initialForm = [payload.nombre, payload.icono, payload.id];
     },
     async submit() {
       if (!Array.isArray(this.initialForm) && !this.initialForm.length > 2) {
@@ -188,6 +193,11 @@ export default {
 
   watch: {
     dialog(newValue) {
+      if (!newValue) {
+        this.initialForm = [];
+      }
+    },
+    dialogRestore(newValue) {
       if (!newValue) {
         this.initialForm = [];
       }
