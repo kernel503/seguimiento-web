@@ -162,7 +162,7 @@ export default {
           {
             title: 'Clasificación Vehicular',
             icon: 'mdi-car-info',
-            path: { name: 'web:administracion:marcadores' },
+            path: { name: 'web:administracion:clasificacion-vehicular' },
           },
         ],
       },

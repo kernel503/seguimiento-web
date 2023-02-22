@@ -66,6 +66,13 @@ const routes = [
         ),
       },
       {
+        path: 'clasificacion-vehicular',
+        name: 'web:administracion:clasificacion-vehicular',
+        component: () => import(
+          /* webpackChunkName: "administracion:marcadores" */ '@/components/administracion/ClasificacionVehicular.vue'
+        ),
+      },
+      {
         path: 'table',
         name: 'administracion-marcadores',
         component: () => import(
