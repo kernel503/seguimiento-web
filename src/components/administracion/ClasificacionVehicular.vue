@@ -1,4 +1,5 @@
 <template>
+  <div>
     <v-data-table
     :headers="headers"
     :items="items"
@@ -79,12 +80,23 @@
 
     <template v-slot:item.actions="{ item }">
       <v-icon class="mr-2" @click="editItem(item)" > mdi-pencil </v-icon>
-      <v-icon color="red lighten-2">
+      <v-icon color="red lighten-2" @click="deleteItemConfirm(item)">
         mdi-delete
       </v-icon>
     </template>
     </v-data-table>
-
+    <v-dialog v-model="dialogDelete"  max-width="530px" >
+      <v-card>
+          <v-card-title class="text-h5">¿Está seguro que desea eliminar el registro?</v-card-title>
+          <v-card-actions class="py-3">
+          <v-spacer></v-spacer>
+          <v-btn class="default"  outlined color=""  @click="dialogDelete = false" >Cancelar</v-btn>
+          <v-btn class="primary" @click="deleteItem()" >Eliminar</v-btn>
+          <v-spacer></v-spacer>
+          </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 <script>
 export default {
@@ -106,8 +118,10 @@ export default {
       ],
       items: [],
       dialog: false,
+      dialogDelete: false,
       editedIndex: -1,
       editedItem: {
+        id: '',
         nombre: '',
         version: '',
       },
@@ -159,6 +173,21 @@ export default {
         this.$toast.error('Error al crear la clasificación vehicular.');
       }
     },
+    deleteItemConfirm(item) {
+      this.editedItem.id = item.id;
+      this.dialogDelete = true;
+    },
+    async deleteItem() {
+      try {
+        await this.axios.delete(`/clasificaciones-vehicular/${this.editedItem.id}`);
+        this.$toast.success('Registro eliminado');
+        this.initialize();
+        this.dialogDelete = false;
+      } catch (error) {
+        this.$toast.error('Error al eliminar la clasificación vehicular.');
+      }
+    },
+
     close() {
       this.dialog = false;
       this.$nextTick(() => {
