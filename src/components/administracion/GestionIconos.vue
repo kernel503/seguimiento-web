@@ -1,17 +1,16 @@
 <template>
   <div>
-    <FilteredTable
+    <MdiTabla
       :toolbarTitle="this.path.replace('-', ' ')"
       :headers="headers"
       :items="items"
       @create="create"
       @remove="remove"
       @edit="edit"
-      @trashed="obtenerItems"
       @refresh="obtenerItems"
       @restore="restore"
     >
-    </FilteredTable>
+    </MdiTabla>
 
     <v-dialog v-model="dialog" max-width="600">
       <MdiPicker
@@ -59,17 +58,17 @@
   </div>
 </template>
 <script>
+import { mapMutations, mapState } from 'vuex';
 import MdiPicker from './MdiPicker.vue';
-import FilteredTable from './FilteredTable.vue';
+import MdiTabla from './MdiTabla.vue';
 
 export default {
   name: 'GestionIconos',
 
-  components: { MdiPicker, FilteredTable },
+  components: { MdiPicker, MdiTabla },
 
   data() {
     return {
-      with_trashed: false,
       dialog: false,
       dialogDelete: false,
       dialogRestore: false,
@@ -93,27 +92,41 @@ export default {
     };
   },
 
-  async created() {
-    this.with_trashed = this.$route?.query?.with_trashed || false;
+  computed: {
+    ...mapState('withPaginationAndTrashed', ['page', 'limit', 'withTrashed']),
+  },
+
+  created() {
+    this.resetPaginationAndTrashed();
     this.path = this.$route.path.split('/').at(-1);
     this.obtenerItems();
   },
 
   methods: {
+    ...mapMutations('withPaginationAndTrashed', ['resetPaginationAndTrashed', 'actualizarQuery']),
+
     async obtenerItems() {
-      this.with_trashed = this.$route?.query?.with_trashed || false;
       try {
         const {
-          data: { data },
+          data: {
+            data,
+            meta: { total },
+          },
         } = await this.axios.get(this.path, {
-          params: { with_trashed: this.with_trashed },
+          params: {
+            with_trashed: this.withTrashed,
+            limit: this.limit,
+            page: this.page,
+          },
         });
 
         this.items = data;
+        this.actualizarQuery({ total });
       } catch (error) {
         this.$toast.error('Error al obtener los medios de desplazamiento.');
       }
     },
+
     async deleteItem() {
       const id = this.initialForm.at(2);
       try {
@@ -127,22 +140,27 @@ export default {
       this.obtenerItems();
       this.dialogDelete = false;
     },
+
     create() {
       this.initialForm = ['', ''];
       this.dialog = true;
     },
+
     remove(payload) {
       this.dialogDelete = true;
       this.initialForm = [payload.nombre, payload.icono, payload.id];
     },
+
     edit(payload) {
       this.initialForm = [payload.nombre, payload.icono, payload.id];
       this.dialog = true;
     },
+
     close() {
       this.dialog = false;
       this.initialForm = [];
     },
+
     async restoreItem() {
       const id = this.initialForm.at(2);
       try {
@@ -154,10 +172,12 @@ export default {
       this.obtenerItems();
       this.dialogRestore = false;
     },
+
     async restore(payload) {
       this.dialogRestore = true;
       this.initialForm = [payload.nombre, payload.icono, payload.id];
     },
+
     async submit() {
       if (!Array.isArray(this.initialForm) && !this.initialForm.length > 2) {
         return;
@@ -197,17 +217,25 @@ export default {
         this.initialForm = [];
       }
     },
+
     dialogRestore(newValue) {
       if (!newValue) {
         this.initialForm = [];
       }
     },
+
     $route(to, from) {
-      this.path = this.$route.path.split('/').at(-1);
-      if (!to.query.with_trashed) {
-        this.$router.push({ query: from.query });
+      const nuevaRuta = this.$route.path.split('/').at(-1);
+
+      if (this.path !== nuevaRuta) {
+        this.resetPaginationAndTrashed();
+        this.path = nuevaRuta;
+        return;
       }
-      this.obtenerItems();
+
+      if (from.fullPath !== to.fullPath) {
+        this.obtenerItems();
+      }
     },
   },
 };

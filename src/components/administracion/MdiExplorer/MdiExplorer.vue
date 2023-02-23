@@ -7,7 +7,6 @@
     label="Seleccionar icono"
     :rules="rules"
     :prepend-inner-icon="'mdi-' + iconSelected"
-    @keyup.enter="$emit('submit')"
   >
     <template #label>
       Seleccionar icono

@@ -1,9 +1,14 @@
 <template>
   <v-data-table
-    :headers="headers"
-    :items="items"
     sort-by="id"
     class="elevation-1"
+    :headers="headers"
+    :items="items"
+    :options.sync="options"
+    :items-per-page="limit"
+    :footer-props="footerProps"
+    @update:options="actualizarOpcionesTabla"
+    :server-items-length="total"
   >
     <template v-slot:top>
       <v-toolbar flat>
@@ -14,11 +19,12 @@
         <v-spacer></v-spacer>
         <v-btn
           icon
-          :color="with_trashed ? 'primary' : 'grey'"
           class="mr-2"
-          @click="showTrash"
+          @click="withTrashedActive = !withTrashedActive"
         >
-          <v-icon>mdi-archive-lock-open-outline</v-icon>
+          <v-icon :color="withTrashedActive ? 'primary' : 'grey'">
+            mdi-archive-lock-open-outline
+          </v-icon>
         </v-btn>
         <v-btn color="primary" dark class="mb-2" @click="$emit('create')">
           Nuevo registro
@@ -48,8 +54,10 @@
   </v-data-table>
 </template>
 <script>
+import { mapMutations, mapState } from 'vuex';
+
 export default {
-  name: 'FilteredTable',
+  name: 'MdiTabla',
 
   props: {
     toolbarTitle: {
@@ -65,37 +73,41 @@ export default {
       default: () => [],
     },
   },
+
   created() {
-    if (this.$route.query.with_trashed === 'true') {
-      this.with_trashed = true;
-      return;
-    }
-
-    if (this.$route.query.with_trashed === 'false') {
-      this.with_trashed = false;
-      return;
-    }
-
-    this.$router.push({ query: { with_trashed: this.with_trashed } });
     this.resource = this.$route.query.resource;
+    this.withTrashedActive = this.withTrashed;
+    this.options = { page: this.page };
   },
+
   data() {
     return {
-      with_trashed: false,
+      withTrashedActive: false,
+      options: {},
+      footerProps: {
+        'items-per-page-options': [5, 10, 20, 40],
+      },
     };
   },
 
+  computed: {
+    ...mapState('withPaginationAndTrashed', ['total', 'withTrashed', 'limit', 'page']),
+  },
+
   methods: {
-    showTrash() {
-      this.with_trashed = !this.with_trashed;
-      this.$router.push({ query: { with_trashed: this.with_trashed } });
-      this.$emit('trashed');
+    ...mapMutations('withPaginationAndTrashed', ['actualizarQuery']),
+
+    actualizarOpcionesTabla({ itemsPerPage, page }) {
+      this.actualizarQuery({ limit: itemsPerPage, page });
     },
   },
 
   watch: {
-    with_trashed() {
-      // this.$router.push({ query: { with_trashed: this.with_trashed } });
+    withTrashedActive(newValue) {
+      this.actualizarQuery({ withTrashed: newValue });
+    },
+    withTrashed(newValue) {
+      this.withTrashedActive = newValue;
     },
   },
 };

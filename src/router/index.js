@@ -69,7 +69,7 @@ const routes = [
         path: 'table',
         name: 'administracion-marcadores',
         component: () => import(
-          /* webpackChunkName: "marcadores" */ '@/components/administracion/FilteredTable.vue'
+          /* webpackChunkName: "marcadores" */ '@/components/administracion/MdiTabla.vue'
         ),
       },
     ],

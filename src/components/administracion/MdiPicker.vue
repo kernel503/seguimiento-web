@@ -4,15 +4,21 @@
       <v-card-title>
         {{ value.length === 3 ? 'Editar registro' : 'Crear registro' }}
       </v-card-title>
-      <v-card-text class="mb-0 pb-0" @keyup.enter="submit">
-        <v-text-field :rules="[nombreRule]" v-model="nombre" outlined required>
+      <v-card-text class="mb-0 pb-0">
+        <v-text-field
+          :rules="[nombreRule]"
+          v-model="nombre"
+          outlined
+          required
+          @keyup.enter="submit"
+        >
           <template #label>
             {{ title }}
             <span class="red--text"><strong>* </strong></span>
           </template>
         </v-text-field>
 
-        <MdiExplorer :rules="[iconoRule]" v-model="icono" @submit="$emit('submit')" />
+        <MdiExplorer :rules="[iconoRule]" v-model="icono" />
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -24,7 +30,7 @@
 </template>
 <script>
 import { string } from '@/http/Validation';
-import MdiExplorer from '../mdiExplorer/MdiExplorer.vue';
+import MdiExplorer from './MdiExplorer/MdiExplorer.vue';
 
 export default {
   name: 'MdiPicker',
