@@ -4,7 +4,7 @@
     class="elevation-1"
     :headers="headers"
     :items="items"
-    :options.sync="options"
+    :options="options"
     :items-per-page="limit"
     :footer-props="footerProps"
     @update:options="actualizarOpcionesTabla"
@@ -106,6 +106,7 @@ export default {
     withTrashedActive(newValue) {
       this.actualizarQuery({ withTrashed: newValue });
     },
+
     withTrashed(newValue) {
       this.withTrashedActive = newValue;
     },
