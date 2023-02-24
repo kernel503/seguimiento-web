@@ -88,6 +88,7 @@ export default {
     limit: DEFAULT_LIMITE,
     withTrashed: DEFAULT_WITH_TRASHED,
     total: DEFAULT_TOTAL,
+    itemsPerPage: DEFAULT_TABLA_PAGINACION,
   }),
 
   mutations: {

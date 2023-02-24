@@ -66,10 +66,17 @@ const routes = [
         ),
       },
       {
+        path: 'estados-solicitud',
+        name: 'web:administracion:estado_solicitud',
+        component: () => import(
+          /* webpackChunkName: "administracion:marcadores" */ '@/components/administracion/GestionEstadosCuenta.vue'
+        ),
+      },
+      {
         path: 'table',
         name: 'administracion-marcadores',
         component: () => import(
-          /* webpackChunkName: "marcadores" */ '@/components/administracion/MdiTabla.vue'
+          /* webpackChunkName: "marcadores" */ '@/components/administracion/EstadoCuentaTablaPaginada.vue'
         ),
       },
     ],

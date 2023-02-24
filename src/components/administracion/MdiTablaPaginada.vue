@@ -10,7 +10,8 @@
     @update:options="actualizarOpcionesTabla"
     :server-items-length="total"
   >
-    <template v-slot:top>
+    <template #top>
+
       <v-toolbar flat>
         <v-toolbar-title class="text-capitalize">
           {{ toolbarTitle }}
@@ -31,10 +32,12 @@
         </v-btn>
       </v-toolbar>
     </template>
-    <template v-slot:item.icono="{ item }">
-      <v-icon> {{ 'mdi-' + item.icono }}</v-icon>
+
+    <template #item.icono="{ item }">
+      <v-icon> {{ `mdi-${item.icono}` }}</v-icon>
     </template>
-    <template v-slot:item.actions="{ item }">
+
+    <template #item.actions="{ item }">
       <v-icon
         v-if="item.fecha_eliminado"
         class="mr-2"
@@ -43,12 +46,13 @@
       >
         mdi-delete-restore
       </v-icon>
-      <v-icon class="mr-2" @click="$emit('edit', item)"> mdi-pencil </v-icon>
       <v-icon @click="$emit('remove', item)" color="red lighten-2">
         mdi-delete
       </v-icon>
+      <v-icon class="ml-2" @click="$emit('edit', item)"> mdi-pencil </v-icon>
     </template>
-    <template v-slot:no-data>
+
+    <template #no-data>
       <v-btn color="primary" @click="$emit('refresh')"> Recargar </v-btn>
     </template>
   </v-data-table>
@@ -57,7 +61,7 @@
 import { mapMutations, mapState } from 'vuex';
 
 export default {
-  name: 'MdiTabla',
+  name: 'MdiTablaPaginada',
 
   props: {
     toolbarTitle: {
@@ -78,20 +82,27 @@ export default {
     this.resource = this.$route.query.resource;
     this.withTrashedActive = this.withTrashed;
     this.options = { page: this.page };
+    this.footerProps = {
+      'items-per-page-options': this.itemsPerPage,
+    };
   },
 
   data() {
     return {
       withTrashedActive: false,
       options: {},
-      footerProps: {
-        'items-per-page-options': [5, 10, 20, 40],
-      },
+      footerProps: {},
     };
   },
 
   computed: {
-    ...mapState('withPaginationAndTrashed', ['total', 'withTrashed', 'limit', 'page']),
+    ...mapState('withPaginationAndTrashed', [
+      'total',
+      'withTrashed',
+      'limit',
+      'page',
+      'itemsPerPage',
+    ]),
   },
 
   methods: {

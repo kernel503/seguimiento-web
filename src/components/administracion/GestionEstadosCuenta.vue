@@ -1,6 +1,6 @@
 <template>
   <div>
-    <MdiTablaPaginada
+    <EstadoCuentaTablaPaginada
       :toolbarTitle="this.path.replace('-', ' ')"
       :headers="headers"
       :items="items"
@@ -10,16 +10,16 @@
       @refresh="obtenerItems"
       @restore="restore"
     >
-    </MdiTablaPaginada>
+    </EstadoCuentaTablaPaginada>
 
     <v-dialog v-model="dialog" max-width="600">
-      <MdiPicker
+      <EstadoCuentaForm
         v-if="initialForm.length"
         ref="mdipicker"
         @submit="submit"
         @close="close"
         :value="initialForm"
-      ></MdiPicker>
+      ></EstadoCuentaForm>
     </v-dialog>
 
     <v-dialog v-model="dialogDelete" max-width="600">
@@ -59,13 +59,13 @@
 </template>
 <script>
 import { mapMutations, mapState } from 'vuex';
-import MdiPicker from './MdiPicker.vue';
-import MdiTablaPaginada from './MdiTablaPaginada.vue';
+import EstadoCuentaForm from './EstadoCuentaForm.vue';
+import EstadoCuentaTablaPaginada from './EstadoCuentaTablaPaginada.vue';
 
 export default {
-  name: 'GestionIconos',
+  name: 'GestionEstadosCuenta',
 
-  components: { MdiPicker, MdiTablaPaginada },
+  components: { EstadoCuentaForm, EstadoCuentaTablaPaginada },
 
   data() {
     return {
@@ -79,7 +79,7 @@ export default {
           align: 'start',
           value: 'nombre',
         },
-        { text: 'Icono', align: 'center', value: 'icono' },
+        { text: 'Acceso al software', align: 'center', value: 'permitir_acceso' },
         {
           text: 'Acciones',
           align: 'right',
@@ -103,10 +103,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations('withPaginationAndTrashed', [
-      'resetPaginationAndTrashed',
-      'actualizarQuery',
-    ]),
+    ...mapMutations('withPaginationAndTrashed', ['resetPaginationAndTrashed', 'actualizarQuery']),
 
     async obtenerItems() {
       try {
@@ -126,9 +123,7 @@ export default {
         this.items = data;
         this.actualizarQuery({ total });
       } catch (error) {
-        this.$toast.error(
-          `Error al obtener los ${this.path.replace('-', ' ')}.`,
-        );
+        this.$toast.error('Error al obtener los medios de desplazamiento.');
       }
     },
 
@@ -153,11 +148,11 @@ export default {
 
     remove(payload) {
       this.dialogDelete = true;
-      this.initialForm = [payload.nombre, payload.icono, payload.id];
+      this.initialForm = [payload.nombre, payload.permitir_acceso, payload.id];
     },
 
     edit(payload) {
-      this.initialForm = [payload.nombre, payload.icono, payload.id];
+      this.initialForm = [payload.nombre, payload.permitir_acceso, payload.id];
       this.dialog = true;
     },
 
@@ -180,7 +175,7 @@ export default {
 
     async restore(payload) {
       this.dialogRestore = true;
-      this.initialForm = [payload.nombre, payload.icono, payload.id];
+      this.initialForm = [payload.nombre, payload.permitir_acceso, payload.id];
     },
 
     async submit() {
@@ -189,7 +184,7 @@ export default {
       }
       const data = {
         nombre: this.initialForm.at(0),
-        icono: this.initialForm.at(1),
+        permitir_acceso: this.initialForm.at(1),
       };
 
       if (this.initialForm.length === 2) {
