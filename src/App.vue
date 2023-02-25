@@ -164,6 +164,11 @@ export default {
             icon: 'mdi-car-info',
             path: { name: 'web:administracion:clasificacion-vehicular' },
           },
+          {
+            title: 'Estado solicitud',
+            icon: 'mdi-car-info',
+            path: { name: 'web:administracion:estado-solicitud' },
+          },
         ],
       },
       {

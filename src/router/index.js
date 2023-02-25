@@ -73,6 +73,13 @@ const routes = [
         ),
       },
       {
+        path: 'estado-solicitud',
+        name: 'web:administracion:estado-solicitud',
+        component: () => import(
+          /* webpackChunkName: "administracion:estado-solicitud" */ '@/components/administracion/EstadoSolicitud.vue'
+        ),
+      },
+      {
         path: 'table',
         name: 'administracion-marcadores',
         component: () => import(
