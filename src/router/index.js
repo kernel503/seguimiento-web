@@ -42,7 +42,7 @@ const routes = [
       {
         path: 'permisos',
         name: 'web:administracion:permisos',
-        component: () => import(/* webpackChunkName: "administracion:permisos" */ '@/components/users/CreateUserFom.vue'),
+        component: () => import(/* webpackChunkName: "administracion:permisos" */ '@/views/administracion/Permisos.vue'),
       },
       {
         path: 'medios-desplazamiento',
@@ -73,17 +73,17 @@ const routes = [
         ),
       },
       {
-        path: 'estado-solicitud',
-        name: 'web:administracion:estado-solicitud',
+        path: 'estados-solicitud',
+        name: 'web:administracion:estado_solicitud',
         component: () => import(
-          /* webpackChunkName: "administracion:estado-solicitud" */ '@/components/administracion/EstadoSolicitud.vue'
+          /* webpackChunkName: "administracion:marcadores" */ '@/components/administracion/GestionEstadosCuenta.vue'
         ),
       },
       {
         path: 'table',
         name: 'administracion-marcadores',
         component: () => import(
-          /* webpackChunkName: "marcadores" */ '@/components/administracion/FilteredTable.vue'
+          /* webpackChunkName: "marcadores" */ '@/components/administracion/EstadoCuentaTablaPaginada.vue'
         ),
       },
     ],

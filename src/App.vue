@@ -145,6 +145,11 @@ export default {
             path: { name: 'web:administracion:roles' },
           },
           {
+            title: 'Estados solicitud',
+            icon: 'mdi-account-details',
+            path: { name: 'web:administracion:estado_solicitud' },
+          },
+          {
             title: 'Medios desplazamiento',
             icon: 'mdi-train-car',
             path: { name: 'web:administracion:medios-desplazamiento' },
@@ -163,11 +168,6 @@ export default {
             title: 'Clasificación Vehicular',
             icon: 'mdi-car-info',
             path: { name: 'web:administracion:clasificacion-vehicular' },
-          },
-          {
-            title: 'Estado solicitud',
-            icon: 'mdi-car-info',
-            path: { name: 'web:administracion:estado-solicitud' },
           },
         ],
       },

@@ -4,7 +4,6 @@
       <v-tab>Listado roles</v-tab>
       <v-tab>Crear rol</v-tab>
       <v-tab>Editar rol</v-tab>
-      <v-tab>Estado usuario</v-tab>
     </v-tabs>
     <v-tabs-items v-model="tab">
       <v-tab-item>
@@ -20,70 +19,6 @@
           <v-card-text>TODO</v-card-text>
         </v-card>
       </v-tab-item>
-      <v-tab-item>
-        <div>
-    <v-data-table
-    :headers="headers"
-    :items="item2.data"
-    sort-by="id"
-    class="elevation-1"
-    >
-
-    <template v-slot:item.actions="{ item }">
-      <v-icon
-      v-if="item.solicitud.estado.id==1"
-      class="mr-2"
-       > mdi-close-circle
-     </v-icon>
-
-     <v-icon
-      v-else
-      class="mr-2"
-      > mdi-checkbox-marked-circle
-    </v-icon>
-    </template>
-    <template v-slot:item.solicitud.estado.nombre="{ item }">
-      <v-chip
-      v-if="item.solicitud.estado.id==1"
-      color="green"
-      text-color="white">{{ item.solicitud.estado.nombre }}
-    </v-chip>
-    <v-chip
-      v-else
-      color="red"
-      text-color="white">{{ item.solicitud.estado.nombre }}
-    </v-chip>
-    </template>
-    </v-data-table>
-    <v-dialog v-model="dialogDelete"  max-width="530px" >
-      <v-card>
-          <v-card-title class="text-h5">¿Está seguro que desea eliminar el registro?</v-card-title>
-          <v-card-actions class="py-3">
-          <v-spacer></v-spacer>
-          <v-btn class="default"  outlined color=""  @click="dialogDelete = false" >Cancelar</v-btn>
-          <v-btn class="primary" @click="deleteItem()" >Eliminar</v-btn>
-          <v-spacer></v-spacer>
-          </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <v-dialog v-model="dialogEstado" max-width="600">
-      <v-card>
-        <v-card-title class="text-center">
-          Suspender cuenta de usuario
-        </v-card-title>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="red darken-1" text>Aceptar</v-btn>
-          <v-btn color="gray darken-1" text @click="dialogEstado = false">
-            Cancelar
-          </v-btn>
-          <v-spacer></v-spacer>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </div>
-      </v-tab-item>
-
     </v-tabs-items>
   </div>
 </template>
@@ -100,76 +35,6 @@ export default {
   data() {
     return {
       tab: null,
-      headers: [
-        {
-          text: 'Usuario',
-          align: 'start',
-          value: 'name',
-        },
-        { text: 'Estado', align: 'center', value: 'solicitud.estado.nombre' },
-        {
-          text: 'Acciones',
-          align: 'right',
-          value: 'actions',
-          sortable: false,
-        },
-      ],
-      items: [],
-      item2: {
-        data: [
-          {
-            id: 1,
-            name: 'developer',
-            email: 'developer@gmail.com',
-            email_verified_at: null,
-            created_at: '2023-02-25T01:07:50.000000Z',
-            updated_at: '2023-02-25T01:07:50.000000Z',
-            solicitud: {
-              id: 1,
-              id_usuario: 1,
-              id_estado_solicitud: 1,
-              fecha_creado: '2023-02-25T01:07:50.000000Z',
-              fecha_actualizado: '2023-02-25T01:07:50.000000Z',
-              fecha_eliminado: null,
-              estado: {
-                id: 1,
-                nombre: 'Activa',
-                permitir_acceso: true,
-                fecha_creado: '2023-02-25T01:07:50.000000Z',
-                fecha_actualizado: '2023-02-25T01:07:50.000000Z',
-                fecha_eliminado: null,
-              },
-            },
-          },
-          {
-            id: 2,
-            name: 'test',
-            email: 'test@gmail.com',
-            email_verified_at: null,
-            created_at: '2023-02-25T02:04:00.000000Z',
-            updated_at: '2023-02-25T02:04:00.000000Z',
-            solicitud: {
-              id: 2,
-              id_usuario: 2,
-              id_estado_solicitud: 1,
-              fecha_creado: '2023-02-25T02:04:00.000000Z',
-              fecha_actualizado: '2023-02-25T02:04:00.000000Z',
-              fecha_eliminado: null,
-              estado: {
-                id: 3,
-                nombre: 'Suspendida',
-                permitir_acceso: true,
-                fecha_creado: '2023-02-25T01:07:50.000000Z',
-                fecha_actualizado: '2023-02-25T01:07:50.000000Z',
-                fecha_eliminado: null,
-              },
-            },
-          },
-        ],
-      },
-      dialog: false,
-      dialogDelete: false,
-      dialogEstado: false,
     };
   },
 

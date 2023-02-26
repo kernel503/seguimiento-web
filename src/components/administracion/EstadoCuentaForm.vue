@@ -17,8 +17,10 @@
             <span class="red--text"><strong>* </strong></span>
           </template>
         </v-text-field>
-
-        <MdiExplorer :rules="[iconoRule]" v-model="icono" />
+        <v-switch
+          label="Permitir acceso al software"
+          v-model="permitirAcceso"
+        ></v-switch>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -30,14 +32,9 @@
 </template>
 <script>
 import { string } from '@/http/Validation';
-import MdiExplorer from './MdiExplorer/MdiExplorer.vue';
 
 export default {
-  name: 'MdiPicker',
-
-  components: {
-    MdiExplorer,
-  },
+  name: 'EstadoCuentaForm',
 
   props: {
     title: {
@@ -58,13 +55,13 @@ export default {
     return {
       valid: false,
       nombre: '',
-      icono: '',
+      permitirAcceso: '',
     };
   },
 
   mounted() {
     this.nombre = this.value.at(0) || '';
-    this.icono = this.value.at(1) || '';
+    this.permitirAcceso = this.value.at(1) || false;
   },
 
   methods: {
@@ -81,7 +78,7 @@ export default {
     nombre(newValue) {
       this.value[0] = newValue;
     },
-    icono(newValue) {
+    permitirAcceso(newValue) {
       this.value[1] = newValue;
     },
   },
