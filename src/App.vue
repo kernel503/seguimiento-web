@@ -176,10 +176,18 @@ export default {
         icon: 'mdi-crosshairs-gps',
         children: [
           {
-            title: 'Dispositivo móvil',
+            title: 'Registros',
             icon: 'mdi-cellphone-marker',
             path: {
               name: 'web:desplazamiento:movil',
+              // params: { uuid: '22a3e45f-343e-4308-b42b-0cc2fe05873f' },
+            },
+          },
+          {
+            title: 'Dispositivo móvil',
+            icon: 'mdi-cellphone-marker',
+            path: {
+              name: 'web:desplazamiento:detalle',
               params: { uuid: '22a3e45f-343e-4308-b42b-0cc2fe05873f' },
             },
           },

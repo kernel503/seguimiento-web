@@ -88,8 +88,13 @@ const routes = [
     component: () => import(/* webpackChunkName: "administracion" */ '@/views/desplazamiento/Base.vue'),
     children: [
       {
-        path: 'registrados/:uuid',
+        path: 'movil',
         name: 'web:desplazamiento:movil',
+        component: () => import(/* webpackChunkName: "web:desplazamiento:movil" */ '@/components/desplazamiento/DesplazamientoListado.vue'),
+      },
+      {
+        path: 'registrados/:uuid',
+        name: 'web:desplazamiento:detalle',
         component: () => import(/* webpackChunkName: "web:desplazamiento:movil" */ '@/components/desplazamiento/GeoJson.vue'),
       },
     ],
