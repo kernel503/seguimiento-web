@@ -169,6 +169,11 @@ export default {
             icon: 'mdi-car-info',
             path: { name: 'web:administracion:clasificacion-vehicular' },
           },
+          {
+            title: 'Clases Vehiculares',
+            icon: 'mdi-car-info',
+            path: { name: 'web:administracion:clases-vehiculares' },
+          },
         ],
       },
       {

@@ -117,6 +117,7 @@
       Cambio de estado
       </v-card-title>
       <v-card-text>
+        <v-form ref="form_change_state" v-model="valid_state">
         <v-autocomplete
             v-model="estado"
             :rules="[integerRule]"
@@ -129,6 +130,7 @@
               Selecciona el estado <span class="red--text"><strong>* </strong></span>
             </template>
           </v-autocomplete>
+        </v-form>
       </v-card-text>
 
       <v-card-actions class="py-3">
@@ -147,6 +149,7 @@
       Cambiar contraseña
       </v-card-title>
       <v-card-text>
+        <v-form ref="form_change_pass">
         <v-text-field
           :rules="[fieldRule]"
           v-model="editedItem.password"
@@ -172,6 +175,7 @@
             Confirmar Contraseña <span class="red--text"><strong>* </strong></span>
           </template>
         </v-text-field>
+      </v-form>
       </v-card-text>
       <v-card-actions class="py-3">
       <v-spacer></v-spacer>
@@ -196,6 +200,7 @@ export default {
 
   data: () => ({
     valid: true,
+    valid_state: true,
     showPassword: false,
     roles: [],
     form: {
@@ -226,7 +231,7 @@ export default {
     dialog: false,
     dialogEstado: false,
     dialogCambioPassword: false,
-    estado: 0,
+    estado: '',
     estados: [],
   }),
 
@@ -284,23 +289,28 @@ export default {
     async changeState() {
       const nuevoEstado = this.estado;
       try {
-        // const validate = this.$refs.form_clasificacion.validate();
-        const data = { id_estado_solicitud: nuevoEstado };
-        await this.axios.put(`/solicitudes-cuentas/${this.editedItem.id}`, data);
-        this.initialize();
-        this.$toast.success('Registro actualizado');
-        this.dialogEstado = false;
+        const validate = this.$refs.form_change_state.validate();
+        if (validate) {
+          const data = { id_estado_solicitud: nuevoEstado };
+          await this.axios.put(`/solicitudes-cuentas/${this.editedItem.id}`, data);
+          this.initialize();
+          this.$toast.success('Registro actualizado');
+          this.dialogEstado = false;
+        }
       } catch (error) {
         this.$toast.error('Error al actualizar el estado');
       }
     },
     async changePassword() {
       try {
-        const pass = this.editedItem.password;
-        const data = { password: pass };
-        await this.axios.put(`/usuarios/${this.editedItem.id}`, data);
-        this.$toast.success('Constraseña actualizada correctamente');
-        this.dialogCambioPassword = false;
+        const validate = this.$refs.form_change_pass.validate();
+        if (validate) {
+          const pass = this.editedItem.password;
+          const data = { password: pass };
+          await this.axios.put(`/usuarios/${this.editedItem.id}`, data);
+          this.$toast.success('Constraseña actualizada correctamente');
+          this.dialogCambioPassword = false;
+        }
       } catch (error) {
         this.$toast.error('Error al actualizar la contraseña');
       }
