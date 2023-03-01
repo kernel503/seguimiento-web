@@ -73,6 +73,13 @@ const routes = [
         ),
       },
       {
+        path: 'clases-vehiculares',
+        name: 'web:administracion:clases-vehiculares',
+        component: () => import(
+          /* webpackChunkName: "administracion:marcadores" */ '@/views/administracion/ClasesVehiculares.vue'
+        ),
+      },
+      {
         path: 'estados-solicitud',
         name: 'web:administracion:estado_solicitud',
         component: () => import(
