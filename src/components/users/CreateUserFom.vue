@@ -84,16 +84,15 @@
     </template>
 
     <template v-slot:item.actions="{ item }">
-        <v-icon
-        v-if="item.solicitud.estado.id==1"
-        class="mr-2"
-        @click="openDialog(item)" > mdi-close-circle
-      </v-icon>
-
       <v-icon
-        v-else
+        title="Cambiar estado usuario"
         class="mr-2"
-        @click="openDialog(item)" > mdi-checkbox-marked-circle
+        @click="openDialog(item)" > mdi-account-convert
+      </v-icon>
+      <v-icon
+        title="Cambiar contraseña"
+        class="mr-2"
+        @click="openDialogChangePass(item)" > mdi-lock-reset
       </v-icon>
     </template>
 
@@ -108,8 +107,80 @@
       color="red"
       text-color="white">{{ item.solicitud.estado.nombre }}
     </v-chip>
-    </template>
-    </v-data-table>
+  </template>
+</v-data-table>
+<!--Modal cambio de estado-->
+<v-dialog v-model="dialogEstado"  max-width="530px" >
+  <v-card>
+      <v-card-title
+      class="text-h5">
+      Cambio de estado
+      </v-card-title>
+      <v-card-text>
+        <v-autocomplete
+            v-model="estado"
+            :rules="[integerRule]"
+            item-text="nombre"
+            item-value="id"
+            outlined
+            :items="estados"
+          >
+            <template #label>
+              Selecciona el estado <span class="red--text"><strong>* </strong></span>
+            </template>
+          </v-autocomplete>
+      </v-card-text>
+
+      <v-card-actions class="py-3">
+      <v-spacer></v-spacer>
+      <v-btn class="default"  outlined color=""  @click="dialogEstado = false" >Cancelar</v-btn>
+      <v-btn class="primary" @click="changeState()">Aceptar</v-btn>
+      <v-spacer></v-spacer>
+      </v-card-actions>
+  </v-card>
+</v-dialog>
+<!--Modal cambio de contraseña-->
+<v-dialog v-model="dialogCambioPassword"  max-width="530px" >
+  <v-card>
+      <v-card-title
+      class="text-h5">
+      Cambiar contraseña
+      </v-card-title>
+      <v-card-text>
+        <v-text-field
+          :rules="[fieldRule]"
+          v-model="editedItem.password"
+          outlined
+          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+          :type="showPassword ? 'text' : 'password'"
+          @click:append="showPassword = !showPassword"
+        >
+          <template #label>
+            Contraseña <span class="red--text"><strong>* </strong></span>
+          </template>
+        </v-text-field>
+
+        <v-text-field
+          :rules="[fieldRule]"
+          v-model="passConfirm"
+          outlined
+          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+          :type="showPassword ? 'text' : 'password'"
+          @click:append="showPassword = !showPassword"
+        >
+          <template #label>
+            Confirmar Contraseña <span class="red--text"><strong>* </strong></span>
+          </template>
+        </v-text-field>
+      </v-card-text>
+      <v-card-actions class="py-3">
+      <v-spacer></v-spacer>
+      <v-btn class="default"  outlined  @click="dialogCambioPassword = false" >Cancelar</v-btn>
+      <v-btn class="primary" @click="changePassword()">Aceptar</v-btn>
+      <v-spacer></v-spacer>
+      </v-card-actions>
+  </v-card>
+</v-dialog>
  </div>
 </template>
 <script>
@@ -120,6 +191,7 @@ export default {
   created() {
     this.obtenerRoles();
     this.initialize();
+    this.getEstadosCuenta();
   },
 
   data: () => ({
@@ -147,8 +219,15 @@ export default {
       },
     ],
     items: [],
+    editedItem: {
+      password: '',
+    },
+    passConfirm: '',
     dialog: false,
     dialogEstado: false,
+    dialogCambioPassword: false,
+    estado: 0,
+    estados: [],
   }),
 
   methods: {
@@ -196,6 +275,40 @@ export default {
       this.editedIndex = this.items.indexOf(item);
       this.editedItem = { ...item };
       this.dialogEstado = true;
+    },
+    openDialogChangePass(item) {
+      this.editedIndex = this.items.indexOf(item);
+      this.editedItem = { ...item };
+      this.dialogCambioPassword = true;
+    },
+    async changeState() {
+      const nuevoEstado = this.estado;
+      try {
+        // const validate = this.$refs.form_clasificacion.validate();
+        const data = { id_estado_solicitud: nuevoEstado };
+        await this.axios.put(`/solicitudes-cuentas/${this.editedItem.id}`, data);
+        this.initialize();
+        this.$toast.success('Registro actualizado');
+        this.dialogEstado = false;
+      } catch (error) {
+        this.$toast.error('Error al actualizar el estado');
+      }
+    },
+    async changePassword() {
+      try {
+        const pass = this.editedItem.password;
+        const data = { password: pass };
+        await this.axios.put(`/usuarios/${this.editedItem.id}`, data);
+        this.$toast.success('Constraseña actualizada correctamente');
+        this.dialogCambioPassword = false;
+      } catch (error) {
+        this.$toast.error('Error al actualizar la contraseña');
+      }
+    },
+    async getEstadosCuenta() {
+      const response = await this.axios.get('/estados-solicitud');
+      this.estados = response.data.data;
+      console.log(response.data.data);
     },
     close() {
       this.dialog = false;
