@@ -1,10 +1,8 @@
 <template>
   <div>
-    <v-row>
-      <v-col >
+    <!-- <v-row>
+      <v-col>
         <v-menu
-          ref="menu1"
-          v-model="menu1"
           :close-on-content-click="false"
           transition="scale-transition"
           offset-y
@@ -13,30 +11,20 @@
         >
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
-              v-model="dateFormatted"
               label="Date"
               hint="MM/DD/YYYY format"
               persistent-hint
               prepend-icon="mdi-calendar"
               v-bind="attrs"
-              @blur="date = parseDate(dateFormatted)"
               v-on="on"
             ></v-text-field>
           </template>
-          <v-date-picker
-            v-model="date"
-            no-title
-            @input="menu1 = false"
-          ></v-date-picker>
+          <v-date-picker no-title></v-date-picker>
         </v-menu>
-        <p>
-          Date in ISO format: <strong>{{ date }}</strong>
-        </p>
       </v-col>
 
-      <v-col >
+      <v-col>
         <v-menu
-          v-model="menu2"
           :close-on-content-click="false"
           transition="scale-transition"
           offset-y
@@ -45,7 +33,6 @@
         >
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
-              v-model="computedDateFormatted"
               label="Date (read only text field)"
               hint="MM/DD/YYYY format"
               persistent-hint
@@ -56,32 +43,62 @@
             ></v-text-field>
           </template>
           <v-date-picker
-            v-model="date"
             no-title
-            @input="menu2 = false"
           ></v-date-picker>
         </v-menu>
-        <p>
-          Date in ISO format: <strong>{{ date }}</strong>
-        </p>
       </v-col>
       <v-col> <v-btn color="primary"> Filtrar </v-btn></v-col>
-    </v-row>
-    <v-row>
+    </v-row> -->
+    <!-- <v-row>
       <div class="text-center">
-        <v-pagination
-          v-model="page"
-          :length="6"
-        ></v-pagination>
+        <v-pagination v-model="page" :length="6"></v-pagination>
       </div>
-    </v-row>
+    </v-row> -->
     <v-row>
-      <v-col>
+      <v-col
+        v-for="desplazamiento in desplazamientos"
+        :key="desplazamiento.id"
+        sm="2"
+        md="2"
+        lg="2"
+      >
         <v-card>
+          <v-card-title class="my-0 py-0">
+            {{ desplazamiento.id }}
+          </v-card-title>
+          <v-card-text class="my-0 py-0">
+            <v-list class="transparent">
+              <v-list-item class="my-0 py-0">
+                <v-list-item-title>Autobus</v-list-item-title>
+
+                <v-list-item-icon>
+                  <v-icon>mdi-bus</v-icon>
+                </v-list-item-icon>
+
+                <v-list-item-subtitle class="text-right">
+                  50
+                </v-list-item-subtitle>
+              </v-list-item>
+            </v-list>
+          </v-card-text>
+          <v-card-actions class="">
+            <v-btn
+              text
+              @click="visualizar(desplazamiento)"
+              color="red darken-2"
+            >
+              Visualizar
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+
+      <!-- <v-col>
+        <v-card height="100%">
           <v-card-title class="my-0 py-0">
             22a3e45f-343e-4308-b42b-0cc2fe05873f
           </v-card-title>
-          <v-card-text>
+          <v-card-text class="my-0 py-0">
             <v-list class="transparent">
               <v-list-item
                 v-for="item in forecast"
@@ -100,47 +117,18 @@
               </v-list-item>
             </v-list>
           </v-card-text>
-          <v-card-actions class="my-0 py-0">
-            <v-btn text> Ver detalle </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col>
-        <v-card>
-          <v-card-title class="my-0 py-0">
-            22a3e45f-343e-4308-b42b-0cc2fe05873f
-          </v-card-title>
-          <v-card-text>
-            <v-list class="transparent">
-              <v-list-item
-                v-for="item in forecast"
-                :key="item.day"
-                class="my-0 py-0"
-              >
-                <v-list-item-title>{{ item.day }}</v-list-item-title>
-
-                <v-list-item-icon>
-                  <v-icon>{{ item.icon }}</v-icon>
-                </v-list-item-icon>
-
-                <v-list-item-subtitle class="text-right">
-                  {{ item.temp }}
-                </v-list-item-subtitle>
-              </v-list-item>
-            </v-list>
-          </v-card-text>
-          <v-card-actions class="my-0 py-0">
-            <v-btn text> Ver detalle </v-btn>
+          <v-card-actions class="">
+            <v-btn text> Visualizar </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
 
       <v-col>
-        <v-card>
+        <v-card height="100%">
           <v-card-title class="my-0 py-0">
             22a3e45f-343e-4308-b42b-0cc2fe05873f
           </v-card-title>
-          <v-card-text>
+          <v-card-text class="my-0 py-0">
             <v-list class="transparent">
               <v-list-item
                 v-for="item in forecast.slice(2)"
@@ -159,18 +147,18 @@
               </v-list-item>
             </v-list>
           </v-card-text>
-          <v-card-actions class="my-0 py-0">
-            <v-btn text> Ver detalle </v-btn>
+          <v-card-actions class="d-flex align-end mb-6">
+            <v-btn text> Visualizar </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
 
       <v-col>
-        <v-card>
+        <v-card height="100%">
           <v-card-title class="my-0 py-0">
             22a3e45f-343e-4308-b42b-0cc2fe05873f
           </v-card-title>
-          <v-card-text>
+          <v-card-text class="my-0 py-0">
             <v-list class="transparent">
               <v-list-item
                 v-for="item in forecast.slice(1)"
@@ -189,11 +177,11 @@
               </v-list-item>
             </v-list>
           </v-card-text>
-          <v-card-actions class="my-0 py-0">
-            <v-btn text> Ver detalle </v-btn>
+          <v-card-actions>
+            <v-btn text> Visualizar </v-btn>
           </v-card-actions>
         </v-card>
-      </v-col>
+      </v-col> -->
     </v-row>
   </div>
 </template>
@@ -202,23 +190,34 @@ export default {
   name: 'DesplazamientoListado',
 
   components: {},
+  created() {
+    this.obtenerDesplazamientos();
+  },
   data() {
     return {
-      forecast: [
-        {
-          day: 'Caminando',
-          icon: 'mdi-walk',
-          temp: '36 minutos',
-        },
-        {
-          day: 'Autobus',
-          icon: 'mdi-bus',
-          temp: '7 minutos',
-        },
-        { day: 'Carro', icon: 'mdi-car', temp: '15 minutos' },
-        { day: 'Total', icon: 'mdi-sigma', temp: '58 minutos' },
-      ],
+      page: 0,
+      desplazamientos: [],
     };
+  },
+
+  methods: {
+    async obtenerDesplazamientos() {
+      try {
+        const {
+          data: { data: desplazamientos },
+        } = await this.axios.get('desplazamientos');
+        this.desplazamientos = desplazamientos;
+      } catch (error) {
+        this.$toast.error('Error al obtener los desplazamiento.');
+      }
+    },
+
+    visualizar(desplazamiento) {
+      this.$router.push({
+        name: 'web:desplazamiento:detalle',
+        params: { uuid: desplazamiento.id },
+      });
+    },
   },
 };
 </script>

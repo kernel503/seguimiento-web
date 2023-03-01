@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer app v-model="drawer" v-if="isAuthenticated">
+    <v-navigation-drawer app v-model="drawer" v-if="isAuthenticated" color="blue-grey lighten-5">
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="text-h6 text-center">
@@ -54,7 +54,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app>
+    <v-app-bar app color="blue-grey lighten-5">
       <v-app-bar-nav-icon
         @click="drawer = !drawer"
         v-if="isAuthenticated"
@@ -183,14 +183,14 @@ export default {
               // params: { uuid: '22a3e45f-343e-4308-b42b-0cc2fe05873f' },
             },
           },
-          {
-            title: 'Dispositivo móvil',
-            icon: 'mdi-cellphone-marker',
-            path: {
-              name: 'web:desplazamiento:detalle',
-              params: { uuid: '22a3e45f-343e-4308-b42b-0cc2fe05873f' },
-            },
-          },
+          // {
+          //   title: 'Dispositivo móvil',
+          //   icon: 'mdi-cellphone-marker',
+          //   path: {
+          //     name: 'web:desplazamiento:detalle',
+          //     params: { uuid: '22a3e45f-343e-4308-b42b-0cc2fe05873f' },
+          //   },
+          // },
         ],
       },
     ],
