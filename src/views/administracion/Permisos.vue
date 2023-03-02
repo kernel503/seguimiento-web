@@ -30,9 +30,12 @@
                         <v-col class="mt-2 pb-0" cols="12" sm="12">
                           <v-text-field
                             v-model="editedItem.name"
-                            label="Ingrese el nombre*"
                             outlined
                           >
+                          <template #label>
+                            Ingrese el nombre
+                            <span class="red--text"><strong>* </strong></span>
+                          </template>
                           </v-text-field>
                         </v-col>
                       </v-row>
@@ -42,7 +45,7 @@
 
                 <v-card-actions class="py-5">
                   <v-row class="justify-center">
-                    <v-col cols="12" sm="3">
+                    <v-col cols="12" sm="3" md="3">
                       <v-btn
                         outlined
                         block
@@ -53,12 +56,12 @@
                         Cancelar
                       </v-btn>
                     </v-col>
-                    <v-col cols="12" sm="3" v-if="editedIndex==-1">
+                    <v-col cols="12" sm="3" md="3" v-if="editedIndex==-1">
                       <v-btn block cols-12 class="primary" text @click="save()" >
                         Guardar
                       </v-btn>
                     </v-col>
-                    <v-col cols="12" sm="5" v-else>
+                    <v-col cols="12" sm="3" md="3" v-else>
                       <v-btn block cols-12 class="primary" text @click="update(editedItem)" >
                         Actualizar
                       </v-btn>
