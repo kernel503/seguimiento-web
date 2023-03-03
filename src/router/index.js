@@ -80,6 +80,13 @@ const routes = [
         ),
       },
       {
+        path: 'vehiculos',
+        name: 'web:administracion:vehiculos',
+        component: () => import(
+          /* webpackChunkName: "administracion:marcadores" */ '@/views/administracion/Vehiculos.vue'
+        ),
+      },
+      {
         path: 'estados-solicitud',
         name: 'web:administracion:estado_solicitud',
         component: () => import(

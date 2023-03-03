@@ -164,7 +164,7 @@
         </v-text-field>
 
         <v-text-field
-          :rules="[fieldRule]"
+          :rules="[fieldRule,repeatPasswordRules]"
           v-model="passConfirm"
           outlined
           :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -285,6 +285,9 @@ export default {
       this.editedIndex = this.items.indexOf(item);
       this.editedItem = { ...item };
       this.dialogCambioPassword = true;
+      if (this.$refs.form_change_pass) {
+        this.$refs.form_change_pass.reset();
+      }
     },
     async changeState() {
       const nuevoEstado = this.estado;
@@ -326,6 +329,11 @@ export default {
         this.editedItem = { ...this.defaultItem };
         this.editedIndex = -1;
       });
+    },
+  },
+  computed: {
+    repeatPasswordRules() {
+      return () => this.editedItem.password === this.passConfirm || 'Contraseñas no coinciden';
     },
   },
 };
