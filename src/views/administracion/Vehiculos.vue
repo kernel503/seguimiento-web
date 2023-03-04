@@ -9,7 +9,7 @@
       <template v-slot:top>
           <v-toolbar flat>
             <v-toolbar-title class="text-capitalize">
-              Clases Vehiculares
+              Vehiculos
             </v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
@@ -17,18 +17,18 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
                   <v-icon class="mr-1"> mdi-plus-box </v-icon>
-                  Agregar clase vehicular
+                  Nuevo registro
                 </v-btn>
               </template>
 
               <v-card>
-                <v-card-title class="">
+                <v-card-title class="justify-center">
                   {{formTitle}}
                 </v-card-title>
                 <v-divider class="blue accent-2 mx-5"></v-divider>
 
                 <v-card-text>
-                  <v-form ref="form_clase">
+                  <v-form ref="form_vehiculo">
                     <v-container>
                       <v-row>
                         <v-col class="mt-2 pb-0" cols="12" sm="12">
@@ -36,6 +36,57 @@
                             :rules="[fieldRule]"
                             v-model="editedItem.nombre"
                             label="Ingrese el nombre*"
+                            outlined
+                          >
+                          </v-text-field>
+                        </v-col>
+                          <v-col class="pb-0" cols="12" sm="12">
+                              <v-autocomplete
+                                  v-model="editedItem.id_clase"
+                                  :rules="[integerRule]"
+                                  item-text="nombre"
+                                  item-value="id"
+                                  outlined
+                                  :items="clases"
+                              >
+                                  <template #label>
+                                  Selecciona clase
+                                  <span class="red--text"><strong>* </strong></span>
+                                  </template>
+                              </v-autocomplete>
+                          </v-col>
+                        <v-col class="mt-2 pb-0" cols="12" sm="12">
+                          <v-text-field
+                            :rules="[fieldRule]"
+                            v-model="editedItem.nomenclatura"
+                            label="Ingrese la nomenclatura*"
+                            outlined
+                          >
+                          </v-text-field>
+                        </v-col>
+                        <v-col class="mt-2 pb-0" cols="12" sm="12">
+                          <v-text-field
+                            :rules="[integerRule]"
+                            v-model="editedItem.cantidad_ejes"
+                            label="Ingrese la cantidad de ejes*"
+                            outlined
+                          >
+                          </v-text-field>
+                        </v-col>
+                        <v-col class="mt-2 pb-0" cols="12" sm="6">
+                          <v-text-field
+                            :rules="[integerRule]"
+                            v-model="editedItem.peso_maximo"
+                            label="Ingrese peso máximo*"
+                            outlined
+                          >
+                          </v-text-field>
+                        </v-col>
+                        <v-col class="mt-2 pb-0" cols="12" sm="6">
+                          <v-text-field
+                            :rules="[integerRule]"
+                            v-model="editedItem.longitud_maxima"
+                            label="Ingrese longitud máxima*"
                             outlined
                           >
                           </v-text-field>
@@ -48,21 +99,6 @@
                             outlined
                           >
                           </v-text-field>
-                        </v-col>
-                        <v-col class="pb-0" cols="12" sm="12">
-                            <v-autocomplete
-                                v-model="editedItem.id_clasificacion_vehicular"
-                                :rules="[integerRule]"
-                                item-text="nombre"
-                                item-value="id"
-                                outlined
-                                :items="clasificaciones"
-                            >
-                                <template #label>
-                                Selecciona clasificación
-                                <span class="red--text"><strong>* </strong></span>
-                                </template>
-                            </v-autocomplete>
                         </v-col>
                       </v-row>
                     </v-container>
@@ -87,7 +123,7 @@
                         Guardar
                       </v-btn>
                     </v-col>
-                    <v-col cols="12" sm="5" v-else>
+                    <v-col cols="12" sm="3" v-else>
                       <v-btn block cols-12 class="primary" text @click="update(editedItem)" >
                         Actualizar
                       </v-btn>
@@ -131,6 +167,18 @@ export default {
           align: 'start',
           value: 'nombre',
         },
+        { text: 'Nomenclatura', align: 'center', value: 'nomenclatura' },
+        {
+          text: 'Cantidad de ejes',
+          align: 'start',
+          value: 'cantidad_ejes',
+        },
+        {
+          text: 'Peso máximo',
+          align: 'start',
+          value: 'peso_maximo',
+        },
+        { text: 'Logitud máxima', align: 'center', value: 'longitud_maxima' },
         { text: 'Descripción', align: 'center', value: 'descripcion' },
         {
           text: 'Acciones',
@@ -140,48 +188,48 @@ export default {
         },
       ],
       items: [],
-      clasificaciones: [],
+      clases: [],
       dialog: false,
       dialogDelete: false,
       editedIndex: -1,
       editedItem: {
-        id: '',
-        nombre: '',
-        descripcion: '',
-        id_clasificacion_vehicular: '',
       },
       defaultItem: {
         nombre: '',
+        id_clase: null,
+        nomenclatura: '',
+        cantidad_ejes: null,
+        peso_maximo: null,
+        longitud_maxima: null,
         descripcion: '',
-        id_clasificacion_vehicular: '',
       },
 
     };
   },
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? 'Crear Clasificación Vehicular' : 'Editar Clasificación Vehicular';
+      return this.editedIndex === -1 ? 'Registrar Vehiculo' : 'Editar Vehiculo';
     },
   },
   methods: {
-    integerRule: integer('Debe seleccionar un rol.'),
+    integerRule: integer('Debe completar el campo.'),
     fieldRule: string('Debe completar el campo.'),
     async initialize() {
-      const response = await this.axios.get('/clases-vehicular');
+      const response = await this.axios.get('/vehiculos');
       this.items = response.data.data;
-      this.getClasificacionVehicular();
+      this.getClaseVehicular();
     },
     async save() {
       try {
-        const validate = this.$refs.form_clase.validate();
+        const validate = this.$refs.form_vehiculo.validate();
         if (validate) {
-          await this.axios.post('/clases-vehicular', this.editedItem);
+          await this.axios.post('/vehiculos', this.editedItem);
           this.initialize();
           this.$toast.success('Registro creado.');
           this.close();
         }
       } catch (error) {
-        this.$toast.error('Error al crear la clasificación vehicular.');
+        this.$toast.error('Error al crear el vehiculo vehicular.');
       }
     },
     editItem(item) {
@@ -191,9 +239,9 @@ export default {
     },
     async update(item) {
       try {
-        const validate = this.$refs.form_clase.validate();
+        const validate = this.$refs.form_vehiculo.validate();
         if (validate) {
-          await this.axios.put(`/clases-vehicular/${item.id}`, this.editedItem);
+          await this.axios.put(`/vehiculos/${item.id}`, this.editedItem);
           this.initialize();
           this.$toast.success('Registro actualizado correctamente.');
           this.close();
@@ -208,17 +256,17 @@ export default {
     },
     async deleteItem() {
       try {
-        await this.axios.delete(`/clases-vehicular/${this.editedItem.id}`);
+        await this.axios.delete(`/vehiculos/${this.editedItem.id}`);
         this.$toast.success('Registro eliminado');
         this.initialize();
         this.dialogDelete = false;
       } catch (error) {
-        this.$toast.error('Error al eliminar la clasificación vehicular.');
+        this.$toast.error('Error al eliminar vehiculo.');
       }
     },
-    async getClasificacionVehicular() {
-      const response = await this.axios.get('/clasificaciones-vehicular');
-      this.clasificaciones = response.data.data;
+    async getClaseVehicular() {
+      const response = await this.axios.get('/clases-vehicular');
+      this.clases = response.data.data;
     },
     close() {
       this.dialog = false;
@@ -226,6 +274,7 @@ export default {
         this.editedItem = { ...this.defaultItem };
         this.editedIndex = -1;
       });
+      this.$refs.form_vehiculo.reset();
     },
   },
   async created() {

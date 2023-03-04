@@ -8,18 +8,22 @@
     >
     <template v-slot:top>
         <v-toolbar flat>
+          <v-toolbar-title class="text-capitalize">
+              Clasificación Vehicular
+            </v-toolbar-title>
+            <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
           <v-dialog v-model="dialog" max-width="600px" persistent>
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
                 <v-icon class="mr-1"> mdi-plus-box </v-icon>
-                Agregar clasificación
+                Nuevo registro
               </v-btn>
             </template>
 
             <v-card>
               <v-card-title class="justify-center">
-                <h2 class="primary--text">{{formTitle}}</h2>
+                {{formTitle}}
               </v-card-title>
               <v-divider class="blue accent-2 mx-5"></v-divider>
 
@@ -29,6 +33,7 @@
                     <v-row>
                       <v-col class="mt-2 pb-0" cols="12" sm="12">
                         <v-text-field
+                          :rules="[fieldRule]"
                           v-model="editedItem.nombre"
                           label="Ingrese el nombre*"
                           outlined
@@ -37,6 +42,7 @@
                       </v-col>
                       <v-col class="pb-0" cols="12" sm="12">
                         <v-text-field
+                          :rules="[fieldRule]"
                           v-model="editedItem.version"
                           label="Ingrese versión*"
                           outlined
@@ -99,6 +105,8 @@
   </div>
 </template>
 <script>
+import { string } from '../../http/Validation';
+
 export default {
   data() {
     return {
@@ -138,6 +146,7 @@ export default {
     },
   },
   methods: {
+    fieldRule: string('Debe completar el campo.'),
     async initialize() {
       const response = await this.axios.get('/clasificaciones-vehicular');
       this.items = response.data.data;

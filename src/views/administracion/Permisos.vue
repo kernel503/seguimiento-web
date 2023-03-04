@@ -8,12 +8,16 @@
       >
       <template v-slot:top>
           <v-toolbar flat>
+            <v-toolbar-title class="text-capitalize">
+          Permisos
+        </v-toolbar-title>
+        <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
             <v-dialog v-model="dialog" max-width="600px" persistent>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
                   <v-icon class="mr-1"> mdi-plus-box </v-icon>
-                  Agregar registro
+                  Nuevo registro
                 </v-btn>
               </template>
 
@@ -24,11 +28,12 @@
                 <v-divider class="blue accent-2 mx-5"></v-divider>
 
                 <v-card-text>
-                  <v-form ref="form_clasificacion">
+                  <v-form ref="form_permisos">
                     <v-container>
                       <v-row>
                         <v-col class="mt-2 pb-0" cols="12" sm="12">
                           <v-text-field
+                            :rules="[fieldRule]"
                             v-model="editedItem.name"
                             outlined
                           >
@@ -94,6 +99,8 @@
     </div>
   </template>
 <script>
+import { string } from '../../http/Validation';
+
 export default {
   data() {
     return {
@@ -128,6 +135,7 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? 'Crear Permiso' : 'Editar Permiso';
     },
+    fieldRule: string('Debe completar el campo.'),
   },
   methods: {
     async initialize() {
@@ -136,7 +144,7 @@ export default {
     },
     async save() {
       try {
-        const validate = this.$refs.form_clasificacion.validate();
+        const validate = this.$refs.form_permisos.validate();
         if (validate) {
           await this.axios.post('/permisos', this.editedItem);
           this.initialize();
@@ -151,6 +159,9 @@ export default {
       this.editedIndex = this.items.indexOf(item);
       this.editedItem = { ...item };
       this.dialog = true;
+      if (this.$refs.form_permisos) {
+        this.$refs.form_permisos.resetValidation();
+      }
     },
     async update(item) {
       try {
@@ -186,6 +197,9 @@ export default {
         this.editedItem = { ...this.defaultItem };
         this.editedIndex = -1;
       });
+      // if (this.$refs.form_change_pass) {
+      this.$refs.form_permisos.resetValidation();
+      this.$refs.form_permisos.reset();
     },
   },
   async created() {
