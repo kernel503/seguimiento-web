@@ -8,6 +8,10 @@
       >
       <template v-slot:top>
           <v-toolbar flat>
+            <v-toolbar-title class="text-capitalize">
+              Clases Vehiculares
+            </v-toolbar-title>
+            <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
             <v-dialog v-model="dialog" max-width="600px" persistent>
               <template v-slot:activator="{ on, attrs }">
@@ -18,8 +22,8 @@
               </template>
 
               <v-card>
-                <v-card-title class="justify-center">
-                  <h2 class="primary--text">{{formTitle}}</h2>
+                <v-card-title class="">
+                  {{formTitle}}
                 </v-card-title>
                 <v-divider class="blue accent-2 mx-5"></v-divider>
 
