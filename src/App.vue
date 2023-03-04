@@ -120,11 +120,11 @@ export default {
 
   data: () => ({
     items: [
-      {
-        title: 'Dashboard',
-        icon: 'mdi-view-dashboard',
-        path: { name: 'dashboard' },
-      },
+      // {
+      //   title: 'Dashboard',
+      //   icon: 'mdi-view-dashboard',
+      //   path: { name: 'dashboard' },
+      // },
       {
         title: 'Administración',
         icon: 'mdi-database',
