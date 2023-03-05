@@ -58,13 +58,13 @@
       <v-col
         v-for="desplazamiento in desplazamientos"
         :key="desplazamiento.id"
-        sm="3"
-        md="3"
-        lg="3"
+        sm="12"
+        md="12"
+        lg="12"
       >
         <v-card>
           <v-card-title class="my-0 py-0">
-            {{ desplazamiento.id }}
+            {{ desplazamiento.inicio_desplazamiento }}
           </v-card-title>
           <v-card-text class="my-0 py-0">
             <v-list class="transparent">
@@ -86,8 +86,10 @@
             </v-list>
           </v-card-text>
           <v-card-actions class="">
+            <h3>{{ desplazamiento.id }}</h3>
+            <v-spacer></v-spacer>
             <v-btn
-              text
+              outlined
               @click="visualizar(desplazamiento)"
               color="red darken-2"
             >

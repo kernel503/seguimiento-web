@@ -227,7 +227,7 @@ export default {
 
   methods: {
     logout() {
-      this.dialogLogoutdialogLogout = false;
+      this.dialogLogout = false;
       localStorage.removeItem('token');
       this.userIsAuthenticated(false);
       this.$router.push({ name: 'ingresar' });
