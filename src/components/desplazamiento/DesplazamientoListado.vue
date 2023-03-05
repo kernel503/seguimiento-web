@@ -58,9 +58,9 @@
       <v-col
         v-for="desplazamiento in desplazamientos"
         :key="desplazamiento.id"
-        sm="2"
-        md="2"
-        lg="2"
+        sm="3"
+        md="3"
+        lg="3"
       >
         <v-card>
           <v-card-title class="my-0 py-0">
@@ -68,15 +68,19 @@
           </v-card-title>
           <v-card-text class="my-0 py-0">
             <v-list class="transparent">
-              <v-list-item class="my-0 py-0">
-                <v-list-item-title>Autobus</v-list-item-title>
+              <v-list-item
+                class="my-0 py-0"
+                v-for="medio in desplazamiento.detalle_medios_desplazamiento"
+                :key="medio.id"
+              >
+                <v-list-item-title>{{medio.medio_desplazamiento.nombre}}</v-list-item-title>
 
                 <v-list-item-icon>
-                  <v-icon>mdi-bus</v-icon>
+                  <v-icon>{{`mdi-${medio.medio_desplazamiento.icono}`}}</v-icon>
                 </v-list-item-icon>
 
                 <v-list-item-subtitle class="text-right">
-                  50
+                  {{medio.duracion}}
                 </v-list-item-subtitle>
               </v-list-item>
             </v-list>
@@ -205,7 +209,11 @@ export default {
       try {
         const {
           data: { data: desplazamientos },
-        } = await this.axios.get('desplazamientos');
+        } = await this.axios.get('desplazamientos', {
+          params: {
+            include: 'detalle_medios_desplazamiento.medio_desplazamiento',
+          },
+        });
         this.desplazamientos = desplazamientos;
       } catch (error) {
         this.$toast.error('Error al obtener los desplazamiento.');
