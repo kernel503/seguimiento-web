@@ -9,14 +9,16 @@
       :center="center"
     >
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-      <l-polyline :lat-lngs="polyline.latlngs" :color="polyline.color">
-      </l-polyline>
+      <!-- <l-polyline :lat-lngs="polyline.latlngs" :color="polyline.color">
+      </l-polyline> -->
 
-      <!-- <l-polyline
-    :lat-lngs="polyline.latlngs"
-    color="red"
-    weight="6"
-    ></l-polyline> -->
+      <l-polyline
+        v-for="segmento in segmentosDesplazamiento"
+        :weight="+4"
+        :lat-lngs="segmento.multilinea"
+        :color="segmento.color"
+        :key="segmento.id"
+      ></l-polyline>
     </l-map>
   </div>
 </template>
@@ -41,19 +43,19 @@ export default {
         latlngs: [],
         color: 'green',
       },
+      segmentosDesplazamiento: [],
     };
   },
   async created() {
     const { uuid } = this.$route.params;
 
     const {
-      data: { desplazamiento },
-    } = await this.axios.get(`desplazamiento/${uuid}`);
+      data: { segmentos },
+    } = await this.axios.get(`desplazamiento/${uuid}`, {
+      params: { group: 'yes' },
+    });
 
-    this.polyline.latlngs = desplazamiento.map((point) => [
-      point.latitud,
-      point.longitud,
-    ]);
+    this.segmentosDesplazamiento = segmentos;
   },
 };
 </script>
