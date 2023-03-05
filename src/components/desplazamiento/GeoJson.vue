@@ -1,18 +1,22 @@
 <template>
   <div>
-    <v-btn text class="my-2" color="red darken-2" @click="$router.go(-1)"> Regresar </v-btn>
-    <l-map style="height: 100vh" :zoom="zoom" :center="center">
+    <v-btn text class="my-2" color="red darken-2" @click="$router.go(-1)">
+      Regresar
+    </v-btn>
+    <l-map
+      :style="{ height: '100vh', position: 'fixed !important' }"
+      :zoom="zoom"
+      :center="center"
+    >
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-      <l-polyline
-        :lat-lngs="polyline.latlngs"
-        :color="polyline.color"
-      ></l-polyline>
+      <l-polyline :lat-lngs="polyline.latlngs" :color="polyline.color">
+      </l-polyline>
 
       <!-- <l-polyline
-        :lat-lngs="polyline.latlngs"
-        color="red"
-        weight="6"
-      ></l-polyline> -->
+    :lat-lngs="polyline.latlngs"
+    color="red"
+    weight="6"
+    ></l-polyline> -->
     </l-map>
   </div>
 </template>

@@ -78,12 +78,9 @@
           small
           class="mx-2"
           plain
-          :to="{ name: 'login' }"
+          :to="{ name: 'ingresar' }"
         >
           Ingresar
-        </v-btn>
-        <v-btn :color="signupColor" small plain :to="{ name: 'signup' }">
-          Registrarse
         </v-btn>
       </template>
     </v-app-bar>
@@ -233,14 +230,14 @@ export default {
       this.dialogLogoutdialogLogout = false;
       localStorage.removeItem('token');
       this.userIsAuthenticated(false);
-      this.$router.push({ name: 'login' });
+      this.$router.push({ name: 'ingresar' });
     },
     ...mapActions('user', ['userIsAuthenticated', 'userData']),
   },
 
   computed: {
     loginColor() {
-      return this.$route.name === 'login' ? 'red darken-2' : '';
+      return this.$route.name === 'ingresar' ? 'red darken-2' : '';
     },
     signupColor() {
       return this.$route.name === 'signup' ? 'red darken-2' : '';
