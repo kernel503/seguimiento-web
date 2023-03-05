@@ -16,7 +16,7 @@
         <v-spacer></v-spacer>
       <v-dialog v-model="dialog" width="600px">
         <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+              <v-btn color="red darken-2" dark class="mb-2" v-bind="attrs" v-on="on">
                 <v-icon class="mr-1"> mdi-plus-box </v-icon>
                 Nuevo registro
               </v-btn>
@@ -136,7 +136,7 @@
       <v-card-actions class="py-3">
       <v-spacer></v-spacer>
       <v-btn class="default"  outlined color=""  @click="dialogEstado = false" >Cancelar</v-btn>
-      <v-btn class="primary" @click="changeState()">Aceptar</v-btn>
+      <v-btn class="red darken-2" @click="changeState()">Aceptar</v-btn>
       <v-spacer></v-spacer>
       </v-card-actions>
   </v-card>
@@ -180,7 +180,7 @@
       <v-card-actions class="py-3">
       <v-spacer></v-spacer>
       <v-btn class="default"  outlined  @click="dialogCambioPassword = false" >Cancelar</v-btn>
-      <v-btn class="primary" @click="changePassword()">Aceptar</v-btn>
+      <v-btn class="red darken-2" @click="changePassword()">Aceptar</v-btn>
       <v-spacer></v-spacer>
       </v-card-actions>
   </v-card>

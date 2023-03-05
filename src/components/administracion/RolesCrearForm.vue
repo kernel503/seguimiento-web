@@ -28,7 +28,7 @@
           class="m-0 p-0"
           :label="seccion.etiqueta"
           @change="cambiarEstado($event, seccion.etiqueta)"
-          color="primary"
+          color="red darken-2"
           hide-details
           v-model="seccion.seleccionado"
         ></v-checkbox>
@@ -49,7 +49,7 @@
               class="text-truncate"
               :label="permiso.name"
               v-model="permiso.seleccionado"
-              color="primary"
+              color="red darken-2"
               hide-details
             ></v-checkbox
           ></v-col>

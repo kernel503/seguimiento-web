@@ -2,7 +2,7 @@
     <v-row>
 
       <v-col sm="6" md="6" lg="6">
-        <v-card class="mt-5" outlined tile width="100vh">
+        <v-card class="mt-8" outlined tile width="100vh">
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-card-title> Ingresar </v-card-title>
             <v-card-text class="mb-0 pb-0">
@@ -32,7 +32,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn @click="login" color="blue darken-1" dark>
+              <v-btn @click="login" color="red darken-1" dark>
                 <v-icon left> mdi-login-variant </v-icon>
                 Ingresar
               </v-btn>
