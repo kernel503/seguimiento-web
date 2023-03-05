@@ -6,7 +6,14 @@
     :items="items"
     sort-by="id"
     class="elevation-1"
+    :footer-props="{
+        pageText: '{0}-{1} de {2}',
+        'items-per-page-text':'Elementos por página'
+    }"
     >
+    <template v-slot:no-data>
+      Sin registros
+    </template>
     <template #top>
       <v-toolbar flat>
         <v-toolbar-title class="text-capitalize">
@@ -116,7 +123,7 @@
       class="text-h5">
       Cambio de estado
       </v-card-title>
-      <v-card-text>
+      <v-card-text class="mb-0 pb-0">
         <v-form ref="form_change_state" v-model="valid_state">
         <v-autocomplete
             v-model="estado"
@@ -133,7 +140,7 @@
         </v-form>
       </v-card-text>
 
-      <v-card-actions class="py-3">
+      <v-card-actions class="mt-0 pt-0">
       <v-spacer></v-spacer>
       <v-btn class="default"  outlined color=""  @click="dialogEstado = false" >Cancelar</v-btn>
       <v-btn class="red darken-2" @click="changeState()">Aceptar</v-btn>
@@ -216,6 +223,7 @@ export default {
         align: 'start',
         value: 'name',
       },
+      { text: 'Correo', align: 'center', value: 'email' },
       { text: 'Estado', align: 'center', value: 'solicitud.estado.nombre' },
       {
         text: 'Acciones',
