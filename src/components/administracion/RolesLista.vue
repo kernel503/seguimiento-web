@@ -1,4 +1,4 @@
-<template>
+ <template>
   <v-expansion-panels class="pa-2">
     <v-expansion-panel v-for="seccion in secciones" :key="seccion.id" class="mt-3">
       <v-expansion-panel-header class="m-0 p-0 font-weight-bold">
@@ -7,10 +7,10 @@
       <v-expansion-panel-content>
         <v-row>
           <v-col
-            cols="6"
-            sm="4"
+            cols="12"
+            sm="6"
             md="4"
-            lg="3"
+            lg="4"
             v-for="permiso in seccion.permissions"
             :key="permiso.id"
           >

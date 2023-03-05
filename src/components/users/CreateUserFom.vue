@@ -82,7 +82,7 @@
           <v-card-actions class="py-5">
             <v-spacer></v-spacer>
             <v-btn @click="close()" text> Cancelar </v-btn>
-            <v-btn @click="crearUsuario" color="red darken-1" dark>Aceptar111</v-btn>
+            <v-btn @click="crearUsuario" color="red darken-1" dark>Aceptar</v-btn>
           </v-card-actions>
           </v-card>
         </v-dialog>
@@ -172,9 +172,9 @@
           :rules="[fieldRule,repeatPasswordRules]"
           v-model="passConfirm"
           outlined
-          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-          :type="showPassword ? 'text' : 'password'"
-          @click:append="showPassword = !showPassword"
+          :append-icon="showPasswordConfirm ? 'mdi-eye' : 'mdi-eye-off'"
+          :type="showPasswordConfirm ? 'text' : 'password'"
+          @click:append="showPasswordConfirm = !showPasswordConfirm"
         >
           <template #label>
             Confirmar Contraseña <span class="red--text"><strong>* </strong></span>
@@ -207,6 +207,7 @@ export default {
     valid: true,
     valid_state: true,
     showPassword: false,
+    showPasswordConfirm: false,
     roles: [],
     form: {
       email: '',

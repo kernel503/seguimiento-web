@@ -29,6 +29,13 @@ export function integer(message = 'Campo requerido.') {
   return validate(schema);
 }
 
+export function number(message = 'Campo requerido.') {
+  const schema = Joi.number().min(0).required()
+    .error(new Error(message));
+
+  return validate(schema);
+}
+
 export function email(message = 'Campo requerido.') {
   const schema = Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'sv'] } }).required()
     .error(new Error(message));

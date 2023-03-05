@@ -86,7 +86,7 @@
             </v-list>
           </v-card-text>
           <v-card-actions class="">
-            <h3>{{ desplazamiento.id }}</h3>
+            <p class="gray--text">{{ desplazamiento.id }}</p>
             <v-spacer></v-spacer>
             <v-btn
               outlined

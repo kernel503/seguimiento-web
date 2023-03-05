@@ -1,9 +1,9 @@
 <template>
   <div>
-    <v-tabs v-model="tab">
+    <v-tabs color="red" v-model="tab">
       <v-tab>Listado roles</v-tab>
       <v-tab>Crear rol</v-tab>
-      <v-tab>Editar rol</v-tab>
+      <!--<v-tab>Editar rol</v-tab>-->
     </v-tabs>
     <v-tabs-items v-model="tab">
       <v-tab-item>

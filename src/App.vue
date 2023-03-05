@@ -6,9 +6,9 @@
       v-if="isAuthenticated"
       color="blue-grey lighten-5"
     >
-      <v-list-item>
+      <v-list-item >
         <v-list-item-content>
-          <v-list-item-title class="text-h6 text-center">
+          <v-list-item-title  class="text-h6 text-center">
             Seguimiento
           </v-list-item-title>
           <v-list-item-subtitle class="text-h4 text-center">
@@ -21,7 +21,7 @@
 
       <v-list dense nav>
         <template v-for="item in items">
-          <v-list-group v-if="item.children" :key="item.index">
+          <v-list-group color="red" v-if="item.children" :key="item.index">
             <template v-slot:activator>
               <v-list-item-title class="text-capitalize">
                 {{ item.title }}
@@ -37,6 +37,7 @@
               :key="j"
               :to="child.path"
               class="ml-4"
+              color="red"
             >
               <v-list-item-icon>
                 <v-icon>{{ child.icon }} </v-icon>

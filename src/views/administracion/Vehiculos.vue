@@ -82,7 +82,7 @@
                         </v-col>
                         <v-col class="mt-2 pb-0" cols="12" sm="6">
                           <v-text-field
-                            :rules="[integerRule]"
+                            :rules="[numberRule]"
                             v-model="editedItem.peso_maximo"
                             label="Ingrese peso máximo*"
                             outlined
@@ -91,7 +91,7 @@
                         </v-col>
                         <v-col class="mt-2 pb-0" cols="12" sm="6">
                           <v-text-field
-                            :rules="[integerRule]"
+                            :rules="[numberRule]"
                             v-model="editedItem.longitud_maxima"
                             label="Ingrese longitud máxima*"
                             outlined
@@ -153,7 +153,7 @@
     </div>
   </template>
 <script>
-import { integer, string } from '../../http/Validation';
+import { integer, string, number } from '../../http/Validation';
 
 export default {
   data() {
@@ -210,7 +210,8 @@ export default {
   },
   methods: {
     integerRule: integer('Debe completar el campo.'),
-    fieldRule: string('Debe completar el campo.'),
+    fieldRule: string('Debe ingresar un valor numerico'),
+    numberRule: number('Debe ingresar un valor numerico'),
     async initialize() {
       const response = await this.axios.get('/vehiculos');
       this.items = response.data.data;

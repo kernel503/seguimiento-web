@@ -37,7 +37,7 @@
     </template>
 
     <template #item.permitir_acceso="{ item }">
-      <v-icon color="red darken-2" v-if="item.permitir_acceso">mdi-check-circle-outline</v-icon>
+      <v-icon color="green darken-2" v-if="item.permitir_acceso">mdi-check-circle-outline</v-icon>
     </template>
 
     <template #item.actions="{ item }">

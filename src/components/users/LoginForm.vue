@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col sm="6" md="6" lg="6">
-      <v-card class="mt-8" outlined tile width="100vh" v-if="esInicioSesion">
+      <v-card class="mt-8" outlined tile width="40vh" v-if="esInicioSesion">
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-card-title> Iniciar sesión </v-card-title>
           <v-card-text class="mb-0 pb-0">
@@ -29,17 +29,19 @@
               </template>
             </v-text-field>
           </v-card-text>
-          <v-card-actions>
+          <v-card-actions class="px-4">
             <v-spacer></v-spacer>
-            <v-btn @click="registrarse" small outlined>
-              <v-icon left> mdi-account-plus </v-icon>
-              Registrarse
-            </v-btn>
-            <v-btn @click="login" color="red darken-1" dark small outlined>
+            <v-btn block @click="login" color="red darken-4" dark small>
               <v-icon left> mdi-login-variant </v-icon>
               Ingresar
             </v-btn>
           </v-card-actions>
+          <div class="d-flex justify-center mt-4">
+            <v-btn  @click="registrarse" small outlined>
+              <v-icon left> mdi-account-plus </v-icon>
+              Registrarse
+            </v-btn>
+          </div>
         </v-form>
       </v-card>
 

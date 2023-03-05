@@ -102,6 +102,9 @@ import { string } from '../../http/Validation';
 export default {
   data() {
     return {
+      requiredField: [
+        (v) => !!v || 'Name is required',
+      ],
       headers: [
         {
           text: 'Nombre',
@@ -133,9 +136,9 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? 'Crear Permiso' : 'Editar Permiso';
     },
-    fieldRule: string('Debe completar el campo.'),
   },
   methods: {
+    fieldRule: string('Debe completar el campo.'),
     async initialize() {
       const response = await this.axios.get('/permisos');
       this.items = response.data.data;
