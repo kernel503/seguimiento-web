@@ -12,16 +12,16 @@ const routes = [
     component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
   },
   {
-    path: '/login',
-    name: 'login',
+    path: '/ingresar',
+    name: 'ingresar',
     meta: { requiresAuth: false },
     component: () => import(/* webpackChunkName: "login" */ '@/components/users/LoginForm.vue'),
   },
   {
-    path: '/signup',
-    name: 'signup',
+    path: '/registrarse',
+    name: 'registrarse',
     meta: { requiresAuth: false },
-    component: () => import(/* webpackChunkName: "login" */ '@/components/users/CreateUserFom.vue'),
+    component: () => import(/* webpackChunkName: "login" */ '@/components/users/RegistroUsuario.vue'),
   },
   {
     path: '/administracion',

@@ -192,6 +192,7 @@ import { email, string, integer } from '../../http/Validation';
 
 export default {
   name: 'CreateUserFom',
+
   created() {
     this.obtenerRoles();
     this.initialize();
