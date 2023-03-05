@@ -22,7 +22,7 @@
             <v-spacer></v-spacer>
             <v-dialog v-model="dialog" max-width="600px" persistent>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                <v-btn color="red darken-2" dark class="mb-2" v-bind="attrs" v-on="on">
                   <v-icon class="mr-1"> mdi-plus-box </v-icon>
                   Nuevo registro
                 </v-btn>
@@ -30,7 +30,7 @@
 
               <v-card>
                 <v-card-title class="justify-center">
-                  <h2 class="primary--text">{{formTitle}}</h2>
+                  <h2 class="red darken-2--text">{{formTitle}}</h2>
                 </v-card-title>
                 <v-divider class="blue accent-2 mx-5"></v-divider>
 
@@ -69,12 +69,12 @@
                       </v-btn>
                     </v-col>
                     <v-col cols="12" sm="3" md="3" v-if="editedIndex==-1">
-                      <v-btn block cols-12 class="primary" text @click="save()" >
+                      <v-btn block cols-12 class="red darken-2" text @click="save()" >
                         Guardar
                       </v-btn>
                     </v-col>
                     <v-col cols="12" sm="3" md="3" v-else>
-                      <v-btn block cols-12 class="primary" text @click="update(editedItem)" >
+                      <v-btn block cols-12 class="red darken-2" text @click="update(editedItem)" >
                         Actualizar
                       </v-btn>
                     </v-col>
@@ -98,7 +98,7 @@
         <v-card-actions class="py-3">
         <v-spacer></v-spacer>
         <v-btn class="default"  outlined color=""  @click="dialogDelete = false" >Cancelar</v-btn>
-        <v-btn class="primary" @click="deleteItem()" >Eliminar</v-btn>
+        <v-btn class="red darken-2" @click="deleteItem()" >Eliminar</v-btn>
         <v-spacer></v-spacer>
         </v-card-actions>
         </v-card>

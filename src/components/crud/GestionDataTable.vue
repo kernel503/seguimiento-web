@@ -29,7 +29,7 @@
         >
           <template v-slot:activator="{ on, attrs }">
             <v-btn
-              color="primary"
+              color="red darken-2"
               dark
               class="mb-2"
               v-bind="attrs"
@@ -149,7 +149,7 @@
     </template>
     <template v-slot:no-data>
       <v-btn
-        color="primary"
+        color="red darken-2"
         @click="initialize"
       >
         Reset

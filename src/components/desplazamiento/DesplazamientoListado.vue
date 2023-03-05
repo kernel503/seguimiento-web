@@ -47,7 +47,7 @@
           ></v-date-picker>
         </v-menu>
       </v-col>
-      <v-col> <v-btn color="primary"> Filtrar </v-btn></v-col>
+      <v-col> <v-btn color="red darken-2"> Filtrar </v-btn></v-col>
     </v-row> -->
     <!-- <v-row>
       <div class="text-center">

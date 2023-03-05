@@ -1,6 +1,11 @@
 <template>
   <v-app>
-    <v-navigation-drawer app v-model="drawer" v-if="isAuthenticated" color="blue-grey lighten-5">
+    <v-navigation-drawer
+      app
+      v-model="drawer"
+      v-if="isAuthenticated"
+      color="blue-grey lighten-5"
+    >
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="text-h6 text-center">
@@ -18,9 +23,9 @@
         <template v-for="item in items">
           <v-list-group v-if="item.children" :key="item.index">
             <template v-slot:activator>
-              <v-list-item-title class="text-capitalize">{{
-                item.title
-              }}</v-list-item-title>
+              <v-list-item-title class="text-capitalize">
+                {{ item.title }}
+              </v-list-item-title>
             </template>
 
             <template #prependIcon>
@@ -120,11 +125,11 @@ export default {
 
   data: () => ({
     items: [
-      {
-        title: 'Dashboard',
-        icon: 'mdi-view-dashboard',
-        path: { name: 'dashboard' },
-      },
+      // {
+      //   title: 'Dashboard',
+      //   icon: 'mdi-view-dashboard',
+      //   path: { name: 'dashboard' },
+      // },
       {
         title: 'Administración',
         icon: 'mdi-database',
@@ -220,10 +225,10 @@ export default {
 
   computed: {
     loginColor() {
-      return this.$route.name === 'login' ? 'primary' : '';
+      return this.$route.name === 'login' ? 'red darken-2' : '';
     },
     signupColor() {
-      return this.$route.name === 'signup' ? 'primary' : '';
+      return this.$route.name === 'signup' ? 'red darken-2' : '';
     },
     ...mapState('user', ['data', 'isAuthenticated']),
   },

@@ -26,11 +26,11 @@
           class="mr-2"
           @click="withTrashedActive = !withTrashedActive"
         >
-          <v-icon :color="withTrashedActive ? 'primary' : 'grey'">
+          <v-icon :color="withTrashedActive ? 'red darken-2' : 'grey'">
             mdi-archive-lock-open-outline
           </v-icon>
         </v-btn>
-        <v-btn color="primary" dark class="mb-2" @click="$emit('create')">
+        <v-btn color="red darken-2" dark class="mb-2" @click="$emit('create')">
           Nuevo registro
         </v-btn>
       </v-toolbar>
@@ -49,14 +49,14 @@
       >
         mdi-delete-restore
       </v-icon>
+      <v-icon class="ml-2" @click="$emit('edit', item)"> mdi-pencil </v-icon>
       <v-icon @click="$emit('remove', item)" color="red lighten-2">
         mdi-delete
       </v-icon>
-      <v-icon class="ml-2" @click="$emit('edit', item)"> mdi-pencil </v-icon>
     </template>
 
     <template #no-data>
-      <v-btn color="primary" @click="$emit('refresh')"> Recargar </v-btn>
+      <v-btn color="red darken-2" @click="$emit('refresh')" dark> Recargar </v-btn>
     </template>
   </v-data-table>
 </template>

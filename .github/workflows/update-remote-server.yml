@@ -1,0 +1,17 @@
+name: update-remote-server
+run-name: ${{ github.actor }} is updating the remote server
+on: [push]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: cd /home/apps/seguimiento-web && git pull
+        # script: cd /home/apps/app-seguimiento-backend && git pull && docker compose run api_rest_laravel composer install
