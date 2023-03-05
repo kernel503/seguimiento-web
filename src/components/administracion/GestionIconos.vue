@@ -24,7 +24,7 @@
 
     <v-dialog v-model="dialogDelete" max-width="600">
       <v-card v-if="initialForm.length">
-        <v-card-title class="text-center">
+        <v-card-title class="justify-center">
           ¿Seguro que quieres borrar el registro
           {{ initialForm[0].toLocaleLowerCase() }}?
         </v-card-title>

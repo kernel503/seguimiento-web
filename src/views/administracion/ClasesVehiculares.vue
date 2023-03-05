@@ -24,7 +24,7 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-btn color="red darken-2" dark class="mb-2" v-bind="attrs" v-on="on">
                   <v-icon class="mr-1"> mdi-plus-box </v-icon>
-                  Agregar clase vehicular
+                  Nuevo registro
                 </v-btn>
               </template>
 
@@ -77,29 +77,19 @@
                 </v-card-text>
 
                 <v-card-actions class="py-5">
-                  <v-row class="justify-center">
-                    <v-col cols="12" sm="3">
+                  <v-spacer></v-spacer>
                       <v-btn
-                        outlined
-                        block
-                        color="blue darken-1"
                         text
                         @click="close()"
                       >
                         Cancelar
                       </v-btn>
-                    </v-col>
-                    <v-col cols="12" sm="3" v-if="editedIndex==-1">
-                      <v-btn block cols-12 class="red darken-2" text @click="save()" >
+                      <v-btn class="red darken-1" text @click="save()" v-if="editedIndex==-1" dark>
                         Guardar
                       </v-btn>
-                    </v-col>
-                    <v-col cols="12" sm="5" v-else>
-                      <v-btn block cols-12 class="red darken-2" text @click="update(editedItem)" >
+                      <v-btn class="red darken-1" text @click="update(editedItem)"  v-else dark>
                         Actualizar
                       </v-btn>
-                    </v-col>
-                  </v-row>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -115,11 +105,13 @@
       </v-data-table>
       <v-dialog v-model="dialogDelete"  max-width="530px" >
         <v-card>
-        <v-card-title class="text-h5">¿Está seguro que desea eliminar el registro?</v-card-title>
-        <v-card-actions class="py-3">
+        <v-card-title class="justify-center">
+          ¿Está seguro que desea eliminar el registro?
+        </v-card-title>
+        <v-card-actions class="">
         <v-spacer></v-spacer>
-        <v-btn class="default"  outlined color=""  @click="dialogDelete = false" >Cancelar</v-btn>
-        <v-btn class="red darken-2" @click="deleteItem()" >Eliminar</v-btn>
+        <v-btn text color="red darken-1" @click="deleteItem()" >Aceptar</v-btn>
+        <v-btn text color="gray darken-1" @click="dialogDelete = false" >Cancelar</v-btn>
         <v-spacer></v-spacer>
         </v-card-actions>
         </v-card>
@@ -167,7 +159,7 @@ export default {
   },
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? 'Crear Clasificación Vehicular' : 'Editar Clasificación Vehicular';
+      return this.editedIndex === -1 ? 'Crear clase vehicular' : 'Editar clase vehicular';
     },
   },
   methods: {

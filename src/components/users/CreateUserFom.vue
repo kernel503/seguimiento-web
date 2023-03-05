@@ -82,8 +82,7 @@
           <v-card-actions class="py-5">
             <v-spacer></v-spacer>
             <v-btn @click="close()" text> Cancelar </v-btn>
-            <v-btn @click="crearUsuario" color="blue darken-1" dark>Aceptar</v-btn>
-          <v-spacer></v-spacer>
+            <v-btn @click="crearUsuario" color="red darken-1" dark>Aceptar111</v-btn>
           </v-card-actions>
           </v-card>
         </v-dialog>
@@ -142,9 +141,8 @@
 
       <v-card-actions class="mt-0 pt-0">
       <v-spacer></v-spacer>
-      <v-btn class="default"  outlined color=""  @click="dialogEstado = false" >Cancelar</v-btn>
-      <v-btn class="red darken-2" @click="changeState()">Aceptar</v-btn>
-      <v-spacer></v-spacer>
+      <v-btn class="default" color=""  @click="dialogEstado = false" >Cancelar</v-btn>
+      <v-btn color="red darken-3" @click="changeState()" dark> Aceptar </v-btn>
       </v-card-actions>
   </v-card>
 </v-dialog>
@@ -186,9 +184,8 @@
       </v-card-text>
       <v-card-actions class="py-3">
       <v-spacer></v-spacer>
-      <v-btn class="default"  outlined  @click="dialogCambioPassword = false" >Cancelar</v-btn>
-      <v-btn class="red darken-2" @click="changePassword()">Aceptar</v-btn>
-      <v-spacer></v-spacer>
+      <v-btn class="default" text  @click="dialogCambioPassword = false" >Cancelar</v-btn>
+      <v-btn class="red darken-2" dark @click="changePassword()">Aceptar</v-btn>
       </v-card-actions>
   </v-card>
 </v-dialog>
