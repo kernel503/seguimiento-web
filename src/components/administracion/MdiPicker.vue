@@ -4,6 +4,7 @@
       <v-card-title>
         {{ value.length === 3 ? 'Editar registro' : 'Crear registro' }}
       </v-card-title>
+      <v-divider class="blue accent-2 mx-5 mb-3"></v-divider>
       <v-card-text class="mb-0 pb-0">
         <v-text-field
           :rules="[nombreRule]"
@@ -23,7 +24,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn @click="$emit('close')" text> Cancelar </v-btn>
-        <v-btn @click="submit" color="blue darken-1" dark> Aceptar </v-btn>
+        <v-btn @click="submit" color="red  darken-1" dark> Aceptar </v-btn>
       </v-card-actions>
     </v-form>
   </v-card>

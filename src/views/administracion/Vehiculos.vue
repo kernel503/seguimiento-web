@@ -29,7 +29,7 @@
               </template>
 
               <v-card>
-                <v-card-title class="justify-center">
+                <v-card-title class="">
                   {{formTitle}}
                 </v-card-title>
                 <v-divider class="blue accent-2 mx-5"></v-divider>
@@ -113,29 +113,19 @@
                 </v-card-text>
 
                 <v-card-actions class="py-5">
-                  <v-row class="justify-center">
-                    <v-col cols="12" sm="3">
+                  <v-spacer></v-spacer>
                       <v-btn
-                        outlined
-                        block
-                        color="blue darken-1"
                         text
                         @click="close()"
                       >
                         Cancelar
                       </v-btn>
-                    </v-col>
-                    <v-col cols="12" sm="3" v-if="editedIndex==-1">
-                      <v-btn block cols-12 class="red darken-2" text @click="save()" >
+                      <v-btn class="red darken-1" text @click="save()" v-if="editedIndex==-1" dark>
                         Guardar
                       </v-btn>
-                    </v-col>
-                    <v-col cols="12" sm="3" v-else>
-                      <v-btn block cols-12 class="red darken-2" text @click="update(editedItem)" >
+                      <v-btn class="red darken-1" text @click="update(editedItem)"  v-else dark>
                         Actualizar
                       </v-btn>
-                    </v-col>
-                  </v-row>
                 </v-card-actions>
               </v-card>
             </v-dialog>

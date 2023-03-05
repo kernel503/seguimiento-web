@@ -49,10 +49,10 @@
       >
         mdi-delete-restore
       </v-icon>
+      <v-icon class="ml-2" @click="$emit('edit', item)"> mdi-pencil </v-icon>
       <v-icon @click="$emit('remove', item)" color="red lighten-2">
         mdi-delete
       </v-icon>
-      <v-icon class="ml-2" @click="$emit('edit', item)"> mdi-pencil </v-icon>
     </template>
 
     <template #no-data>
