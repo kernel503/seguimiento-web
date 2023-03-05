@@ -10,6 +10,9 @@
     @update:options="actualizarOpcionesTabla"
     :server-items-length="total"
   >
+    <template v-slot:no-data>
+        Sin registros
+      </template>
     <template #top>
 
       <v-toolbar flat>
@@ -84,6 +87,8 @@ export default {
     this.options = { page: this.page };
     this.footerProps = {
       'items-per-page-options': this.itemsPerPage,
+      pageText: '{0}-{1} de {2}',
+      'items-per-page-text': 'Elementos por página',
     };
   },
 

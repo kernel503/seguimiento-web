@@ -4,7 +4,14 @@
     :items="desserts"
     sort-by="calories"
     class="elevation-1"
+    :footer-props="{
+        pageText: '{0}-{1} de {2}',
+        'items-per-page-text':'Elementos por página'
+    }"
   >
+    <template v-slot:no-data>
+        Sin registros
+      </template>
     <template v-slot:top>
       <v-toolbar
         flat
