@@ -136,41 +136,31 @@ export default {
       }
     }
 
-    this.$router.beforeResolve((to, from, next) => {
-      this.$Progress.start();
-      next();
-    });
+    // this.$router.beforeEach((to, from, next) => {
+    //   this.$Progress.start();
+    //   next();
+    // });
 
-    this.$router.beforeEach((to, from, next) => {
-      this.$Progress.start();
-      next();
-    });
+    // this.$router.afterEach(() => {
+    //   this.$Progress.finish();
+    //   console.log('Finaliza ruta');
+    // });
 
-    this.$router.afterEach(() => {
+    this.axios.interceptors.request.use((config) => {
+      this.$Progress.start();
+      return config;
+    }, (error) => {
       this.$Progress.finish();
+      return Promise.reject(error);
     });
 
-    this.axios.interceptors.request.use(
-      (config) => {
-        this.$Progress.start();
-        return config;
-      },
-      (error) => {
-        console.log(error);
-        return Promise.reject(error);
-      },
-    );
-
-    this.axios.interceptors.response.use(
-      (response) => {
-        this.$Progress.finish();
-        return response;
-      },
-      (error) => {
-        console.log(error);
-        return Promise.reject(error);
-      },
-    );
+    this.axios.interceptors.response.use((response) => {
+      this.$Progress.finish();
+      return response;
+    }, (error) => {
+      this.$Progress.finish();
+      return Promise.reject(error);
+    });
   },
 
   mounted() {
