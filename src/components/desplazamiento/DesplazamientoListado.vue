@@ -62,6 +62,7 @@
         sm="12"
         md="12"
         lg="12"
+        xl="12"
       >
         <v-card>
           <v-card-title class="mb-0 pb-0">

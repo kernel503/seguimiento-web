@@ -1,6 +1,6 @@
 <template>
-  <v-row>
-    <v-col offset="4" lg="4" md="4" sm="12">
+  <v-row justify="center">
+    <v-col lg="4" md="4" sm="12">
       <v-card class="mt-8" v-if="esInicioSesion">
         <v-card-title> Iniciar sesión </v-card-title>
         <v-card-text class="mb-0 pb-0">
@@ -100,6 +100,12 @@ export default {
 
     cancelar() {
       this.esInicioSesion = true;
+    },
+  },
+
+  computed: {
+    handleOffset() {
+      return this.$vuetify.breakpoint.mobile ? 0 : 4;
     },
   },
 };

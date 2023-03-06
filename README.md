@@ -1,5 +1,6 @@
 # seguimiento-web
 https://www.vuescript.com/best-progress-bar/
+https://opengeo.tech/maps/leaflet-geojson-selector/examples/custom-item.html
 ## Project setup
 ```
 npm install
