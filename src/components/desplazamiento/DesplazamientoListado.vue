@@ -53,6 +53,7 @@
       v-model="paginaActiva"
       :length="numeroDePaginas"
       class="mb-2"
+      color="red darken-2"
     ></v-pagination>
     <v-row>
       <v-col
@@ -140,7 +141,7 @@ export default {
             meta: { last_page: lastPage },
           },
         } = await this.axios.post(
-          `desplazamientos/search?page=${this.paginaActiva}`,
+          'desplazamientos/search',
           {
             sort: [{ field: 'fecha_creado', direction: 'desc' }],
             includes: [
@@ -148,6 +149,11 @@ export default {
                 relation: 'detalle_medios_desplazamiento.medio_desplazamiento',
               },
             ],
+          },
+          {
+            params: {
+              page: this.paginaActiva,
+            },
           },
         );
         this.desplazamientos = desplazamientos;

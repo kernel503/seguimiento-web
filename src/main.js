@@ -17,7 +17,7 @@ Vue.config.productionTip = false;
 Vue.use(VueAxios, { axios: instance });
 Vue.use(Toast, toastOptions);
 Vue.use(VueProgressBar, {
-  color: 'black',
+  color: 'rgb(244, 67, 54)',
   failedColor: 'rgb(244, 67, 54)',
   height: '2px',
   thickness: '4px',
