@@ -4,7 +4,7 @@
       Regresar
     </v-btn>
     <l-map
-      :style="{ height: '100vh', position: 'fixed !important' }"
+      :style="{ height: '100vh'}"
       :zoom="zoom"
       :center="center"
     >

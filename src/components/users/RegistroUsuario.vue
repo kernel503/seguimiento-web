@@ -1,7 +1,7 @@
 <template>
   <v-form ref="form" v-model="valid">
     <v-card class="mx-auto">
-      <v-card-title> Registrarse </v-card-title>
+      <v-card-title> Crear cuenta </v-card-title>
       <v-card-text class="mb-0 pb-0">
         <v-text-field
           v-model="form.email"
@@ -46,11 +46,10 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn outlined small @click="$emit('cancelar')">
-          Cancelar
+        <v-btn outlined @click="$emit('cancelar')">
+          Regresar
         </v-btn>
-        <v-btn @click="crearUsuario" color="red darken-1" dark outlined small>
-          <v-icon left> mdi-account-plus </v-icon>
+        <v-btn @click="crearUsuario" color="red darken-1" dark outlined>
           Registrarse
         </v-btn>
       </v-card-actions>

@@ -1,10 +1,10 @@
 <template>
   <v-row>
-    <v-col sm="6" md="6" lg="6">
-      <v-card class="mt-8" outlined tile width="40vh" v-if="esInicioSesion">
-        <v-form ref="form" v-model="valid" lazy-validation>
-          <v-card-title> Iniciar sesión </v-card-title>
-          <v-card-text class="mb-0 pb-0">
+    <v-col offset="4" lg="4" md="4" sm="12">
+      <v-card class="mt-8" v-if="esInicioSesion">
+        <v-card-title> Iniciar sesión </v-card-title>
+        <v-card-text class="mb-0 pb-0">
+          <v-form ref="form" v-model="valid" lazy-validation>
             <v-text-field
               :rules="[emailRule]"
               v-model="form.email"
@@ -28,21 +28,24 @@
                 Contraseña <span class="red--text"><strong>* </strong></span>
               </template>
             </v-text-field>
-          </v-card-text>
-          <v-card-actions class="px-4">
-            <v-spacer></v-spacer>
-            <v-btn block @click="login" color="red darken-4" dark small>
-              <v-icon left> mdi-login-variant </v-icon>
-              Ingresar
-            </v-btn>
-          </v-card-actions>
-          <div class="d-flex justify-center mt-4">
-            <v-btn  @click="registrarse" small outlined>
-              <v-icon left> mdi-account-plus </v-icon>
-              Registrarse
-            </v-btn>
-          </div>
-        </v-form>
+          </v-form>
+        </v-card-text>
+        <v-card-actions>
+          <v-container class="mt-0 pt-0">
+            <v-row no-gutters justify="center">
+              <v-col sm="8" md="8" lg="8" align-self="center">
+                <v-btn @click="login" color="red darken-4" dark block>
+                  Ingresar
+                </v-btn>
+              </v-col>
+            </v-row>
+            <v-row no-gutters class="mt-6" justify="center">
+              <v-col sm="8" md="8" lg="8" align-self="center">
+                <v-btn @click="registrarse" outlined block> Registrarse </v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-actions>
       </v-card>
 
       <RegistroUsuario v-else @cancelar="cancelar"></RegistroUsuario>
