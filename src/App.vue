@@ -130,10 +130,10 @@ export default {
         this.userIsAuthenticated(true);
         this.showBtn = true;
       } catch (error) {
-        this.userData(null);
-        this.userIsAuthenticated(false);
-        this.showBtn = true;
+        this.logout();
       }
+    } else {
+      this.logout();
     }
 
     // this.$router.beforeEach((to, from, next) => {
@@ -146,21 +146,27 @@ export default {
     //   console.log('Finaliza ruta');
     // });
 
-    this.axios.interceptors.request.use((config) => {
-      this.$Progress.start();
-      return config;
-    }, (error) => {
-      this.$Progress.finish();
-      return Promise.reject(error);
-    });
+    this.axios.interceptors.request.use(
+      (config) => {
+        this.$Progress.start();
+        return config;
+      },
+      (error) => {
+        this.$Progress.finish();
+        return Promise.reject(error);
+      },
+    );
 
-    this.axios.interceptors.response.use((response) => {
-      this.$Progress.finish();
-      return response;
-    }, (error) => {
-      this.$Progress.finish();
-      return Promise.reject(error);
-    });
+    this.axios.interceptors.response.use(
+      (response) => {
+        this.$Progress.finish();
+        return response;
+      },
+      (error) => {
+        this.$Progress.finish();
+        return Promise.reject(error);
+      },
+    );
   },
 
   mounted() {
