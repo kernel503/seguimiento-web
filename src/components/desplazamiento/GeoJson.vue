@@ -3,18 +3,11 @@
     <v-btn text class="my-2" color="red darken-2" @click="$router.go(-1)">
       Regresar
     </v-btn>
-    <l-map
-      :style="{ height: '100vh'}"
-      :zoom="zoom"
-      :center="center"
-    >
+    <l-map :style="{ height: '100vh' }" :zoom="zoom" :center="center">
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-      <!-- <l-polyline :lat-lngs="polyline.latlngs" :color="polyline.color">
-      </l-polyline> -->
-
       <l-polyline
         v-for="segmento in segmentosDesplazamiento"
-        :weight="+4"
+        :weight="+5"
         :lat-lngs="segmento.multilinea"
         :color="segmento.color"
         :key="segmento.id"
@@ -33,6 +26,23 @@ export default {
   },
   data() {
     return {
+      leafletProviders: [
+        {
+          name: 'OpenStreetMap',
+          visible: true,
+          attribution:
+            '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+          url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        },
+        {
+          name: 'Stadia.AlidadeSmoothDark',
+          visible: false,
+          url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
+          attribution:
+            '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+        },
+      ],
+
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',

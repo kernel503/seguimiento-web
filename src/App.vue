@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <vue-progress-bar></vue-progress-bar>
     <v-navigation-drawer
       app
       v-model="drawer"
