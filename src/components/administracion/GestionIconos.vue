@@ -4,11 +4,14 @@
       :toolbarTitle="this.path.replace('-', ' ')"
       :headers="headers"
       :items="items"
+      :total="total"
       @create="create"
       @remove="remove"
       @edit="edit"
       @refresh="obtenerItems"
       @restore="restore"
+      @trash="trash"
+      @update="update"
     >
     </MdiTablaPaginada>
 
@@ -58,7 +61,7 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapState } from 'vuex';
+// import { mapMutations, mapState } from 'vuex';
 import MdiPicker from './MdiPicker.vue';
 import MdiTablaPaginada from './MdiTablaPaginada.vue';
 
@@ -69,6 +72,10 @@ export default {
 
   data() {
     return {
+      total: 0,
+      limit: 10,
+      page: 1,
+      withTrashed: false,
       dialog: false,
       dialogDelete: false,
       dialogRestore: false,
@@ -92,21 +99,29 @@ export default {
     };
   },
 
-  computed: {
-    ...mapState('withPaginationAndTrashed', ['page', 'limit', 'withTrashed']),
-  },
-
   created() {
-    this.resetPaginationAndTrashed();
     this.path = this.$route.path.split('/').at(-1);
     this.obtenerItems();
   },
 
   methods: {
-    ...mapMutations('withPaginationAndTrashed', [
-      'resetPaginationAndTrashed',
-      'actualizarQuery',
-    ]),
+    update(config) {
+      if (config.page !== this.page) {
+        this.page = config.page;
+        this.obtenerItems();
+      }
+
+      if (config.itemsPerPage !== this.limit) {
+        this.limit = config.itemsPerPage;
+        this.obtenerItems();
+      }
+    },
+
+    trash(value) {
+      if (typeof value === 'boolean') {
+        this.withTrashed = value;
+      }
+    },
 
     async obtenerItems() {
       try {
@@ -123,7 +138,7 @@ export default {
           },
         });
         this.items = data;
-        this.actualizarQuery({ total });
+        this.total = total;
       } catch (error) {
         this.$toast.error(
           `Error al obtener los ${this.path.replace('-', ' ')}.`,
@@ -228,12 +243,19 @@ export default {
       }
     },
 
+    withTrashed() {
+      this.obtenerItems();
+    },
+
     $route(to, from) {
       const nuevaRuta = this.$route.path.split('/').at(-1);
 
       if (this.path !== nuevaRuta) {
-        this.resetPaginationAndTrashed();
         this.path = nuevaRuta;
+        this.total = 0;
+        this.limit = 10;
+        this.page = 1;
+        this.obtenerItems();
         return;
       }
 

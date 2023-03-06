@@ -4,11 +4,15 @@
       :toolbarTitle="this.path.replace('-', ' ')"
       :headers="headers"
       :items="items"
+      :total="total"
       @create="create"
       @remove="remove"
       @edit="edit"
       @refresh="obtenerItems"
       @restore="restore"
+      @trash="trash"
+      @update="update"
+      :key="total"
     >
     </EstadoCuentaTablaPaginada>
 
@@ -58,7 +62,7 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapState } from 'vuex';
+// import { mapMutations, mapState } from 'vuex';
 import EstadoCuentaForm from './EstadoCuentaForm.vue';
 import EstadoCuentaTablaPaginada from './EstadoCuentaTablaPaginada.vue';
 
@@ -69,6 +73,11 @@ export default {
 
   data() {
     return {
+      total: 0,
+      itemsPerPage: 10,
+      withTrashed: false,
+      limit: 10,
+      page: 1,
       dialog: false,
       dialogDelete: false,
       dialogRestore: false,
@@ -79,7 +88,11 @@ export default {
           align: 'start',
           value: 'nombre',
         },
-        { text: 'Acceso al software', align: 'center', value: 'permitir_acceso' },
+        {
+          text: 'Acceso al software',
+          align: 'center',
+          value: 'permitir_acceso',
+        },
         {
           text: 'Acciones',
           align: 'right',
@@ -92,18 +105,27 @@ export default {
     };
   },
 
-  computed: {
-    ...mapState('withPaginationAndTrashed', ['page', 'limit', 'withTrashed']),
-  },
-
   created() {
-    this.resetPaginationAndTrashed();
     this.path = this.$route.path.split('/').at(-1);
     this.obtenerItems();
   },
 
   methods: {
-    ...mapMutations('withPaginationAndTrashed', ['resetPaginationAndTrashed', 'actualizarQuery']),
+    update(config) {
+      if (config.page !== this.page) {
+        this.page = config.page;
+        this.obtenerItems();
+      }
+
+      if (config.itemsPerPage !== this.limit) {
+        this.limit = config.itemsPerPage;
+        this.obtenerItems();
+      }
+    },
+
+    trash(value) {
+      this.withTrashed = value;
+    },
 
     async obtenerItems() {
       try {
@@ -121,7 +143,7 @@ export default {
         });
 
         this.items = data;
-        this.actualizarQuery({ total });
+        this.total = total;
       } catch (error) {
         this.$toast.error('Error al obtener los medios de desplazamiento.');
       }
@@ -224,18 +246,8 @@ export default {
       }
     },
 
-    $route(to, from) {
-      const nuevaRuta = this.$route.path.split('/').at(-1);
-
-      if (this.path !== nuevaRuta) {
-        this.resetPaginationAndTrashed();
-        this.path = nuevaRuta;
-        return;
-      }
-
-      if (from.fullPath !== to.fullPath) {
-        this.obtenerItems();
-      }
+    withTrashed() {
+      this.obtenerItems();
     },
   },
 };

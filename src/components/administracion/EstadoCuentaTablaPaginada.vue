@@ -5,16 +5,12 @@
     :headers="headers"
     :items="items"
     :options="options"
-    :items-per-page="limit"
     :footer-props="footerProps"
-    @update:options="actualizarOpcionesTabla"
     :server-items-length="total"
+    @update:options="actualizarOpcionesTabla"
   >
-    <template v-slot:no-data>
-        Sin registros
-      </template>
+    <template v-slot:no-data> Sin registros </template>
     <template #top>
-
       <v-toolbar flat>
         <v-toolbar-title class="text-capitalize">
           {{ toolbarTitle }}
@@ -37,7 +33,9 @@
     </template>
 
     <template #item.permitir_acceso="{ item }">
-      <v-icon color="green darken-2" v-if="item.permitir_acceso">mdi-check-circle-outline</v-icon>
+      <v-icon color="green darken-2" v-if="item.permitir_acceso"
+        >mdi-check-circle-outline</v-icon
+      >
     </template>
 
     <template #item.actions="{ item }">
@@ -56,17 +54,22 @@
     </template>
 
     <template #no-data>
-      <v-btn color="red darken-2" @click="$emit('refresh')" dark> Recargar </v-btn>
+      <v-btn color="red darken-2" @click="$emit('refresh')" dark>
+        Recargar
+      </v-btn>
     </template>
   </v-data-table>
 </template>
 <script>
-import { mapMutations, mapState } from 'vuex';
+// import { mapMutations, mapState } from 'vuex';
 
 export default {
   name: 'EstadoCuentaTablaPaginada',
 
   props: {
+    total: {
+      type: Number,
+    },
     toolbarTitle: {
       type: String,
       default: 'Listado',
@@ -83,8 +86,8 @@ export default {
 
   created() {
     this.resource = this.$route.query.resource;
-    this.withTrashedActive = this.withTrashed;
-    this.options = { page: this.page };
+    // this.withTrashedActive = this.withTrashed;S
+    this.options = {};
     this.footerProps = {
       'items-per-page-options': this.itemsPerPage,
       pageText: '{0}-{1} de {2}',
@@ -95,36 +98,31 @@ export default {
   data() {
     return {
       withTrashedActive: false,
+
       options: {},
       footerProps: {},
     };
   },
 
   computed: {
-    ...mapState('withPaginationAndTrashed', [
-      'total',
-      'withTrashed',
-      'limit',
-      'page',
-      'itemsPerPage',
-    ]),
+    // ...mapState('withPaginationAndTrashed', [
+    //   'total',
+    //   'withTrashed',
+    //   'limit',
+    //   'page',
+    //   'itemsPerPage',
+    // ]),
   },
 
   methods: {
-    ...mapMutations('withPaginationAndTrashed', ['actualizarQuery']),
-
-    actualizarOpcionesTabla({ itemsPerPage, page }) {
-      this.actualizarQuery({ limit: itemsPerPage, page });
+    actualizarOpcionesTabla(config) {
+      this.$emit('update', config);
     },
   },
 
   watch: {
     withTrashedActive(newValue) {
-      this.actualizarQuery({ withTrashed: newValue });
-    },
-
-    withTrashed(newValue) {
-      this.withTrashedActive = newValue;
+      this.$emit('trash', newValue);
     },
   },
 };
