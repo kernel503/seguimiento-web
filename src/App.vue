@@ -7,9 +7,9 @@
       v-if="isAuthenticated"
       color="blue-grey lighten-5"
     >
-      <v-list-item >
+      <v-list-item>
         <v-list-item-content>
-          <v-list-item-title  class="text-h6 text-center">
+          <v-list-item-title class="text-h6 text-center">
             Seguimiento
           </v-list-item-title>
           <v-list-item-subtitle class="text-h4 text-center">
@@ -94,19 +94,21 @@
     </v-main>
 
     <v-footer app> </v-footer>
-    <v-dialog v-model="dialogLogout"  max-width="530px" >
-        <v-card>
+    <v-dialog v-model="dialogLogout" max-width="530px">
+      <v-card>
         <v-card-title class="text-h5 justify-center">
           ¿Está seguro que desea cerrar sesion?
         </v-card-title>
         <v-card-actions class="py-3">
-        <v-spacer></v-spacer>
-        <v-btn class="red darken-2" @click="logout" dark >Si</v-btn>
-        <v-btn class="default" color=""  @click="dialogLogout = false" >No</v-btn>
-        <v-spacer></v-spacer>
+          <v-spacer></v-spacer>
+          <v-btn class="red darken-2" @click="logout" dark>Si</v-btn>
+          <v-btn class="default" color="" @click="dialogLogout = false"
+            >No</v-btn
+          >
+          <v-spacer></v-spacer>
         </v-card-actions>
-        </v-card>
-      </v-dialog>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
@@ -117,6 +119,8 @@ export default {
   name: 'App',
   // components: { BarNavigation, MainContainer, NavigationDrawer },
   async created() {
+    this.$Progress.start();
+
     const hasToken = !!localStorage.getItem('token') || false;
     if (hasToken) {
       try {
@@ -131,9 +135,25 @@ export default {
         this.showBtn = true;
       }
     }
+
+    this.$router.beforeResolve((to, from, next) => {
+      this.$Progress.start();
+      next();
+    });
+
+    this.$router.beforeEach((to, from, next) => {
+      this.$Progress.start();
+      next();
+    });
+
+    this.$router.afterEach(() => {
+      this.$Progress.finish();
+    });
   },
 
-  mounted() {},
+  mounted() {
+    this.$Progress.finish();
+  },
 
   data: () => ({
     items: [
