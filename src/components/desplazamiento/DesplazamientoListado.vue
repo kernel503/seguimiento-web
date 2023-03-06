@@ -133,7 +133,6 @@ export default {
 
   methods: {
     async obtenerDesplazamientos() {
-      this.$Progress.start();
       try {
         const {
           data: {
@@ -158,10 +157,8 @@ export default {
         );
         this.desplazamientos = desplazamientos;
         this.numeroDePaginas = lastPage;
-        this.$Progress.finish();
       } catch (error) {
         this.$toast.error('Error al obtener los desplazamiento.');
-        this.$Progress.fail();
       }
     },
 

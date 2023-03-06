@@ -122,7 +122,6 @@ export default {
             page: this.page,
           },
         });
-
         this.items = data;
         this.actualizarQuery({ total });
       } catch (error) {

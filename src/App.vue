@@ -149,6 +149,28 @@ export default {
     this.$router.afterEach(() => {
       this.$Progress.finish();
     });
+
+    this.axios.interceptors.request.use(
+      (config) => {
+        this.$Progress.start();
+        return config;
+      },
+      (error) => {
+        console.log(error);
+        return Promise.reject(error);
+      },
+    );
+
+    this.axios.interceptors.response.use(
+      (response) => {
+        this.$Progress.finish();
+        return response;
+      },
+      (error) => {
+        console.log(error);
+        return Promise.reject(error);
+      },
+    );
   },
 
   mounted() {
