@@ -15,34 +15,38 @@ const routes = [
     path: '/ingresar',
     name: 'ingresar',
     meta: { requiresAuth: false },
-    component: () => import(/* webpackChunkName: "login" */ '@/components/users/LoginForm.vue'),
-  },
-  {
-    path: '/registrarse',
-    name: 'registrarse',
-    meta: { requiresAuth: false },
-    component: () => import(/* webpackChunkName: "login" */ '@/components/users/RegistroUsuario.vue'),
+    component: () => import(
+      /* webpackChunkName: "login" */ '@/components/users/LoginForm.vue'
+    ),
   },
   {
     path: '/administracion',
     name: 'administracion',
-    component: () => import(/* webpackChunkName: "administracion" */ '@/views/administracion/Base.vue'),
+    component: () => import(
+      /* webpackChunkName: "administracion" */ '@/views/administracion/Base.vue'
+    ),
     children: [
       {
         path: 'usuario',
         name: 'web:administracion:usuarios',
-        component: () => import(/* webpackChunkName: "administracion:usuario" */ '@/components/users/CreateUserFom.vue'),
+        component: () => import(
+          /* webpackChunkName: "administracion:usuario" */ '@/components/users/CreateUserFom.vue'
+        ),
       },
 
       {
         path: 'roles',
         name: 'web:administracion:roles',
-        component: () => import(/* webpackChunkName: "administracion:roles" */ '@/views/administracion/Roles.vue'),
+        component: () => import(
+          /* webpackChunkName: "administracion:roles" */ '@/views/administracion/Roles.vue'
+        ),
       },
       {
         path: 'permisos',
         name: 'web:administracion:permisos',
-        component: () => import(/* webpackChunkName: "administracion:permisos" */ '@/views/administracion/Permisos.vue'),
+        component: () => import(
+          /* webpackChunkName: "administracion:permisos" */ '@/views/administracion/Permisos.vue'
+        ),
       },
       {
         path: 'medios-desplazamiento',
@@ -106,19 +110,32 @@ const routes = [
   {
     path: '/desplazamiento',
     name: 'desplazamiento',
-    component: () => import(/* webpackChunkName: "administracion" */ '@/views/desplazamiento/Base.vue'),
+    component: () => import(
+      /* webpackChunkName: "administracion" */ '@/views/desplazamiento/Base.vue'
+    ),
     children: [
       {
         path: 'movil',
         name: 'web:desplazamiento:movil',
-        component: () => import(/* webpackChunkName: "web:desplazamiento:movil" */ '@/components/desplazamiento/DesplazamientoListado.vue'),
+        component: () => import(
+          /* webpackChunkName: "web:desplazamiento:movil" */ '@/components/desplazamiento/DesplazamientoListado.vue'
+        ),
       },
       {
         path: 'registrados/:uuid',
         name: 'web:desplazamiento:detalle',
-        component: () => import(/* webpackChunkName: "web:desplazamiento:movil" */ '@/components/desplazamiento/GeoJson.vue'),
+        component: () => import(
+          /* webpackChunkName: "web:desplazamiento:movil" */ '@/components/desplazamiento/GeoJson.vue'
+        ),
       },
     ],
+  },
+
+  {
+    path: '*',
+    component: () => import(
+      /* webpackChunkName: "web:not_found:movil" */ '@/components/desplazamiento/GeoJson.vue'
+    ),
   },
 ];
 
