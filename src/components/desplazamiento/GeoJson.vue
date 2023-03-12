@@ -51,6 +51,15 @@ export default {
             weight: 7,
           };
         },
+        onEachFeature(feature, layer) {
+          console.log(layer);
+          console.log(feature);
+          layer.bindPopup('Hi There!');
+          setTimeout(() => {
+            // eslint-disable-next-line no-param-reassign
+            layer.options.weight = 15;
+          }, 1000);
+        },
       },
       leafletProviders: [
         {

@@ -80,7 +80,7 @@
           small
           class="mx-2"
           plain
-          :to="{ name: 'ingresar' }"
+          :to="{ name: 'web:ingresar' }"
         >
           Ingresar
         </v-btn>
@@ -146,6 +146,26 @@ export default {
     //   console.log('Finaliza ruta');
     // });
 
+    if (this.rutaIngresar()) {
+      this.$router.push({ name: 'web:dashboard' }, () => {});
+    }
+
+    if (!this.accesoPermitido(this.$router.name) && !this.userIsAuthenticated) {
+      this.$router.push({ name: 'web:dashboard' }, () => {});
+    }
+
+    this.$router.beforeEach((to, from, next) => {
+      if (!this.isAuthenticated && !to.meta.requiresAuth) {
+        return next();
+      }
+
+      if (this.rutaIngresar() || !this.accesoPermitido(to.name)) {
+        return next(false);
+      }
+
+      return next();
+    });
+
     this.axios.interceptors.request.use(
       (config) => {
         this.$Progress.start();
@@ -202,7 +222,7 @@ export default {
           {
             title: 'Estados solicitud',
             icon: 'mdi-account-details',
-            path: { name: 'web:administracion:estado_solicitud' },
+            path: { name: 'web:administracion:estados-solicitud' },
           },
           {
             title: 'Medios desplazamiento',
@@ -245,7 +265,6 @@ export default {
             icon: 'mdi-cellphone-marker',
             path: {
               name: 'web:desplazamiento:movil',
-              // params: { uuid: '22a3e45f-343e-4308-b42b-0cc2fe05873f' },
             },
           },
           // {
@@ -266,23 +285,33 @@ export default {
   }),
 
   methods: {
+    ...mapActions('user', ['userIsAuthenticated', 'userData']),
+
     logout() {
       this.dialogLogout = false;
       localStorage.removeItem('token');
       this.userIsAuthenticated(false);
-      this.$router.push({ name: 'ingresar' });
+      this.$router.push({ name: 'web:ingresar' }, () => {});
     },
-    ...mapActions('user', ['userIsAuthenticated', 'userData']),
+
+    rutaIngresar() {
+      return this.$route.name === 'web:ingresar';
+    },
+
+    accesoPermitido(nombreRuta) {
+      if (this.data === null || !Array.isArray(this.data.permisos)) {
+        return false;
+      }
+      return this.data.permisos.includes(nombreRuta);
+    },
   },
 
   computed: {
-    loginColor() {
-      return this.$route.name === 'ingresar' ? 'red darken-2' : '';
-    },
-    signupColor() {
-      return this.$route.name === 'signup' ? 'red darken-2' : '';
-    },
     ...mapState('user', ['data', 'isAuthenticated']),
+
+    loginColor() {
+      return this.$route.name === 'web:ingresar' ? 'red darken-2' : '';
+    },
   },
 };
 </script>
