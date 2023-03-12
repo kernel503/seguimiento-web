@@ -100,6 +100,13 @@ const routes = [
           /* webpackChunkName: "marcadores" */ '@/components/administracion/EstadoCuentaTablaPaginada.vue'
         ),
       },
+      {
+        path: 'login2',
+        name: 'administracion-login2',
+        component: () => import(
+          /* webpackChunkName: "login2" */ '@/views/administracion/Login.vue'
+        ),
+      },
     ],
   },
 

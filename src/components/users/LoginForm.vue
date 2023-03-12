@@ -54,6 +54,7 @@
 </template>
 <script>
 import RegistroUsuario from '@/components/users/RegistroUsuario.vue';
+
 import { alphaString, string } from '../../http/Validation';
 
 export default {

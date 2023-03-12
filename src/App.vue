@@ -109,15 +109,18 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <Footer></Footer>
   </v-app>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import Footer from '@/components/Footer.vue';
 
 export default {
   name: 'App',
   // components: { BarNavigation, MainContainer, NavigationDrawer },
+  components: { Footer },
   async created() {
     this.$Progress.start();
 

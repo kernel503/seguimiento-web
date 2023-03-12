@@ -286,6 +286,7 @@ export default {
     openDialog(item) {
       this.editedIndex = this.items.indexOf(item);
       this.editedItem = { ...item };
+      this.estado = item.solicitud.estado.id;
       this.dialogEstado = true;
     },
     openDialogChangePass(item) {
