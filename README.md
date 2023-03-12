@@ -24,3 +24,6 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Comandos
+live-server --port=8086 --entry-file=./index.html &
