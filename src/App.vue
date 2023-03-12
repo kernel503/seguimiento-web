@@ -133,9 +133,7 @@ export default {
         this.logout();
       }
     } else {
-      if (this.$route.meta.requiresAuth) {
-        this.logout();
-      }
+      this.logout();
     }
 
     if (this.rutaIngresar()) {
@@ -148,7 +146,6 @@ export default {
 
     this.$router.beforeEach((to, from, next) => {
       if (!this.isAuthenticated && !to.meta.requiresAuth) {
-        console.log('Acepta');
         return next();
       }
 
@@ -157,11 +154,9 @@ export default {
       }
 
       if (this.rutaIngresar() || !this.accesoPermitido(to.name)) {
-        console.log('Niega');
         return next(false);
       }
 
-      console.log('Acepta');
       return next();
     });
 
@@ -173,7 +168,7 @@ export default {
       (error) => {
         this.$Progress.finish();
         return Promise.reject(error);
-      }
+      },
     );
 
     this.axios.interceptors.response.use(
@@ -184,7 +179,7 @@ export default {
       (error) => {
         this.$Progress.finish();
         return Promise.reject(error);
-      }
+      },
     );
   },
 
