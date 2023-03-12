@@ -6,47 +6,56 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'dashboard',
-    meta: { requiresAuth: false },
+    path: '/dashboard',
+    name: 'web:dashboard',
+    meta: { requiresAuth: true },
     component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
   },
   {
     path: '/ingresar',
-    name: 'ingresar',
+    name: 'web:ingresar',
     meta: { requiresAuth: false },
-    component: () => import(/* webpackChunkName: "login" */ '@/components/users/LoginForm.vue'),
-  },
-  {
-    path: '/registrarse',
-    name: 'registrarse',
-    meta: { requiresAuth: false },
-    component: () => import(/* webpackChunkName: "login" */ '@/components/users/RegistroUsuario.vue'),
+    component: () => import(
+      /* webpackChunkName: "login" */ '@/components/users/LoginForm.vue'
+    ),
   },
   {
     path: '/administracion',
     name: 'administracion',
-    component: () => import(/* webpackChunkName: "administracion" */ '@/views/administracion/Base.vue'),
+    meta: { requiresAuth: true },
+    component: () => import(
+      /* webpackChunkName: "administracion" */ '@/views/administracion/Base.vue'
+    ),
     children: [
       {
         path: 'usuario',
         name: 'web:administracion:usuarios',
-        component: () => import(/* webpackChunkName: "administracion:usuario" */ '@/components/users/CreateUserFom.vue'),
+        meta: { requiresAuth: true },
+        component: () => import(
+          /* webpackChunkName: "administracion:usuario" */ '@/components/users/CreateUserFom.vue'
+        ),
       },
 
       {
         path: 'roles',
         name: 'web:administracion:roles',
-        component: () => import(/* webpackChunkName: "administracion:roles" */ '@/views/administracion/Roles.vue'),
+        meta: { requiresAuth: true },
+        component: () => import(
+          /* webpackChunkName: "administracion:roles" */ '@/views/administracion/Roles.vue'
+        ),
       },
       {
         path: 'permisos',
         name: 'web:administracion:permisos',
-        component: () => import(/* webpackChunkName: "administracion:permisos" */ '@/views/administracion/Permisos.vue'),
+        meta: { requiresAuth: true },
+        component: () => import(
+          /* webpackChunkName: "administracion:permisos" */ '@/views/administracion/Permisos.vue'
+        ),
       },
       {
         path: 'medios-desplazamiento',
         name: 'web:administracion:medios-desplazamiento',
+        meta: { requiresAuth: true },
         component: () => import(
           /* webpackChunkName: "administracion:medios-desplazamiento" */ '@/components/administracion/GestionIconos.vue'
         ),
@@ -54,6 +63,7 @@ const routes = [
       {
         path: 'incidentes',
         name: 'web:administracion:incidentes',
+        meta: { requiresAuth: true },
         component: () => import(
           /* webpackChunkName: "administracion:incidentes" */ '@/components/administracion/GestionIconos.vue'
         ),
@@ -61,6 +71,7 @@ const routes = [
       {
         path: 'marcadores',
         name: 'web:administracion:marcadores',
+        meta: { requiresAuth: true },
         component: () => import(
           /* webpackChunkName: "administracion:marcadores" */ '@/components/administracion/GestionIconos.vue'
         ),
@@ -68,6 +79,7 @@ const routes = [
       {
         path: 'clasificacion-vehicular',
         name: 'web:administracion:clasificacion-vehicular',
+        meta: { requiresAuth: true },
         component: () => import(
           /* webpackChunkName: "administracion:marcadores" */ '@/components/administracion/ClasificacionVehicular.vue'
         ),
@@ -75,6 +87,7 @@ const routes = [
       {
         path: 'clases-vehiculares',
         name: 'web:administracion:clases-vehiculares',
+        meta: { requiresAuth: true },
         component: () => import(
           /* webpackChunkName: "administracion:marcadores" */ '@/views/administracion/ClasesVehiculares.vue'
         ),
@@ -82,13 +95,15 @@ const routes = [
       {
         path: 'vehiculos',
         name: 'web:administracion:vehiculos',
+        meta: { requiresAuth: true },
         component: () => import(
           /* webpackChunkName: "administracion:marcadores" */ '@/views/administracion/Vehiculos.vue'
         ),
       },
       {
         path: 'estados-solicitud',
-        name: 'web:administracion:estado_solicitud',
+        name: 'web:administracion:estados-solicitud',
+        meta: { requiresAuth: true },
         component: () => import(
           /* webpackChunkName: "administracion:marcadores" */ '@/components/administracion/GestionEstadosCuenta.vue'
         ),
@@ -96,6 +111,7 @@ const routes = [
       {
         path: 'table',
         name: 'administracion-marcadores',
+        meta: { requiresAuth: true },
         component: () => import(
           /* webpackChunkName: "marcadores" */ '@/components/administracion/EstadoCuentaTablaPaginada.vue'
         ),
@@ -113,19 +129,35 @@ const routes = [
   {
     path: '/desplazamiento',
     name: 'desplazamiento',
-    component: () => import(/* webpackChunkName: "administracion" */ '@/views/desplazamiento/Base.vue'),
+    meta: { requiresAuth: true },
+    component: () => import(
+      /* webpackChunkName: "administracion" */ '@/views/desplazamiento/Base.vue'
+    ),
     children: [
       {
         path: 'movil',
         name: 'web:desplazamiento:movil',
-        component: () => import(/* webpackChunkName: "web:desplazamiento:movil" */ '@/components/desplazamiento/DesplazamientoListado.vue'),
+        meta: { requiresAuth: true },
+        component: () => import(
+          /* webpackChunkName: "web:desplazamiento:movil" */ '@/components/desplazamiento/DesplazamientoListado.vue'
+        ),
       },
       {
         path: 'registrados/:uuid',
         name: 'web:desplazamiento:detalle',
-        component: () => import(/* webpackChunkName: "web:desplazamiento:movil" */ '@/components/desplazamiento/GeoJson.vue'),
+        meta: { requiresAuth: true },
+        component: () => import(
+          /* webpackChunkName: "web:desplazamiento:movil" */ '@/components/desplazamiento/GeoJson.vue'
+        ),
       },
     ],
+  },
+
+  {
+    path: '*',
+    component: () => import(
+      /* webpackChunkName: "web:not_found:movil" */ '@/components/paginas/NotFound.vue'
+    ),
   },
 ];
 
@@ -134,11 +166,5 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
-
-// router.beforeEach(() => {
-//   // const value = store.state().isAuthenticated;
-//   console.log(store);
-//   return true;
-// });
 
 export default router;

@@ -79,7 +79,7 @@ export default {
   }),
 
   methods: {
-    emailRule: email('Debe agregar un correo.'),
+    emailRule: email('Debe agregar un correo válido.'),
     fieldRule: string('Debe completar el campo.'),
     integerRule: integer('Debe seleccionar un rol.'),
 

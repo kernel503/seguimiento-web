@@ -1,31 +1,66 @@
 <template>
   <div>
-    <v-btn text class="my-2" color="red darken-2" @click="$router.go(-1)">
+    <v-btn
+      text
+      class="mb-1 pb-1 pt-0 mt-0"
+      color="red darken-2"
+      @click="$router.go(-1)"
+    >
       Regresar
     </v-btn>
-    <l-map :style="{ height: '100vh' }" :zoom="zoom" :center="center">
-      <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-      <l-polyline
-        v-for="segmento in segmentosDesplazamiento"
-        :weight="+5"
-        :lat-lngs="segmento.multilinea"
-        :color="segmento.color"
-        :key="segmento.id"
-      ></l-polyline>
+    <l-map
+      :style="{ height: '80vh' }"
+      :zoom="config.zoom"
+      :center="config.center"
+      ref="map"
+      @ready="ready"
+    >
+      <l-tile-layer
+        :url="config.url"
+        :attribution="config.attribution"
+      ></l-tile-layer>
+      <l-geo-json
+        v-if="geojson"
+        :geojson="geojson"
+        :options="geojsonOptions"
+      ></l-geo-json>
     </l-map>
   </div>
 </template>
 <script>
-import { LMap, LTileLayer, LPolyline } from 'vue2-leaflet';
+import { LMap, LTileLayer, LGeoJson } from 'vue2-leaflet';
 
 export default {
+  name: 'GeoJson',
+
   components: {
     LMap,
     LTileLayer,
-    LPolyline,
+    LGeoJson,
   },
+
   data() {
+    // 3bfc0a52-2e00-4225-86e7-92fd2cbfc376
+    // 1,5,2,1
     return {
+      geojson: null,
+      geojsonOptions: {
+        style(feature) {
+          return {
+            color: feature.properties.color || 'red',
+            weight: 7,
+          };
+        },
+        onEachFeature(feature, layer) {
+          console.log(layer);
+          console.log(feature);
+          layer.bindPopup('Hi There!');
+          setTimeout(() => {
+            // eslint-disable-next-line no-param-reassign
+            layer.options.weight = 15;
+          }, 1000);
+        },
+      },
       leafletProviders: [
         {
           name: 'OpenStreetMap',
@@ -43,29 +78,36 @@ export default {
         },
       ],
 
-      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      attribution:
-        '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      zoom: 15,
-      center: [13.71171, -89.22236],
-      geojson: null,
-      polyline: {
-        latlngs: [],
-        color: 'green',
+      config: {
+        url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        attribution:
+          '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        zoom: 10,
+        center: [13.794185, -88.89652999999998],
       },
+      mapa: null,
       segmentosDesplazamiento: [],
     };
   },
-  async created() {
-    const { uuid } = this.$route.params;
 
-    const {
-      data: { segmentos },
-    } = await this.axios.get(`desplazamiento/${uuid}`, {
-      params: { group: 'yes' },
-    });
+  methods: {
+    ready(mapa) {
+      this.mapa = mapa;
+      this.fetchCoordenadas();
+    },
 
-    this.segmentosDesplazamiento = segmentos;
+    async fetchCoordenadas() {
+      const { uuid } = this.$route.params;
+
+      const {
+        data: { coleccion, limite },
+      } = await this.axios.get(`desplazamiento/${uuid}`, {
+        params: { tipo: 'geojson' },
+      });
+
+      this.geojson = coleccion;
+      this.mapa.flyToBounds(limite);
+    },
   },
 };
 </script>
