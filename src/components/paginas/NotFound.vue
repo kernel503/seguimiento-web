@@ -4,7 +4,7 @@
       text
       class="mb-1 pb-1 pt-0 mt-0"
       color="red darken-2"
-      @click="$router.push({name: 'web:dashboard'}, ()=>{})"
+      @click="gotToDashboard"
     >
       Ir a inicio
     </v-btn>
@@ -15,5 +15,12 @@
 <script>
 export default {
   name: 'NotFound',
+  methods: {
+    gotToDashboard() {
+      this.$router.push({ name: 'web:dashboard' }, (error) => {
+        console.log(error);
+      });
+    },
+  },
 };
 </script>

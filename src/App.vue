@@ -133,18 +133,10 @@ export default {
         this.logout();
       }
     } else {
-      this.logout();
+      if (this.$route.meta.requiresAuth) {
+        this.logout();
+      }
     }
-
-    // this.$router.beforeEach((to, from, next) => {
-    //   this.$Progress.start();
-    //   next();
-    // });
-
-    // this.$router.afterEach(() => {
-    //   this.$Progress.finish();
-    //   console.log('Finaliza ruta');
-    // });
 
     if (this.rutaIngresar()) {
       this.$router.push({ name: 'web:dashboard' }, () => {});
@@ -156,13 +148,20 @@ export default {
 
     this.$router.beforeEach((to, from, next) => {
       if (!this.isAuthenticated && !to.meta.requiresAuth) {
+        console.log('Acepta');
+        return next();
+      }
+
+      if (to.meta.requiresAuth) {
         return next();
       }
 
       if (this.rutaIngresar() || !this.accesoPermitido(to.name)) {
+        console.log('Niega');
         return next(false);
       }
 
+      console.log('Acepta');
       return next();
     });
 
@@ -174,7 +173,7 @@ export default {
       (error) => {
         this.$Progress.finish();
         return Promise.reject(error);
-      },
+      }
     );
 
     this.axios.interceptors.response.use(
@@ -185,7 +184,7 @@ export default {
       (error) => {
         this.$Progress.finish();
         return Promise.reject(error);
-      },
+      }
     );
   },
 
