@@ -6,7 +6,7 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '',
+    path: '/dashboard',
     name: 'web:dashboard',
     meta: { requiresAuth: true },
     component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
@@ -149,7 +149,7 @@ const routes = [
   {
     path: '*',
     component: () => import(
-      /* webpackChunkName: "web:not_found:movil" */ '@/components/desplazamiento/GeoJson.vue'
+      /* webpackChunkName: "web:not_found:movil" */ '@/components/paginas/NotFound.vue'
     ),
   },
 ];
