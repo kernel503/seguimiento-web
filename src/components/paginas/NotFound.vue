@@ -1,15 +1,16 @@
 <template>
   <div>
-    <v-btn
-      text
-      class="mb-1 pb-1 pt-0 mt-0"
-      color="red darken-2"
-      @click="gotToDashboard"
+    <v-alert
+      outlined
+      type="warning"
+      prominent
+      border="left"
     >
-      Ir a inicio
-    </v-btn>
-    <v-skeleton-loader class="mx-auto" max-width="300" type="card">
+    Seleccione un catálogo del panel lateral
+    </v-alert>
+    <v-skeleton-loader class="mx-auto" type="table">
     </v-skeleton-loader>
+
   </div>
 </template>
 <script>
