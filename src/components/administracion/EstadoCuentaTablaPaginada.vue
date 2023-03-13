@@ -54,9 +54,7 @@
     </template>
 
     <template #no-data>
-      <v-btn color="red darken-2" @click="$emit('refresh')" dark>
-        Recargar
-      </v-btn>
+      Sin registros
     </template>
   </v-data-table>
 </template>
