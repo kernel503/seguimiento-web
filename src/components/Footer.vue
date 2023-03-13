@@ -1,6 +1,6 @@
 <template>
   <v-footer dark class="red darken-4">
-    <v-container id="text">
+    <v-container class="text-center" id="text">
           Copyright © 2022 Universidad de El Salvador. Todos los derechos reservados
     </v-container>
   </v-footer>

@@ -1,17 +1,16 @@
 <template>
   <div>
-  </v-alert>
     <v-alert
       outlined
       type="warning"
       prominent
       border="left"
     >
-    Seleccione un catálogo del panel lateral    
+    Seleccione un catálogo del panel lateral
     </v-alert>
     <v-skeleton-loader class="mx-auto" type="table">
     </v-skeleton-loader>
-    
+
   </div>
 </template>
 <script>
