@@ -3,7 +3,7 @@
       <v-main>
         <v-container class="fill-height" fluid>
           <v-row  align="center" justify="center">
-            <v-col cols="12" sm="10" md="12" lg="11" xl="9">
+            <v-col cols="12" sm="10" md="12" lg="11" xl="8">
               <v-card class="elevation-1">
                 <v-card-text>
                 <v-window v-model="step" class="mb-0 pb-0">
