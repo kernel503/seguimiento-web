@@ -74,7 +74,7 @@
         </v-btn>
       </template>
 
-      <template v-else>
+      <!-- <template v-else>
         <v-btn
           :color="loginColor"
           small
@@ -82,9 +82,9 @@
           plain
           :to="{ name: 'web:ingresar' }"
         >
-          Ingresar
+          Ingresar2
         </v-btn>
-      </template>
+      </template>-->
     </v-app-bar>
 
     <v-main>

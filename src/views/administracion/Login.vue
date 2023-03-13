@@ -2,15 +2,16 @@
     <v-app id="inspire">
       <v-main>
         <v-container class="fill-height" fluid>
-          <v-row align="center" justify="center">
-            <v-col cols="12" sm="8" md="10" lg="10">
-              <v-card class="">
+          <v-row  align="center" justify="center">
+            <v-col cols="12" sm="10" md="12" lg="11" xl="9">
+              <v-card class="elevation-1">
                 <v-card-text>
                 <v-window v-model="step" class="mb-0 pb-0">
                   <v-window-item :value="1" class="mb-0 pb-0">
                     <v-row>
-                      <v-col cols="12" md="6" class="pr-0 mr-0">
-                        <v-card style="height: 100%;" class="mb-0 pb-0" v-if="esInicioSesion">
+                      <v-col cols="12" md="6" class="pr-0 my-0 mr-0 align-self-center">
+                        <v-card flat style="height: 100;" class="mb-0 pb-0 mx-9"
+                        v-if="esInicioSesion">
                             <v-card-title> Iniciar sesión </v-card-title>
                             <v-card-text class="mb-0 pb-0">
                             <v-form ref="form" v-model="valid" lazy-validation>

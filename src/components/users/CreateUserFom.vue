@@ -21,7 +21,7 @@
         </v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
-      <v-dialog v-model="dialog" width="600px">
+      <v-dialog v-model="dialog" width="600px" persistent>
         <template v-slot:activator="{ on, attrs }">
               <v-btn color="red darken-2" dark class="mb-2" v-bind="attrs" v-on="on">
                 <v-icon class="mr-1"> mdi-plus-box </v-icon>
@@ -65,7 +65,7 @@
                 </template>
               </v-autocomplete>
               <v-text-field
-                :rules="[fieldRule]"
+                :rules="passwordRules"
                 v-model="form.password"
                 outlined
                 :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -240,6 +240,10 @@ export default {
     dialogCambioPassword: false,
     estado: '',
     estados: [],
+    passwordRules: [
+      (v) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/.test(v)
+        || 'La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula.',
+    ],
   }),
 
   methods: {

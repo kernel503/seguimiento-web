@@ -1,6 +1,6 @@
 <template>
   <v-form ref="form" v-model="valid">
-    <v-card class="mx-auto">
+    <v-card class="mx-9" flat>
       <v-card-title> Crear cuenta </v-card-title>
       <v-card-text class="mb-0 pb-0">
         <v-text-field
@@ -32,7 +32,7 @@
           </template>
         </v-autocomplete>
         <v-text-field
-          :rules="[fieldRule]"
+          :rules="passwordRules"
           v-model="form.password"
           outlined
           :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -76,6 +76,10 @@ export default {
       rol: null,
       password: '',
     },
+    passwordRules: [
+      (v) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/.test(v)
+        || 'La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula.',
+    ],
   }),
 
   methods: {

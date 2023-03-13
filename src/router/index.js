@@ -16,7 +16,7 @@ const routes = [
     name: 'web:ingresar',
     meta: { requiresAuth: false },
     component: () => import(
-      /* webpackChunkName: "login" */ '@/components/users/LoginForm.vue'
+      /* webpackChunkName: "login" */ '@/views/administracion/Login.vue'
     ),
   },
   {
