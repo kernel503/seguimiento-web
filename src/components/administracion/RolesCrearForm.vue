@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row>
+    <v-row class="mx-2">
       <v-col cols="12" sm="10" md="8" lg="6">
         <v-form
           ref="form"
@@ -22,7 +22,7 @@
         </v-form>
       </v-col>
     </v-row>
-    <v-card v-for="seccion in secciones" :key="seccion.etiqueta" class="mt-3">
+    <v-card v-for="seccion in secciones" :key="seccion.etiqueta" class="mt-3 mx-4">
       <v-card-title class="m-0 p-0">
         <v-checkbox
           class="m-0 p-0"
@@ -61,17 +61,18 @@
 <script>
 import { string } from '../../http/Validation';
 
+const permisosDefault = 88;
+
 const filtros = {
   web: {
-    filters: [{ field: 'name', operator: 'like', value: 'web%' }],
+    filters: [{ field: 'name', operator: 'like', value: 'web%' }, { field: 'id', operator: '<=', value: permisosDefault }],
   },
   api: {
-    filters: [{ field: 'name', operator: 'like', value: 'api%' }],
+    filters: [{ field: 'name', operator: 'like', value: 'api%' }, { field: 'id', operator: '<=', value: permisosDefault }],
   },
   otro: {
     filters: [
-      { field: 'name', operator: 'not like', value: 'api%' },
-      { field: 'name', operator: 'not like', value: 'web%' },
+      { field: 'id', operator: '>', value: permisosDefault },
     ],
   },
 };
@@ -132,10 +133,10 @@ export default {
       });
     },
 
-    loadCards() {
-      this.cargarRoles(filtros.web, 'Componente web');
-      this.cargarRoles(filtros.api, 'Servicios API REST');
-      this.cargarRoles(filtros.otro, 'Otros permisos');
+    async loadCards() {
+      await this.cargarRoles(filtros.web, 'Componente web');
+      await this.cargarRoles(filtros.api, 'Servicios API REST');
+      await this.cargarRoles(filtros.otro, 'Otros permisos');
     },
 
     async create() {

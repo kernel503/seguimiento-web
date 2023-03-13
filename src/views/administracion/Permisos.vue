@@ -90,11 +90,11 @@
       </template>
 
       <template v-slot:item.actions="{ item }">
-        <v-icon v-if="item.id > roleLimit" class="mr-2" @click="editItem(item)">
+        <v-icon v-if="item.id > permisosDefault" class="mr-2" @click="editItem(item)">
           mdi-pencil
         </v-icon>
         <v-icon
-          v-if="item.id > roleLimit"
+          v-if="item.id > permisosDefault"
           color="red lighten-2"
           @click="deleteItemConfirm(item)"
         >
@@ -126,7 +126,7 @@ export default {
   data() {
     return {
       showBaseRoles: false,
-      roleLimit: 88,
+      permisosDefault: 88,
       requiredField: [(v) => !!v || 'Name is required'],
       headers: [
         {
@@ -175,7 +175,7 @@ export default {
           {
             field: 'id',
             operator: '>',
-            value: this.showBaseRoles ? 0 : this.roleLimit,
+            value: this.showBaseRoles ? 0 : this.permisosDefault,
           },
         ],
       });
