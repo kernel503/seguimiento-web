@@ -49,7 +49,7 @@
         <v-btn outlined @click="$emit('cancelar')">
           Regresar
         </v-btn>
-        <v-btn @click="crearUsuario" color="red darken-1" dark outlined>
+        <v-btn @click="crearUsuario" color="red darken-1" dark>
           Registrarse
         </v-btn>
       </v-card-actions>
