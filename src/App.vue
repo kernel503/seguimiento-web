@@ -61,7 +61,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="blue-grey lighten-5">
+    <v-app-bar app color="blue-grey lighten-5"  v-if="isAuthenticated">
       <v-app-bar-nav-icon
         @click="drawer = !drawer"
         v-if="isAuthenticated"
