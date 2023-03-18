@@ -38,6 +38,13 @@ export function password(message = 'Campo requerido.') {
   return validate(schema);
 }
 
+export function passwordLogin(message = 'Campo requerido.') {
+  const schema = Joi.string().pattern(new RegExp(/^(?=.*).{8,}$/))
+    .error(new Error(message));
+
+  return validate(schema);
+}
+
 export function integer(message = 'Campo requerido.') {
   const schema = Joi.number().integer().min(0).required()
     .error(new Error(message));

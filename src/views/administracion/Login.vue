@@ -105,7 +105,7 @@
   </template>
 <script>
 import RegistroUsuario from '@/components/users/RegistroUsuario.vue';
-import { password, email } from '../../http/Validation';
+import { passwordLogin, email } from '../../http/Validation';
 
 export default {
   name: 'LoginForm',
@@ -126,7 +126,7 @@ export default {
     source: String,
   },
   methods: {
-    passwordRule: password('Formato invalido de la contraseña.'),
+    passwordRule: passwordLogin('Formato invalido de la contraseña.'),
     emailRule: email('El campo correo electrónico es requerido.'),
 
     async login() {
