@@ -55,7 +55,7 @@
 <script>
 import RegistroUsuario from '@/components/users/RegistroUsuario.vue';
 
-import { alphaString, string } from '../../http/Validation';
+import { string } from '../../http/Validation';
 
 export default {
   name: 'LoginForm',
@@ -73,7 +73,7 @@ export default {
   }),
 
   methods: {
-    passwordRule: alphaString('El campo contraseña es requerido.'),
+    passwordRule: string('El campo contraseña es requerido.'),
     emailRule: string('El campo correo electrónico es requerido.'),
 
     async login() {
