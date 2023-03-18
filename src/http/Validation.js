@@ -21,6 +21,22 @@ export function string(message = 'Campo requerido.') {
 
   return validate(schema);
 }
+/*
+    ^                         Start anchor
+    (?=.*[A-Z])               Ensure string has one uppercase letters.
+    (?=.*[!@#$&*])            Ensure string has one special case letter.
+    (?=.*[0-9])               Ensure string has one digits.
+    (?=.*[a-z].*[a-z].*[a-z]) Ensure string has three lowercase letters.
+    .{8,}                     Ensure string is of length 8.
+                              Para cualquiera que quiera una longitud de al menos
+    $                         End anchor.
+*/
+export function password(message = 'Campo requerido.') {
+  const schema = Joi.string().pattern(new RegExp(/^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,}$/))
+    .error(new Error(message));
+
+  return validate(schema);
+}
 
 export function integer(message = 'Campo requerido.') {
   const schema = Joi.number().integer().min(0).required()

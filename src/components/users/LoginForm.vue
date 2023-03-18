@@ -17,8 +17,8 @@
               </template>
             </v-text-field>
             <v-text-field
-              v-model="form.password"
-              :rules="[passwordRule]"
+              v-model.lazy="form.password"
+              :rules="passwordRules"
               outlined
               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               :type="showPassword ? 'text' : 'password'"
@@ -55,7 +55,7 @@
 <script>
 import RegistroUsuario from '@/components/users/RegistroUsuario.vue';
 
-import { string } from '../../http/Validation';
+import { string, password } from '../../http/Validation';
 
 export default {
   name: 'LoginForm',
@@ -67,13 +67,17 @@ export default {
     valid: false,
     esInicioSesion: true,
     form: {
-      email: 'developer@gmail.com',
-      password: 'password',
+      email: '',
+      password: '',
     },
+    passwordRules: [
+      (v) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/.test(v)
+        || 'La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula.',
+    ],
   }),
 
   methods: {
-    passwordRule: string('El campo contraseña es requerido.'),
+    passwordRule: password('Formato de la contraseña invalido'),
     emailRule: string('El campo correo electrónico es requerido.'),
 
     async login() {

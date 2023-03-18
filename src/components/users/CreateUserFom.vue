@@ -192,7 +192,9 @@
  </div>
 </template>
 <script>
-import { email, string, integer } from '../../http/Validation';
+import {
+  email, string, integer, password,
+} from '../../http/Validation';
 
 export default {
   name: 'CreateUserFom',
@@ -242,7 +244,7 @@ export default {
     estados: [],
     passwordRules: [
       (v) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/.test(v)
-        || 'La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula.',
+        || 'La contraseña debe tener al entre 8, al menos un dígito, al menos tres minúscula y al menos una mayúscula.',
     ],
   }),
 
@@ -250,7 +252,7 @@ export default {
     emailRule: email('Debe agregar un correo válido.'),
     fieldRule: string('Debe completar el campo.'),
     integerRule: integer('Debe seleccionar un rol.'),
-
+    passwordRule: password('La contraseña debe tener mínimo una letra mayúscula, tres minúscula, un carácter especial, un dígito y mínimo ocho caracteres'),
     async obtenerRoles() {
       const response = await this.axios.get('/roles');
       const {

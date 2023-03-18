@@ -14,11 +14,12 @@
                         v-if="esInicioSesion">
                             <v-card-title> Iniciar sesión </v-card-title>
                             <v-card-text class="mb-0 pb-0">
-                            <v-form ref="form" v-model="valid" lazy-validation>
+                            <v-form ref="form" v-model="valid" >
                                 <v-text-field
                                 :rules="[emailRule]"
                                 v-model="form.email"
                                 outlined
+                                validate-on-blur
                                 required
                                 >
                                 <template #label>
@@ -29,6 +30,7 @@
                                 <v-text-field
                                 v-model="form.password"
                                 :rules="[passwordRule]"
+                                validate-on-blur
                                 outlined
                                 :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                                 :type="showPassword ? 'text' : 'password'"
@@ -103,7 +105,7 @@
   </template>
 <script>
 import RegistroUsuario from '@/components/users/RegistroUsuario.vue';
-import { alphaString, string } from '../../http/Validation';
+import { password, email } from '../../http/Validation';
 
 export default {
   name: 'LoginForm',
@@ -116,16 +118,16 @@ export default {
     valid: false,
     esInicioSesion: true,
     form: {
-      email: 'developer@gmail.com',
-      password: 'password',
+      email: '',
+      password: '',
     },
   }),
   props: {
     source: String,
   },
   methods: {
-    passwordRule: alphaString('El campo contraseña es requerido.'),
-    emailRule: string('El campo correo electrónico es requerido.'),
+    passwordRule: password('Formato invalido de la contraseña.'),
+    emailRule: email('El campo correo electrónico es requerido.'),
 
     async login() {
       const isValid = this.$refs.form.validate();
