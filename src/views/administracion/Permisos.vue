@@ -17,7 +17,7 @@
           <v-toolbar-title class="text-capitalize"> Permisos </v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
-          <v-btn icon class="mr-2" @click="updateSearch">
+          <v-btn title="ver permisos predefinidos" icon class="mr-2" @click="updateSearch">
             <v-icon :color="showBaseRoles ? 'red darken-2' : 'grey'">
               mdi-shield-lock-open-outline
             </v-icon>
@@ -40,7 +40,6 @@
               <v-card-title>
                 {{ formTitle }}
               </v-card-title>
-              <v-divider class="blue accent-2 mx-5"></v-divider>
               <v-card-text>
                 <v-form ref="form_permisos" @submit.prevent>
                   <v-container>

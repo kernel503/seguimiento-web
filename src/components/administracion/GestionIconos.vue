@@ -230,13 +230,19 @@ export default {
   watch: {
     dialog(newValue) {
       if (!newValue) {
-        this.initialForm = ['', ''];
+        this.initialForm = [];
       }
     },
 
     dialogRestore(newValue) {
       if (!newValue) {
-        this.initialForm = ['', ''];
+        this.initialForm = [];
+      }
+    },
+
+    dialogDelete(newValue) {
+      if (!newValue) {
+        this.initialForm = [];
       }
     },
 

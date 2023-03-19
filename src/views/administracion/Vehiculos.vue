@@ -32,8 +32,6 @@
                 <v-card-title class="">
                   {{formTitle}}
                 </v-card-title>
-                <v-divider class="blue accent-2 mx-5"></v-divider>
-
                 <v-card-text>
                   <v-form ref="form_vehiculo">
                     <v-container>

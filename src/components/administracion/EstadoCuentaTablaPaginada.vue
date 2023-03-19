@@ -21,6 +21,7 @@
           icon
           class="mr-2"
           @click="withTrashedActive = !withTrashedActive"
+          title="Mostrar registros eliminados"
         >
           <v-icon :color="withTrashedActive ? 'red darken-2' : 'grey'">
             mdi-archive-lock-open-outline

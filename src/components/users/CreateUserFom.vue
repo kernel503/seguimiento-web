@@ -32,8 +32,6 @@
             </template>
             <v-card>
               <v-card-title> Crear registro </v-card-title>
-              <v-divider class="blue accent-2 mx-5 mb-5"></v-divider>
-
               <v-card-text>
                 <v-form ref="form" v-model="valid">
                   <v-text-field

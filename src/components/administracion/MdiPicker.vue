@@ -4,7 +4,6 @@
       <v-card-title>
         {{ value.length === 3 ? 'Editar registro' : 'Crear registro' }}
       </v-card-title>
-      <v-divider class="blue accent-2 mx-5 mb-3"></v-divider>
       <v-card-text class="mb-0 pb-0">
         <v-text-field
           :rules="[nombreRule]"
