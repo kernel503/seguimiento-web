@@ -46,8 +46,7 @@
     <v-dialog v-model="dialogRestore" max-width="600">
       <v-card v-if="initialForm.length">
         <v-card-title class="text-center">
-          Restaurar el registro
-          {{ initialForm[0].toLocaleLowerCase() }}
+          ¿Quieres restaurar el registro {{ initialForm[0].toLocaleLowerCase() }}?
         </v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>

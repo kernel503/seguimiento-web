@@ -28,8 +28,7 @@
     <v-dialog v-model="dialogDelete" max-width="600">
       <v-card v-if="initialForm.length">
         <v-card-title class="justify-center">
-          ¿Seguro que quieres borrar el registro
-          {{ initialForm[0].toLocaleLowerCase() }}?
+          Se eliminará el registro {{ initialForm[0].toLocaleLowerCase() }}. ¿Desea continuar?
         </v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -44,9 +43,8 @@
 
     <v-dialog v-model="dialogRestore" max-width="600">
       <v-card v-if="initialForm.length">
-        <v-card-title class="text-center">
-          Restaurar el registro
-          {{ initialForm[0].toLocaleLowerCase() }}
+        <v-card-title class="text-center justify-center">
+          Se restaurará el registro {{ initialForm[0].toLocaleLowerCase() }}. ¿Desea continuar?
         </v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -218,7 +216,7 @@ export default {
       if (this.initialForm.length === 3) {
         const id = this.initialForm.at(2);
         try {
-          this.axios.put(`${this.path}/${id}`, data);
+          await this.axios.put(`${this.path}/${id}`, data);
           this.$toast.info('Registro actualizado.');
         } catch (error) {
           this.$toast.error('Error al actualizar el medio de desplazamiento.');
@@ -233,13 +231,13 @@ export default {
   watch: {
     dialog(newValue) {
       if (!newValue) {
-        this.initialForm = [];
+        this.initialForm = ['', ''];
       }
     },
 
     dialogRestore(newValue) {
       if (!newValue) {
-        this.initialForm = [];
+        this.initialForm = ['', ''];
       }
     },
 
