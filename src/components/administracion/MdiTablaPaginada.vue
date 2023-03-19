@@ -40,22 +40,29 @@
     <template #item.actions="{ item }">
       <v-icon
         v-if="item.fecha_eliminado"
-        class="mr-2"
         @click="$emit('restore', item)"
         color="grey"
       >
         mdi-delete-restore
       </v-icon>
-      <v-icon class="ml-2" @click="$emit('edit', item)"> mdi-pencil </v-icon>
-      <v-icon @click="$emit('remove', item)" color="red lighten-2">
+      <v-icon
+        v-if="!item.fecha_eliminado"
+        class="ml-2"
+        @click="$emit('edit', item)"
+      >
+        mdi-pencil
+      </v-icon>
+      <v-icon
+        v-if="!item.fecha_eliminado"
+        @click="$emit('remove', item)"
+        color="red lighten-2"
+      >
         mdi-delete
       </v-icon>
     </template>
-
   </v-data-table>
 </template>
 <script>
-// import { mapMutations, mapState } from 'vuex';
 
 export default {
   name: 'MdiTablaPaginada',
@@ -82,7 +89,7 @@ export default {
   created() {
     this.resource = this.$route.query.resource;
     this.withTrashedActive = this.withTrashed;
-    this.options = { };
+    this.options = {};
     this.footerProps = {
       'items-per-page-options': this.itemsPerPage,
       pageText: '{0}-{1} de {2}',
