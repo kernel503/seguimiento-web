@@ -1,5 +1,8 @@
 <template>
-  <v-app>
+  <v-app :style="[!isAuthenticated ?
+{'background': 'url(' + minerva + ') center no-repeat fixed !important'} : '']"
+
+>
     <vue-progress-bar></vue-progress-bar>
     <v-navigation-drawer
       app
@@ -279,6 +282,7 @@ export default {
     right: null,
     drawer: null,
     dialogLogout: false,
+    minerva: 'https://eluniversitario.ues.edu.sv/wp-content/uploads/sites/11/2021/02/Minerva-Universidad-de-El-Salvador-UES.jpg',
   }),
 
   methods: {

@@ -1,10 +1,13 @@
 <template>
-    <v-app id="inspire">
+    <v-app id="inspire" style="height: 0; "><!--Solucion temporal-->
       <v-main>
         <v-container class="fill-height" fluid>
           <v-row  align="center" justify="center">
             <v-col cols="12" sm="10" md="12" lg="11" xl="8">
               <v-card class="elevation-1">
+                <v-card-title class="justify-center red darken-4">
+                  <h2 class="white--text">MoviUES</h2>
+                </v-card-title>
                 <v-card-text>
                 <v-window v-model="step" class="mb-0 pb-0">
                   <v-window-item :value="1" class="mb-0 pb-0">
@@ -68,12 +71,12 @@
                         style="  height: 100%;"
                         class="bg-white pb-0 mb-0 py-0"
                         :aspect-ratio="1"
-                        :src="require('@/assets/portada_login.jpeg')"
+                        :src="require('@/assets/movilidad_urbana.jpeg')"
                     ></v-img>
                       </v-col>
                     </v-row>
                   </v-window-item>
-                  <v-window-item :value="2">
+                  <!--<v-window-item :value="2">
                     <v-row class="fill-height">
                       <v-col cols="12" md="6" class="teal accent-3">
                         <v-card-text class="white--text mt-12">
@@ -93,7 +96,7 @@
                         </div>
                       </v-col>
                     </v-row>
-                  </v-window-item>
+                  </v-window-item>-->
                 </v-window>
               </v-card-text>
               </v-card>
