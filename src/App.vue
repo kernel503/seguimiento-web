@@ -221,14 +221,16 @@ export default {
           this.userData(data);
           this.userIsAuthenticated(true);
           this.showBtn = true;
-          this.items = items.map((item) => {
-            const childPath = item.children.filter((child) => permisos.includes(child.path.name));
-            if (childPath.length === 0) return null;
-            return {
-              ...item,
-              children: childPath,
-            };
-          }).filter(Boolean);
+          this.items = items
+            .map((item) => {
+              const childPath = item.children.filter((child) => permisos.includes(child.path.name));
+              if (childPath.length === 0) return null;
+              return {
+                ...item,
+                children: childPath,
+              };
+            })
+            .filter(Boolean);
         } else {
           this.$toast.error(
             'No tiene permisos para acceder al componente web.',
