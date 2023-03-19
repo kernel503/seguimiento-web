@@ -202,6 +202,8 @@ export default {
         this.editedItem = { ...this.defaultItem };
         this.editedIndex = -1;
       });
+      this.$refs.form_clasificacion.resetValidation();
+      this.$refs.form_clasificacion.reset();
     },
   },
   async created() {

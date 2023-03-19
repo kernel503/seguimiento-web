@@ -100,7 +100,7 @@
     <v-dialog v-model="dialogLogout" max-width="530px">
       <v-card>
         <v-card-title class="text-h5 justify-center">
-          ¿Está seguro que desea cerrar sesion?
+          ¿Está seguro que desea cerrar sesión?
         </v-card-title>
         <v-card-actions class="py-3">
           <v-spacer></v-spacer>
@@ -170,16 +170,16 @@ const items = [
         icon: 'mdi-car-info',
         path: { name: 'web:administracion:clasificacion-vehicular' },
       },
-      {
+      /* {
         title: 'Clases Vehiculares',
         icon: 'mdi-car-info',
         path: { name: 'web:administracion:clases-vehiculares' },
-      },
-      {
+      }, */
+      /* {
         title: 'Vehiculos',
         icon: 'mdi-car-info',
         path: { name: 'web:administracion:vehiculos' },
-      },
+      } */
     ],
   },
   {
