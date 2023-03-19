@@ -1,31 +1,39 @@
 <template>
-  <div>
-    <v-btn
-      text
-      class="mb-1 pb-1 pt-0 mt-0"
-      color="red darken-2"
-      @click="$router.go(-1)"
-    >
-      Regresar
-    </v-btn>
-    <l-map
-      :style="{ height: '80vh' }"
-      :zoom="config.zoom"
-      :center="config.center"
-      ref="map"
-      @ready="ready"
-    >
-      <l-tile-layer
-        :url="config.url"
-        :attribution="config.attribution"
-      ></l-tile-layer>
-      <l-geo-json
-        v-if="geojson"
-        :geojson="geojson"
-        :options="geojsonOptions"
-      ></l-geo-json>
-    </l-map>
-  </div>
+  <v-card>
+    <v-card-title>
+      <v-btn
+        text
+        class="mb-1 pb-1 pt-0 mt-0"
+        color="red darken-2"
+        @click="$router.go(-1)"
+      >
+        Regresar
+      </v-btn>
+    </v-card-title>
+    <v-card-text>
+      <v-img height="72vh" width="100vw">
+        <l-map
+          v-if="!false"
+          :style="{ position: 'absolute', height:'100%', width:'100%' }"
+          :zoom="config.zoom"
+          :center="config.center"
+          ref="map"
+          @ready="ready"
+        >
+          <l-tile-layer
+            :url="config.url"
+            :attribution="config.attribution"
+          ></l-tile-layer>
+          <l-geo-json
+            v-if="geojson"
+            :geojson="geojson"
+            :options="geojsonOptions"
+          >
+          </l-geo-json>
+        </l-map>
+      </v-img>
+    </v-card-text>
+  </v-card>
 </template>
 <script>
 import { LMap, LTileLayer, LGeoJson } from 'vue2-leaflet';
