@@ -263,6 +263,9 @@ export default {
       }
 
       if (this.rutaIngresar() || !this.accesoPermitido(to.name)) {
+        console.log(to.name);
+        console.log(to);
+        console.log(from);
         console.log('Entra 3');
         return next(false);
       }
