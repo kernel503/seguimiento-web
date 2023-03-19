@@ -134,6 +134,7 @@ export default {
           this.userIsAuthenticated(true);
           this.showBtn = true;
         } else {
+          this.$toast.error('No tiene permisos para acceder al componente web.');
           this.logout();
         }
       } catch (error) {
