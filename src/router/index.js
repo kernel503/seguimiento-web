@@ -8,7 +8,7 @@ const routes = [
   {
     path: '/dashboard',
     name: 'web:dashboard',
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: false },
     component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
   },
   {
