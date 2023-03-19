@@ -13,5 +13,6 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        script: cd /home/apps/seguimiento-web && git pull && npm run build && rsync -a ./dist/js/ ../app-seguimiento-backend/api-rest/public/js && rsync -a ./dist/css/ ../app-seguimiento-backend/api-rest/public/css && rsync -a ./dist/img/ ../app-seguimiento-backend/api-rest/public/img && cp ./dist/index.html ../app-seguimiento-backend/api-rest/resources/views/web.blade.php 
+        # script: cd /home/apps/seguimiento-web && git pull && npm run build && rsync -a ./dist/js/ ../app-seguimiento-backend/api-rest/public/js && rsync -a ./dist/css/ ../app-seguimiento-backend/api-rest/public/css && rsync -a ./dist/img/ ../app-seguimiento-backend/api-rest/public/img && cp ./dist/index.html ../app-seguimiento-backend/api-rest/resources/views/web.blade.php 
+        script: cd /home/apps/seguimiento-web && git pull && npm run build
         # script: cd /home/apps/app-seguimiento-backend && git pull && docker compose run api_rest_laravel composer install
