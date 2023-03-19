@@ -28,6 +28,7 @@
           </v-icon>
         </v-btn>
         <v-btn color="red darken-2" dark class="mb-2" @click="$emit('create')">
+          <v-icon class="mr-1"> mdi-plus-box </v-icon>
           Nuevo registro
         </v-btn>
       </v-toolbar>
