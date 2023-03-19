@@ -9,7 +9,7 @@ const routes = [
     path: '/dashboard',
     name: 'web:dashboard',
     meta: { requiresAuth: false },
-    component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
+    component: () => import(/* webpackChunkName: "dashboard" */ '@/components/desplazamiento/DesplazamientoListado.vue'),
   },
   {
     path: '/ingresar',

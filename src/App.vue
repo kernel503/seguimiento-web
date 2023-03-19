@@ -210,11 +210,11 @@ export default {
     this.$Progress.start();
 
     const hasToken = !!localStorage.getItem('token') || false;
+
     if (hasToken) {
       console.log('Tiene token');
       try {
-        const response = await this.axios.get('/user');
-        const { data } = response;
+        const { data } = await this.axios.get('/user');
         const { permisos } = data;
 
         if (permisos.length) {
@@ -241,8 +241,6 @@ export default {
         this.logout();
       }
     } else {
-      console.log('No tiene token');
-      console.log(this.$route);
       if (this.$route.meta.requiresAuth || [undefined, null].includes(this.$route.name)) {
         this.logout();
       }
@@ -250,16 +248,11 @@ export default {
       return;
     }
 
-    if (this.userIsAuthenticated) {
+    // this.userIsAuthenticated
+    if (!this.accesoPermitido(this.$route.name)) {
+      console.log(this.$route.name);
+      console.log(this.data?.permisos);
       this.$router.push({ name: 'web:dashboard' }, () => {});
-    }
-
-    // if (!this.accesoPermitido(this.$router.name)) {
-    //   this.$router.push({ name: 'web:desplazamiento:movil' }, () => {});
-    // }
-
-    if (!this.accesoPermitido(this.$router.name) && !this.userIsAuthenticated) {
-      // this.$router.push({ name: 'web:dashboard' }, () => {});
     }
 
     this.$router.beforeEach((to, from, next) => {
