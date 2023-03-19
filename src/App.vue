@@ -244,7 +244,7 @@ export default {
       }
     } else {
       console.log('No tiene token');
-      if (this.$route.meta.requiresAuth) {
+      if (this.$route.meta.requiresAuth || !this.$route.meta) {
         this.logout();
       }
 
