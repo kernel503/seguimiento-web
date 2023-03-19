@@ -235,9 +235,7 @@ export default {
           this.$toast.error(
             'No tiene permisos para acceder al componente web.',
           );
-          setTimeout(() => {
-            this.logout();
-          }, 1500);
+          this.logout();
         }
       } catch (error) {
         this.logout();
