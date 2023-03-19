@@ -50,6 +50,7 @@
       <v-col> <v-btn color="red darken-2"> Filtrar </v-btn></v-col>
     </v-row> -->
     <v-pagination
+      v-if="numeroDePaginas"
       v-model="paginaActiva"
       :length="numeroDePaginas"
       class="mb-2"
@@ -126,7 +127,7 @@ export default {
 
   data() {
     return {
-      numeroDePaginas: 1,
+      numeroDePaginas: 0,
       paginaActiva: 1,
       desplazamientos: [],
     };
