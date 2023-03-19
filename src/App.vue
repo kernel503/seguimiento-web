@@ -254,7 +254,7 @@ export default {
     // }
 
     if (!this.accesoPermitido(this.$router.name) && !this.userIsAuthenticated) {
-      this.$router.push({ name: 'web:desplazamiento:movil' }, () => {});
+      this.$router.push({ name: 'web:dashboard' }, () => {});
     }
 
     this.$router.beforeEach((to, from, next) => {
