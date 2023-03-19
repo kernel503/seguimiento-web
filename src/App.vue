@@ -61,7 +61,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="blue-grey lighten-5"  v-if="isAuthenticated">
+    <v-app-bar app color="blue-grey lighten-5" v-if="isAuthenticated">
       <v-app-bar-nav-icon
         @click="drawer = !drawer"
         v-if="isAuthenticated"
@@ -129,9 +129,13 @@ export default {
       try {
         const response = await this.axios.get('/user');
         const { data } = response;
-        this.userData(data);
-        this.userIsAuthenticated(true);
-        this.showBtn = true;
+        if (data.permisos.length) {
+          this.userData(data);
+          this.userIsAuthenticated(true);
+          this.showBtn = true;
+        } else {
+          this.logout();
+        }
       } catch (error) {
         this.logout();
       }
@@ -292,7 +296,10 @@ export default {
     },
 
     rutaIngresar() {
-      console.log('🚀 ~ file: App.vue:297 ~ rutaIngresar ~ this.$route.name:', this.$route.name);
+      console.log(
+        '🚀 ~ file: App.vue:297 ~ rutaIngresar ~ this.$route.name:',
+        this.$route.name,
+      );
       return this.$route.name === 'web:ingresar';
     },
 
