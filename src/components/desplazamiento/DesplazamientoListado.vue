@@ -49,13 +49,29 @@
       </v-col>
       <v-col> <v-btn color="red darken-2"> Filtrar </v-btn></v-col>
     </v-row> -->
-    <v-pagination
-      v-if="numeroDePaginas"
-      v-model="paginaActiva"
-      :length="numeroDePaginas"
-      class="mb-2"
-      color="red darken-2"
-    ></v-pagination>
+    <v-row>
+      <v-col md="6" sm="12" lg="6" xl="6" xs="12">
+        <v-text-field
+          outlined
+          v-model="searchUuid"
+          append-icon="mdi-magnify"
+          label="Buscar por código"
+          @click:append="search"
+          @keypress.enter="search"
+          :loading="loading"
+        ></v-text-field>
+      </v-col>
+      <v-col md="6" sm="12" lg="6" xl="6" xs="12">
+        <v-pagination
+          v-if="numeroDePaginas"
+          v-model="paginaActiva"
+          :length="numeroDePaginas"
+          class="mb-2"
+          color="red darken-2"
+        ></v-pagination>
+      </v-col>
+    </v-row>
+
     <v-row>
       <v-col
         v-for="desplazamiento in desplazamientos"
@@ -68,7 +84,7 @@
         <v-card>
           <v-card-title class="mb-0 pb-0">
             Fecha registro:
-            {{ desplazamiento.fecha_creado.split('.').at(0).replace('T', ' ') }}
+            {{ desplazamiento.fecha_creado.split(".").at(0).replace("T", " ") }}
           </v-card-title>
           <v-card-text class="my-0 py-0">
             <v-list>
@@ -127,6 +143,8 @@ export default {
 
   data() {
     return {
+      searchUuid: null,
+      loading: false,
       numeroDePaginas: 0,
       paginaActiva: 1,
       desplazamientos: [],
@@ -135,6 +153,12 @@ export default {
 
   methods: {
     async obtenerDesplazamientos() {
+      const search = typeof this.searchUuid === 'string' && !!this.searchUuid
+        ? {
+          value: this.searchUuid,
+          case_sensitive: false,
+        }
+        : undefined;
       try {
         const {
           data: {
@@ -150,6 +174,7 @@ export default {
                 relation: 'detalle_medios_desplazamiento.medio_desplazamiento',
               },
             ],
+            search,
           },
           {
             params: {
@@ -162,6 +187,13 @@ export default {
       } catch (error) {
         this.$toast.error('Error al obtener los desplazamiento.');
       }
+      this.loading = false;
+    },
+
+    search() {
+      this.loading = true;
+      this.paginaActiva = 1;
+      this.obtenerDesplazamientos();
     },
 
     visualizar(desplazamiento) {
