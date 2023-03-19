@@ -245,7 +245,7 @@ export default {
     } else {
       console.log('No tiene token');
       console.log(this.$route);
-      if (this.$route.meta.requiresAuth || this.$route.name === undefined) {
+      if (this.$route.meta.requiresAuth || [undefined, null].includes(this.$route.name)) {
         this.logout();
       }
 
