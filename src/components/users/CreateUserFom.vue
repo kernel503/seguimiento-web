@@ -96,6 +96,9 @@
       </template>
 
       <template v-slot:item.actions="{ item }">
+        <v-icon title="Cambiar rol" class="mr-2" @click="openDialogoRol(item)">
+          mdi-account-switch
+        </v-icon>
         <v-icon
           title="Cambiar estado usuario"
           class="mr-2"
@@ -103,10 +106,7 @@
         >
           mdi-account-convert
         </v-icon>
-        <v-icon
-          title="Cambiar contraseña"
-          @click="openDialogChangePass(item)"
-        >
+        <v-icon title="Cambiar contraseña" @click="openDialogChangePass(item)">
           mdi-lock-reset
         </v-icon>
       </template>
@@ -125,6 +125,38 @@
         </v-chip>
       </template>
     </v-data-table>
+
+    <!--Modal cambio de rol-->
+    <v-dialog v-model="dialogoRol" max-width="530px">
+      <v-card v-if="rolSeleccionado">
+        <v-card-title class="text-h5"> Cambio de estado </v-card-title>
+        <v-card-text class="mb-0 pb-0">
+          <v-form ref="formRol">
+            <v-autocomplete
+              v-model="rolSeleccionado.roles"
+              :rules="[reglaTexto]"
+              item-text="name"
+              item-value="name"
+              outlined
+              :items="roles"
+              label="Seleccionar el rol"
+            >
+            </v-autocomplete>
+          </v-form>
+        </v-card-text>
+
+        <v-card-actions class="mt-0 pt-0">
+          <v-spacer></v-spacer>
+          <v-btn class="default" color="" @click="closeDialogoRol">
+            Cancelar
+          </v-btn>
+          <v-btn color="red darken-3" @click="cambiarRol" dark>
+            Aceptar
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <!--Modal cambio de estado-->
     <v-dialog v-model="dialogEstado" max-width="530px">
       <v-card>
@@ -220,6 +252,9 @@ export default {
   },
 
   data: () => ({
+    dialogoRol: false,
+    rolSeleccionado: null,
+
     valid: true,
     valid_state: true,
     showPassword: false,
@@ -263,6 +298,11 @@ export default {
       )
         || 'La contraseña debe tener al entre 8, al menos un dígito, al menos tres minúscula y al menos una mayúscula.',
     ],
+
+    reglaTexto: [
+      (v) => !!v
+        || 'Debe seleccionar el rol.',
+    ],
   }),
 
   methods: {
@@ -279,6 +319,30 @@ export default {
       } = response;
 
       this.roles = data.slice(this.$route.name === 'signup' ? 1 : 0);
+    },
+
+    openDialogoRol(item) {
+      this.rolSeleccionado = JSON.parse(JSON.stringify(item));
+      this.dialogoRol = true;
+    },
+
+    closeDialogoRol() {
+      this.dialogoRol = false;
+      this.rolSeleccionado = null;
+    },
+
+    async cambiarRol() {
+      try {
+        const validate = this.$refs.formRol.validate();
+        if (validate) {
+          await this.axios.put(`/usuarios/${this.rolSeleccionado.id}`, { rol: this.rolSeleccionado.roles });
+          this.initialize();
+          this.$toast.success('Rol actualizado.');
+        }
+      } catch (error) {
+        this.$toast.error('Error al actualizar el rol.');
+      }
+      this.dialogoRol = false;
     },
 
     async crearUsuario() {
@@ -304,15 +368,9 @@ export default {
       }
     },
     async initialize() {
-      const params = new URLSearchParams();
-      // params.append('include', 'solicitud.estado');
-      params.append('include', 'roles');
-
       const response = await this.axios.post('/usuarios/search', {
         includes: [{ relation: 'roles' }, { relation: 'solicitud.estado' }],
-        filters: [
-          { field: 'roles.id', operator: '!=', value: 1 },
-        ],
+        filters: [{ field: 'roles.id', operator: '!=', value: 1 }],
       });
 
       this.items = response.data.data.map((user) => ({
