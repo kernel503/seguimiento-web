@@ -292,7 +292,8 @@ export default {
     },
 
     rutaIngresar() {
-      return this.$route.name === 'web:ingresar';
+      console.log('🚀 ~ file: App.vue:297 ~ rutaIngresar ~ this.$route.name:', this.$route.name);
+      return this.$route.name === 'web:ingresar' || this.$route.name === null;
     },
 
     accesoPermitido(nombreRuta) {
