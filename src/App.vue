@@ -262,6 +262,11 @@ export default {
         return next();
       }
 
+      if (!this.isAuthenticated) {
+        console.log('Entra 2');
+        return next(false);
+      }
+
       if (to.name === 'web:ingresar' || !this.accesoPermitido(to.name)) {
         console.log('Entra 3');
         return next(false);
