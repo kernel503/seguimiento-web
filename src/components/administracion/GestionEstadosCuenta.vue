@@ -245,6 +245,12 @@ export default {
       }
     },
 
+    dialogDelete(newValue) {
+      if (!newValue) {
+        this.initialForm = [];
+      }
+    },
+
     withTrashed() {
       this.obtenerItems();
     },
