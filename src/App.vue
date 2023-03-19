@@ -139,7 +139,7 @@ export default {
       this.logout();
     }
 
-    if (this.rutaIngresar() || this.userIsAuthenticated) {
+    if (this.rutaIngresar()) {
       this.$router.push({ name: 'web:desplazamiento:movil' }, () => {});
     }
 
