@@ -30,13 +30,11 @@
         <v-card-title class="justify-center">
           Se eliminará el registro {{ initialForm[0].toLocaleLowerCase() }}. ¿Desea continuar?
         </v-card-title>
-        <v-card-actions>
-          <v-spacer></v-spacer>
+        <v-card-actions class="justify-center">
           <v-btn color="red darken-1" text @click="deleteItem">Aceptar</v-btn>
           <v-btn color="gray darken-1" text @click="dialogDelete = false">
             Cancelar
           </v-btn>
-          <v-spacer></v-spacer>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -44,7 +42,8 @@
     <v-dialog v-model="dialogRestore" max-width="600">
       <v-card v-if="initialForm.length">
         <v-card-title class="text-center justify-center">
-          Se restaurará el registro {{ initialForm[0].toLocaleLowerCase() }}. ¿Desea continuar?
+          Se restaurará el registro {{ initialForm[0].toLocaleLowerCase() }}.
+          ¿Desea continuar?
         </v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>
