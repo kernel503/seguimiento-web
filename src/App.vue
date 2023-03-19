@@ -256,15 +256,16 @@ export default {
     }
 
     this.$router.beforeEach((to, from, next) => {
+      console.log(to);
+      console.log(from);
+      console.log(this.data);
+
       if (!this.isAuthenticated && !to.meta.requiresAuth) {
         console.log('Entra');
         return next();
       }
 
       if (this.rutaIngresar() || !this.accesoPermitido(to.name)) {
-        console.log(to.name);
-        console.log(to);
-        console.log(from);
         console.log('Entra 3');
         return next(false);
       }
