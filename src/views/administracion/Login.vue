@@ -140,7 +140,7 @@ export default {
             data: { token },
           } = response;
           localStorage.setItem('token', token);
-          this.$router.push('dashboard');
+          this.$router.push('web:desplazamiento:movil');
           window.location.reload();
         } catch (error) {
           this.$toast.error('Error al iniciar sesión.');
