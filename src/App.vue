@@ -235,18 +235,24 @@ export default {
           this.$toast.error(
             'No tiene permisos para acceder al componente web.',
           );
-          this.logout();
+          setTimeout(() => {
+            this.logout();
+          }, 1500);
         }
       } catch (error) {
         this.logout();
       }
     } else {
       console.log('No tiene token');
-      this.logout();
+      if (this.$route.meta.requiresAuth) {
+        this.logout();
+      }
+
+      return;
     }
 
     if (this.userIsAuthenticated) {
-      this.$router.push({ name: 'web:desplazamiento:movil' }, () => {});
+      this.$router.push({ name: 'web:dashboard' }, () => {});
     }
 
     // if (!this.accesoPermitido(this.$router.name)) {
@@ -254,7 +260,7 @@ export default {
     // }
 
     if (!this.accesoPermitido(this.$router.name) && !this.userIsAuthenticated) {
-      this.$router.push({ name: 'web:dashboard' }, () => {});
+      // this.$router.push({ name: 'web:dashboard' }, () => {});
     }
 
     this.$router.beforeEach((to, from, next) => {
