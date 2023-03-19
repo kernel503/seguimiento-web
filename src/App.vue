@@ -293,7 +293,7 @@ export default {
 
     rutaIngresar() {
       console.log('🚀 ~ file: App.vue:297 ~ rutaIngresar ~ this.$route.name:', this.$route.name);
-      return this.$route.name === 'web:ingresar' || this.$route.name === null;
+      return this.$route.name === 'web:ingresar';
     },
 
     accesoPermitido(nombreRuta) {
