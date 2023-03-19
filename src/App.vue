@@ -221,7 +221,6 @@ export default {
           this.userData(data);
           this.userIsAuthenticated(true);
           this.showBtn = true;
-          this.items = items;
           this.items = items.map((item) => {
             const childPath = item.children.filter((child) => permisos.includes(child.path.name));
             if (childPath.length === 0) return null;
@@ -333,7 +332,7 @@ export default {
     },
 
     accesoPermitido(nombreRuta) {
-      if (this.data === null || !Array.isArray(this.data.permisos)) {
+      if (!Array.isArray(this.data?.permisos)) {
         return false;
       }
       return this.data.permisos.includes(nombreRuta);
