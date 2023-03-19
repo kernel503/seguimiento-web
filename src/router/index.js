@@ -8,8 +8,8 @@ const routes = [
   {
     path: '/dashboard',
     name: 'web:dashboard',
-    meta: { requiresAuth: true },
-    component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
+    meta: { requiresAuth: false },
+    component: () => import(/* webpackChunkName: "dashboard" */ '@/components/desplazamiento/DesplazamientoListado.vue'),
   },
   {
     path: '/ingresar',
@@ -163,7 +163,7 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
+  // base: process.env.BASE_URL,
   routes,
 });
 
