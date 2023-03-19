@@ -19,7 +19,7 @@
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="text-h6 text-center">
-            Seguimiento
+            REGISTRACKER
           </v-list-item-title>
           <v-list-item-subtitle class="text-h4 text-center">
             🛴

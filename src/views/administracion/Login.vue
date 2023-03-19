@@ -6,7 +6,7 @@
             <v-col cols="12" sm="10" md="12" lg="10" xl="8">
               <v-card class="elevation-1">
                 <v-card-title class="justify-center red darken-4">
-                  <h2 class="white--text">MoviUES</h2>
+                  <h2 class="white--text">REGISTRACKER</h2>
                 </v-card-title>
                 <v-card-text>
                 <v-window v-model="step" class="mb-0 pb-0">
@@ -166,7 +166,7 @@ export default {
   },
 
   methods: {
-    passwordRule: passwordLogin('Formato invalido de la contraseña.'),
+    passwordRule: passwordLogin('El campo contraseña es requerido'),
     emailRule: email('El campo correo electrónico es requerido.'),
 
     async login() {

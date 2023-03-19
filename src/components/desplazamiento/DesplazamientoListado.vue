@@ -60,6 +60,7 @@
       <v-col
         v-for="desplazamiento in desplazamientos"
         :key="desplazamiento.id"
+        cols="12"
         sm="12"
         md="12"
         lg="12"

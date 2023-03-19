@@ -432,6 +432,8 @@ export default {
       this.$nextTick(() => {
         this.editedItem = { ...this.defaultItem };
         this.editedIndex = -1;
+        this.$refs.form.resetValidation();
+        this.$refs.form.reset();
       });
     },
   },
