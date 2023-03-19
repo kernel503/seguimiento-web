@@ -8,23 +8,30 @@
     >
       Regresar
     </v-btn>
-    <l-map
-      :style="{ height: '80vh' }"
-      :zoom="config.zoom"
-      :center="config.center"
-      ref="map"
-      @ready="ready"
-    >
-      <l-tile-layer
-        :url="config.url"
-        :attribution="config.attribution"
-      ></l-tile-layer>
-      <l-geo-json
-        v-if="geojson"
-        :geojson="geojson"
-        :options="geojsonOptions"
-      ></l-geo-json>
-    </l-map>
+    <v-container fluid ma-0 pa-0 fill-height>
+      <v-layout row>
+        <v-flex xs4>
+          <l-map
+            v-if="!false"
+            :style="{ height: '80vh', position: 'fixed' }"
+            :zoom="config.zoom"
+            :center="config.center"
+            ref="map"
+            @ready="ready"
+          >
+            <l-tile-layer
+              :url="config.url"
+              :attribution="config.attribution"
+            ></l-tile-layer>
+            <l-geo-json
+              v-if="geojson"
+              :geojson="geojson"
+              :options="geojsonOptions"
+            ></l-geo-json>
+          </l-map>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 <script>
