@@ -13,5 +13,5 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        # script: cd /home/apps/seguimiento-web && git pull
+        script: cd /home/apps/seguimiento-web && git pull && npm run build
         # script: cd /home/apps/app-seguimiento-backend && git pull && docker compose run api_rest_laravel composer install
