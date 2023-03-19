@@ -241,15 +241,12 @@ export default {
         this.logout();
       }
     } else {
-      if (this.$route.meta.requiresAuth || [undefined, null].includes(this.$route.name)) {
-        this.logout();
-      }
-
-      return;
+      console.log('No tiene token');
+      this.logout();
     }
 
     // this.userIsAuthenticated
-    if (!this.accesoPermitido(this.$route.name)) {
+    if (!this.accesoPermitido(this.$route.name) && this.isAuthenticated) {
       console.log(this.$route.name);
       console.log(this.data?.permisos);
       this.$router.push({ name: 'web:dashboard' }, () => {});
