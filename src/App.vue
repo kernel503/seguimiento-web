@@ -140,11 +140,11 @@ export default {
     }
 
     if (this.rutaIngresar()) {
-      this.$router.push({ name: 'web:dashboard' }, () => {});
+      this.$router.push({ name: 'web:desplazamiento:movil' }, () => {});
     }
 
     if (!this.accesoPermitido(this.$router.name) && !this.userIsAuthenticated) {
-      this.$router.push({ name: 'web:dashboard' }, () => {});
+      this.$router.push({ name: 'web:desplazamiento:movil' }, () => {});
     }
 
     this.$router.beforeEach((to, from, next) => {
@@ -195,7 +195,7 @@ export default {
       // {
       //   title: 'Dashboard',
       //   icon: 'mdi-view-dashboard',
-      //   path: { name: 'dashboard' },
+      //   path: { name: 'web:dashboard' },
       // },
       {
         title: 'Administración',
