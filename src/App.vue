@@ -323,7 +323,7 @@ export default {
 
     rutaIngresar() {
       console.log(
-        '🚀 ~ file: App.vue:297 ~ rutaIngresar ~ this.$route.name:',
+        '🚀 ~ file: App.vue:297 ~ rutaIngresar',
         this.$route.name,
       );
       return this.$route.name === 'web:ingresar';
