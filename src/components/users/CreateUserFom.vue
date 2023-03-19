@@ -310,6 +310,9 @@ export default {
 
       const response = await this.axios.post('/usuarios/search', {
         includes: [{ relation: 'roles' }, { relation: 'solicitud.estado' }],
+        filters: [
+          { field: 'roles.id', operator: '!=', value: 1 },
+        ],
       });
 
       this.items = response.data.data.map((user) => ({

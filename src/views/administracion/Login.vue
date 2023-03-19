@@ -182,7 +182,11 @@ export default {
           localStorage.setItem('token', token);
           window.location.reload();
         } catch (error) {
-          this.$toast.error('Error al iniciar sesión.');
+          if (error.response.status === 422) {
+            this.$toast.error(error.response.data.message);
+          } else {
+            this.$toast.error('Error al iniciar sesión.');
+          }
         }
       }
     },
