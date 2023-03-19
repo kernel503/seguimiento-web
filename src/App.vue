@@ -265,7 +265,7 @@ export default {
         return next();
       }
 
-      if (this.rutaIngresar() || !this.accesoPermitido(to.name)) {
+      if (to.name === 'web:ingresar' || !this.accesoPermitido(to.name)) {
         console.log('Entra 3');
         return next(false);
       }
