@@ -50,6 +50,7 @@
                                 "
                                 :type="showPassword ? 'text' : 'password'"
                                 @click:append="showPassword = !showPassword"
+                                @keypress.enter="login"
                               >
                                 <template #label>
                                   Contraseña
