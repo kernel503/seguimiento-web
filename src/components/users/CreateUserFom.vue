@@ -366,7 +366,7 @@ export default {
       }
     },
     async initialize() {
-      const response = await this.axios.post('/usuarios/search', {
+      const response = await this.axios.post('/usuarios/search?limit=100', {
         includes: [{ relation: 'roles' }, { relation: 'solicitud.estado' }],
         filters: [{ field: 'roles.id', operator: '!=', value: 1 }],
       });
