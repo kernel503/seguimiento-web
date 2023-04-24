@@ -194,7 +194,7 @@ const items = [
       {
         title: 'Rutas transporte',
         icon: 'mdi-bus-stop',
-        path: { name: 'web:administracion:rutas-transportes' },
+        path: { name: 'web:administracion:rutas-transporte' },
       },
       /* {
         title: 'Clases Vehiculares',
