@@ -245,7 +245,7 @@ export default {
     fieldRule: string('Debe completar el campo.'),
 
     async obtenerItems() {
-      const response = await this.axios.get('rutas-transportes', {
+      const response = await this.axios.get('rutas-transporte', {
         params: {
           with_trashed: this.withTrashed,
           limit: this.limit,
@@ -292,7 +292,7 @@ export default {
         const validate = this.$refs.form.validate();
         if (!validate) { return; }
 
-        await this.axios.post('rutas-transportes', {
+        await this.axios.post('rutas-transporte', {
           ...this.editedItem,
           id: undefined,
         });
@@ -309,7 +309,7 @@ export default {
       try {
         const validate = this.$refs.form.validate();
         if (!validate) { return; }
-        await this.axios.put(`rutas-transportes/${this.editedItem.id}`, {
+        await this.axios.put(`rutas-transporte/${this.editedItem.id}`, {
           clase: this.editedItem.clase,
         });
         this.$toast.success('Registro actualizado correctamente.');
@@ -324,7 +324,7 @@ export default {
     async handleRestore() {
       try {
         await this.axios.post(
-          `rutas-transportes/${this.editedItem.id}/restore`,
+          `rutas-transporte/${this.editedItem.id}/restore`,
         );
         this.$toast.info('Registro restaurado.');
       } catch (error) {
@@ -337,7 +337,7 @@ export default {
 
     async handleDelete() {
       try {
-        await this.axios.delete(`rutas-transportes/${this.editedItem.id}`);
+        await this.axios.delete(`rutas-transporte/${this.editedItem.id}`);
         this.$toast.success('Registro eliminado');
       } catch (error) {
         console.log(error);

@@ -135,8 +135,8 @@ const routes = [
         ),
       },
       {
-        path: 'rutas-transportes',
-        name: 'web:administracion:rutas-transportes',
+        path: 'rutas-transporte',
+        name: 'web:administracion:rutas-transporte',
         meta: { requiresAuth: true },
         component: () => import(
           /* webpackChunkName: "administracion:rutas-transportes" */ '@/components/administracion/RutasTransporte/GestionRutasTransporte.vue'
