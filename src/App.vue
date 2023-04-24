@@ -154,12 +154,12 @@ const items = [
       {
         title: 'Estados solicitud',
         icon: 'mdi-account-details',
-        path: { name: 'web:administracion:estados-solicitud' },
+        path: { name: 'web:administracion:estados_solicitud' },
       },
       {
         title: 'Medios desplazamiento',
         icon: 'mdi-train-car',
-        path: { name: 'web:administracion:medios-desplazamiento' },
+        path: { name: 'web:administracion:medios_desplazamiento' },
       },
       {
         title: 'Incidentes',
@@ -174,12 +174,12 @@ const items = [
       {
         title: 'Clasificación Vehicular',
         icon: 'mdi-car-info',
-        path: { name: 'web:administracion:clasificacion-vehicular' },
+        path: { name: 'web:administracion:clasificacion_vehicular' },
       },
       /* {
         title: 'Clases Vehiculares',
         icon: 'mdi-car-info',
-        path: { name: 'web:administracion:clases-vehiculares' },
+        path: { name: 'web:administracion:clases_vehiculares' },
       }, */
       /* {
         title: 'Vehiculos',
