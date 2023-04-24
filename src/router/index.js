@@ -9,7 +9,9 @@ const routes = [
     path: '/dashboard',
     name: 'web:dashboard',
     meta: { requiresAuth: false },
-    component: () => import(/* webpackChunkName: "dashboard" */ '@/components/desplazamiento/DesplazamientoListado.vue'),
+    component: () => import(
+      /* webpackChunkName: "dashboard" */ '@/components/desplazamiento/DesplazamientoListado.vue'
+    ),
   },
   {
     path: '/ingresar',
@@ -106,6 +108,38 @@ const routes = [
         meta: { requiresAuth: true },
         component: () => import(
           /* webpackChunkName: "administracion:marcadores" */ '@/components/administracion/GestionEstadosCuenta.vue'
+        ),
+      },
+      {
+        path: 'tipos-vehiculos-rutas',
+        name: 'web:administracion:tipos-vehiculos-rutas',
+        meta: { requiresAuth: true },
+        component: () => import(
+          /* webpackChunkName: "administracion:tipos-vehiculos-rutas" */ '@/components/administracion/RutasTransporte/GestionTiposVehiculoRutas.vue'
+        ),
+      },
+      {
+        path: 'tipos-servicios-rutas',
+        name: 'web:administracion:tipos-servicios-rutas',
+        meta: { requiresAuth: true },
+        component: () => import(
+          /* webpackChunkName: "administracion:tipos-servicios-rutas" */ '@/components/administracion/RutasTransporte/GestionTiposServiciosRutas.vue'
+        ),
+      },
+      {
+        path: 'clases-servicios-rutas',
+        name: 'web:administracion:clases-servicios-rutas',
+        meta: { requiresAuth: true },
+        component: () => import(
+          /* webpackChunkName: "administracion:clases-servicios-rutas" */ '@/components/administracion/RutasTransporte/GestionClasesServiciosRutas.vue'
+        ),
+      },
+      {
+        path: 'rutas-transportes',
+        name: 'web:administracion:rutas-transportes',
+        meta: { requiresAuth: true },
+        component: () => import(
+          /* webpackChunkName: "administracion:rutas-transportes" */ '@/components/administracion/RutasTransporte/GestionRutasTransporte.vue'
         ),
       },
       {

@@ -154,12 +154,12 @@ const items = [
       {
         title: 'Estados solicitud',
         icon: 'mdi-account-details',
-        path: { name: 'web:administracion:estados_solicitud' },
+        path: { name: 'web:administracion:estados-solicitud' },
       },
       {
         title: 'Medios desplazamiento',
         icon: 'mdi-train-car',
-        path: { name: 'web:administracion:medios_desplazamiento' },
+        path: { name: 'web:administracion:medios-desplazamiento' },
       },
       {
         title: 'Incidentes',
@@ -174,12 +174,32 @@ const items = [
       {
         title: 'Clasificación Vehicular',
         icon: 'mdi-car-info',
-        path: { name: 'web:administracion:clasificacion_vehicular' },
+        path: { name: 'web:administracion:clasificacion-vehicular' },
+      },
+      {
+        title: 'Tipos vehiculos rutas',
+        icon: 'mdi-format-list-group',
+        path: { name: 'web:administracion:tipos-vehiculos-rutas' },
+      },
+      {
+        title: 'Tipos servicios rutas',
+        icon: 'mdi-format-list-group',
+        path: { name: 'web:administracion:tipos-servicios-rutas' },
+      },
+      {
+        title: 'Clases servicios rutas',
+        icon: 'mdi-format-list-group',
+        path: { name: 'web:administracion:clases-servicios-rutas' },
+      },
+      {
+        title: 'Rutas transporte',
+        icon: 'mdi-bus-stop',
+        path: { name: 'web:administracion:rutas-transportes' },
       },
       /* {
         title: 'Clases Vehiculares',
         icon: 'mdi-car-info',
-        path: { name: 'web:administracion:clases_vehiculares' },
+        path: { name: 'web:administracion:clases-vehiculares' },
       }, */
       /* {
         title: 'Vehiculos',
