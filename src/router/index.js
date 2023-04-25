@@ -143,6 +143,14 @@ const routes = [
         ),
       },
       {
+        path: 'levantamientos',
+        name: 'web:administracion:levantamiento',
+        meta: { requiresAuth: true },
+        component: () => import(
+          /* webpackChunkName: "administracion:rutas-transportes" */ '@/components/administracion/GestionLevantamiento.vue'
+        ),
+      },
+      {
         path: 'table',
         name: 'administracion-marcadores',
         meta: { requiresAuth: true },
@@ -182,6 +190,33 @@ const routes = [
         meta: { requiresAuth: true },
         component: () => import(
           /* webpackChunkName: "web:desplazamiento:movil" */ '@/components/desplazamiento/GeoJson.vue'
+        ),
+      },
+    ],
+  },
+
+  {
+    path: '/levantamiento',
+    name: 'levantamiento',
+    meta: { requiresAuth: true },
+    component: () => import(
+      /* webpackChunkName: "administracion" */ '@/views/levantamiento/Base.vue'
+    ),
+    children: [
+      {
+        path: 'marcador',
+        name: 'web:levantamiento:marcador',
+        meta: { requiresAuth: true },
+        component: () => import(
+          /* webpackChunkName: "web:desplazamiento:movil" */ '@/components/levantamiento/Listado.vue'
+        ),
+      },
+      {
+        path: 'marcador/:codigo',
+        name: 'web:levantamiento:detalle-marcador',
+        meta: { requiresAuth: true },
+        component: () => import(
+          /* webpackChunkName: "web:desplazamiento:movil" */ '@/components/levantamiento/Marker.vue'
         ),
       },
     ],

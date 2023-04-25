@@ -196,6 +196,11 @@ const items = [
         icon: 'mdi-bus-stop',
         path: { name: 'web:administracion:rutas-transporte' },
       },
+      {
+        title: 'Levantamiento',
+        icon: 'mdi-folder-search-outline',
+        path: { name: 'web:administracion:levantamiento' },
+      },
       /* {
         title: 'Clases Vehiculares',
         icon: 'mdi-car-info',
@@ -217,6 +222,28 @@ const items = [
         icon: 'mdi-cellphone-marker',
         path: {
           name: 'web:desplazamiento:movil',
+        },
+      },
+      // {
+      //   title: 'Dispositivo móvil',
+      //   icon: 'mdi-cellphone-marker',
+      //   path: {
+      //     name: 'web:desplazamiento:detalle',
+      //     params: { uuid: '22a3e45f-343e-4308-b42b-0cc2fe05873f' },
+      //   },
+      // },
+    ],
+  },
+
+  {
+    title: 'Levantamiento',
+    icon: 'mdi-folder-outline',
+    children: [
+      {
+        title: 'Marcadores',
+        icon: 'mdi-map-search-outline',
+        path: {
+          name: 'web:levantamiento:marcador',
         },
       },
       // {
