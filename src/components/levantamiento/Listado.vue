@@ -117,7 +117,7 @@ export default {
     visualizar(levantamiento) {
       this.$router.push({
         name: 'web:levantamiento:detalle-marcador',
-        params: { uuid: levantamiento.codigo },
+        params: { codigo: levantamiento.codigo },
       });
     },
   },
