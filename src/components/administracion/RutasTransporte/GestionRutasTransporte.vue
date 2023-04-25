@@ -53,17 +53,119 @@
                 <v-form ref="form" @submit.prevent>
                   <v-container>
                     <v-row>
-                      <v-col class="mt-2" cols="12" sm="12">
+                      <v-col cols="12" sm="12" class="my-0 py-0">
                         <v-text-field
                           :rules="[fieldRule]"
-                          v-model="editedItem.clase"
+                          v-model="editedItem.codigo_ruta"
                           outlined
                           @keyup.enter="handleSave"
                         >
                           <template #label>
-                            Ingrese el nombre
+                            Ingrese el código de ruta
                             <span class="red--text"><strong>* </strong></span>
                           </template>
+                        </v-text-field>
+                      </v-col>
+
+                      <v-col cols="12" sm="12" class="my-0 py-0">
+                        <v-text-field
+                          :rules="[fieldRule]"
+                          v-model="editedItem.ruta"
+                          outlined
+                          @keyup.enter="handleSave"
+                        >
+                          <template #label>
+                            Ingrese la ruta
+                            <span class="red--text"><strong>* </strong></span>
+                          </template>
+                        </v-text-field>
+                      </v-col>
+
+                      <v-col cols="12" sm="12" class="my-0 py-0">
+                        <v-autocomplete
+                          v-model="editedItem.id_departamento"
+                          :rules="[idDepartamento]"
+                          item-text="nombre"
+                          item-value="id"
+                          outlined
+                          :items="ctlDepartamentos"
+                        >
+                          <template #label>
+                            Selecciona el departamento
+                            <span class="red--text"><strong>* </strong></span>
+                          </template>
+                        </v-autocomplete>
+                      </v-col>
+
+                      <v-col cols="12" sm="12" class="my-0 py-0">
+                        <v-autocomplete
+                          v-model="editedItem.id_tipo_vehiculo_ruta"
+                          :rules="[idTipo]"
+                          item-text="tipo"
+                          item-value="id"
+                          outlined
+                          :items="ctlTipos"
+                        >
+                          <template #label>
+                            Selecciona el tipo de vehículo
+                            <span class="red--text"><strong>* </strong></span>
+                          </template>
+                        </v-autocomplete>
+                      </v-col>
+
+                      <v-col cols="12" sm="12" class="my-0 py-0">
+                        <v-autocomplete
+                          v-model="editedItem.id_tipo_servicio_ruta"
+                          :rules="[idServicio]"
+                          item-text="subtipo"
+                          item-value="id"
+                          outlined
+                          :items="ctlServicios"
+                        >
+                          <template #label>
+                            Selecciona el tipo de ruta
+                            <span class="red--text"><strong>* </strong></span>
+                          </template>
+                        </v-autocomplete>
+                      </v-col>
+
+                      <v-col cols="12" sm="12" class="my-0 py-0">
+                        <v-autocomplete
+                          v-model="editedItem.id_clase_servicio_ruta"
+                          :rules="[idClase]"
+                          item-text="clase"
+                          item-value="id"
+                          outlined
+                          :items="ctlClases"
+                        >
+                          <template #label>
+                            Selecciona la clase de servicio
+                            <span class="red--text"><strong>* </strong></span>
+                          </template>
+                        </v-autocomplete>
+                      </v-col>
+
+                      <v-col cols="12" sm="12" class="my-0 py-0">
+                        <v-text-field
+                          v-model="editedItem.tarifa_autorizada"
+                          outlined
+                          :rules="[tarifaRule]"
+                          @keyup.enter="handleSave"
+                        >
+                          <template #label>
+                            Ingrese la tarifa autorizada
+                            <span class="red--text"><strong>* </strong></span>
+                          </template>
+                        </v-text-field>
+                      </v-col>
+
+                      <v-col cols="12" sm="12" class="my-0 py-0">
+                        <v-text-field
+                          v-model="editedItem.denominacion"
+                          outlined
+                          label="Denominación"
+                          @keyup.enter="handleSave"
+                        >
                         </v-text-field>
                       </v-col>
                     </v-row>
@@ -99,11 +201,19 @@
       </template>
 
       <template #item.actions="{ item }">
-        <v-icon class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-        <v-icon v-if="item.fecha_eliminado" @click="restoreItem(item)" color="grey">
+        <v-icon @click="editItem(item)"> mdi-pencil </v-icon>
+        <v-icon
+          v-if="item.fecha_eliminado"
+          @click="restoreItem(item)"
+          color="grey"
+        >
           mdi-delete-restore
         </v-icon>
-        <v-icon v-if="!item.fecha_eliminado" color="red lighten-2" @click="deleteItem(item)">
+        <v-icon
+          v-if="!item.fecha_eliminado"
+          color="red lighten-2"
+          @click="deleteItem(item)"
+        >
           mdi-delete
         </v-icon>
       </template>
@@ -112,14 +222,14 @@
     <v-dialog v-model="restoreDialog" max-width="600">
       <v-card>
         <v-card-title class="text-center">
-          ¿Quiere restaurar el registro {{editedItem.clase}}?
+          ¿Quiere restaurar el registro {{ editedItem.codigo_ruta }}?
         </v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="red darken-1" text @click="handleRestore">Aceptar</v-btn>
-          <v-btn color="gray darken-1" text @click="close">
-            Cancelar
+          <v-btn color="red darken-1" text @click="handleRestore">
+            Aceptar
           </v-btn>
+          <v-btn color="gray darken-1" text @click="close"> Cancelar </v-btn>
           <v-spacer></v-spacer>
         </v-card-actions>
       </v-card>
@@ -128,16 +238,14 @@
     <v-dialog v-model="deleteDialog" max-width="600">
       <v-card>
         <v-card-title class="justify-center">
-          ¿Quiere eliminar el registro {{editedItem.clase}}?
+          ¿Quiere eliminar el registro {{ editedItem.codigo_ruta }}?
         </v-card-title>
         <v-card-actions class="py-3">
           <v-spacer></v-spacer>
           <v-btn text color="red darken-1" @click="handleDelete">
             Aceptar
           </v-btn>
-          <v-btn text color="gray darken-1" @click="close">
-            Cancelar
-          </v-btn>
+          <v-btn text color="gray darken-1" @click="close"> Cancelar </v-btn>
           <v-spacer></v-spacer>
         </v-card-actions>
       </v-card>
@@ -145,7 +253,7 @@
   </div>
 </template>
 <script>
-import { string } from '../../../http/Validation';
+import { string, integer, number } from '../../../http/Validation';
 
 export default {
   name: 'GestionRutasTransporte',
@@ -158,6 +266,10 @@ export default {
       limit: 10,
       page: 1,
       total: 0,
+      ctlDepartamentos: [],
+      ctlTipos: [],
+      ctlServicios: [],
+      ctlClases: [],
       headers: [
         {
           text: 'Código ruta',
@@ -196,6 +308,12 @@ export default {
           sortable: false,
         },
         {
+          text: 'Denominación',
+          align: 'start',
+          value: 'denominacion',
+          sortable: false,
+        },
+        {
           text: 'Tarifa autorizada',
           align: 'start',
           value: 'tarifa_autorizada',
@@ -203,7 +321,7 @@ export default {
         },
         {
           text: 'Acciones',
-          align: 'right',
+          align: 'start',
           value: 'actions',
           sortable: false,
         },
@@ -215,16 +333,31 @@ export default {
       editedIndex: -1,
       editedItem: {
         id: '',
-        clase: '',
+        id_departamento: null,
+        id_clase_servicio_ruta: null,
+        id_tipo_servicio_ruta: null,
+        id_tipo_vehiculo_ruta: null,
+        ruta: null,
+        codigo_ruta: null,
+        denominacion: null,
+        tarifa_autorizada: null,
       },
       defaultItem: {
-        id: '',
-        clase: '',
+        id: null,
+        id_departamento: null,
+        id_clase_servicio_ruta: null,
+        id_tipo_servicio_ruta: null,
+        id_tipo_vehiculo_ruta: null,
+        ruta: null,
+        codigo_ruta: null,
+        denominacion: null,
+        tarifa_autorizada: null,
       },
     };
   },
 
   created() {
+    this.obtenerCatalogos();
     this.routeName = this.$route.name.split(':').at(-1).replaceAll('-', ' ');
     this.obtenerItems();
   },
@@ -243,6 +376,38 @@ export default {
 
   methods: {
     fieldRule: string('Debe completar el campo.'),
+    tarifaRule: number('Debe ser un número.'),
+    idDepartamento: integer('Debe seleccionar un departamento.'),
+    idTipo: integer('Debe seleccionar un tipo de vehículo.'),
+    idServicio: integer('Debe seleccionar un servicio.'),
+    idClase: integer('Debe seleccionar la clase.'),
+
+    async fetchCatalogo({ path = '', config = {} }) {
+      try {
+        const {
+          data: { data },
+        } = await this.axios.get(path, config);
+        return data;
+      } catch (error) {
+        console.log(error);
+        return [];
+      }
+    },
+
+    async obtenerCatalogos() {
+      this.ctlDepartamentos = await this.fetchCatalogo({
+        path: 'departamentos',
+      });
+      this.ctlTipos = await this.fetchCatalogo({
+        path: 'tipos-vehiculos-rutas',
+      });
+      this.ctlServicios = await this.fetchCatalogo({
+        path: 'tipos-servicios-rutas',
+      });
+      this.ctlClases = await this.fetchCatalogo({
+        path: 'clases-servicios-rutas',
+      });
+    },
 
     async obtenerItems() {
       const response = await this.axios.get('rutas-transporte', {
@@ -271,7 +436,30 @@ export default {
 
     setItemValues(item) {
       this.editedIndex = this.items.indexOf(item);
-      this.editedItem = { ...item };
+      const {
+        id,
+        id_departamento: idDepartamento,
+        id_clase_servicio_ruta: idClaseServicioRuta,
+        id_tipo_servicio_ruta: idTipoServicioRuta,
+        id_tipo_vehiculo_ruta: idTipoVehiculoRuta,
+        ruta,
+        codigo_ruta: codigoRuta,
+        denominacion,
+        tarifa_autorizada: tarifaAutorizada,
+      } = item;
+
+      this.editedItem = {
+        id,
+        id_departamento: idDepartamento,
+        id_clase_servicio_ruta: idClaseServicioRuta,
+        id_tipo_servicio_ruta: idTipoServicioRuta,
+        id_tipo_vehiculo_ruta: idTipoVehiculoRuta,
+        ruta,
+        codigo_ruta: codigoRuta,
+        denominacion,
+        tarifa_autorizada: +tarifaAutorizada,
+      };
+
       if (this.$refs.form) {
         this.$refs.form.resetValidation();
       }
@@ -290,7 +478,9 @@ export default {
     async handleSave() {
       try {
         const validate = this.$refs.form.validate();
-        if (!validate) { return; }
+        if (!validate) {
+          return;
+        }
 
         await this.axios.post('rutas-transporte', {
           ...this.editedItem,
@@ -308,9 +498,11 @@ export default {
     async handleUpdate() {
       try {
         const validate = this.$refs.form.validate();
-        if (!validate) { return; }
+        if (!validate) {
+          return;
+        }
         await this.axios.put(`rutas-transporte/${this.editedItem.id}`, {
-          clase: this.editedItem.clase,
+          ...this.editedItem,
         });
         this.$toast.success('Registro actualizado correctamente.');
       } catch (error) {
@@ -323,9 +515,7 @@ export default {
 
     async handleRestore() {
       try {
-        await this.axios.post(
-          `rutas-transporte/${this.editedItem.id}/restore`,
-        );
+        await this.axios.post(`rutas-transporte/${this.editedItem.id}/restore`);
         this.$toast.info('Registro restaurado.');
       } catch (error) {
         console.log(error);
