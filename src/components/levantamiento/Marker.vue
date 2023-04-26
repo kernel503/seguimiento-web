@@ -29,14 +29,23 @@
             :key="marcador.id"
             :lat-lng="marcador.markerLatLng"
             v-for="marcador in marcadores"
-          ></l-marker>
+            :icon="icon"
+          >
+            <l-popup v-if="marcador.comentario">
+              {{ marcador.comentario }}
+            </l-popup>
+          </l-marker>
         </l-map>
       </v-img>
     </v-card-text>
   </v-card>
 </template>
 <script>
-import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
+import {
+  LMap, LTileLayer, LMarker, LPopup,
+} from 'vue2-leaflet';
+
+import * as L from 'leaflet';
 
 export default {
   name: 'LevantamientoMarker',
@@ -45,6 +54,7 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
+    LPopup,
   },
 
   data() {
@@ -75,7 +85,20 @@ export default {
       },
       mapa: null,
       marcadores: [],
+      icon: L.icon({
+        iconUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Aiga_bus_on_blue_circle.svg/1024px-Aiga_bus_on_blue_circle.svg.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        tooltipAnchor: [16, -28],
+        shadowSize: [41, 41],
+      }),
     };
+  },
+
+  created() {
+    console.log(L);
   },
 
   methods: {
