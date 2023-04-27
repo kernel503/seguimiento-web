@@ -99,11 +99,21 @@
       </template>
 
       <template #item.actions="{ item }">
-        <v-icon class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-        <v-icon v-if="item.fecha_eliminado" @click="restoreItem(item)" color="grey">
+        <v-icon
+          v-if="!item.fecha_eliminado"
+          class="mr-2"
+          @click="editItem(item)"
+        >
+          mdi-pencil
+        </v-icon>
+        <v-icon
+          v-if="item.fecha_eliminado"
+          @click="restoreItem(item)"
+          color="grey"
+        >
           mdi-delete-restore
         </v-icon>
-        <v-icon v-if="!item.fecha_eliminado" color="red lighten-2" @click="deleteItem(item)">
+        <v-icon v-else color="red lighten-2" @click="deleteItem(item)">
           mdi-delete
         </v-icon>
       </template>
@@ -112,14 +122,14 @@
     <v-dialog v-model="restoreDialog" max-width="600">
       <v-card>
         <v-card-title class="text-center">
-          ¿Quiere restaurar el registro {{editedItem.subtipo}}?
+          ¿Quiere restaurar el registro {{ editedItem.subtipo }}?
         </v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="red darken-1" text @click="handleRestore">Aceptar</v-btn>
-          <v-btn color="gray darken-1" text @click="close">
-            Cancelar
-          </v-btn>
+          <v-btn color="red darken-1" text @click="handleRestore"
+            >Aceptar</v-btn
+          >
+          <v-btn color="gray darken-1" text @click="close"> Cancelar </v-btn>
           <v-spacer></v-spacer>
         </v-card-actions>
       </v-card>
@@ -128,16 +138,14 @@
     <v-dialog v-model="deleteDialog" max-width="600">
       <v-card>
         <v-card-title class="justify-center">
-          ¿Quiere eliminar el registro {{editedItem.subtipo}}?
+          ¿Quiere eliminar el registro {{ editedItem.subtipo }}?
         </v-card-title>
         <v-card-actions class="py-3">
           <v-spacer></v-spacer>
           <v-btn text color="red darken-1" @click="handleDelete">
             Aceptar
           </v-btn>
-          <v-btn text color="gray darken-1" @click="close">
-            Cancelar
-          </v-btn>
+          <v-btn text color="gray darken-1" @click="close"> Cancelar </v-btn>
           <v-spacer></v-spacer>
         </v-card-actions>
       </v-card>
@@ -167,7 +175,7 @@ export default {
         },
         {
           text: 'Acciones',
-          align: 'right',
+          align: 'end',
           value: 'actions',
           sortable: false,
         },
@@ -253,7 +261,9 @@ export default {
     async handleSave() {
       try {
         const validate = this.$refs.form.validate();
-        if (!validate) { return; }
+        if (!validate) {
+          return;
+        }
 
         await this.axios.post('tipos-servicios-rutas', {
           ...this.editedItem,
@@ -271,7 +281,9 @@ export default {
     async handleUpdate() {
       try {
         const validate = this.$refs.form.validate();
-        if (!validate) { return; }
+        if (!validate) {
+          return;
+        }
         await this.axios.put(`tipos-servicios-rutas/${this.editedItem.id}`, {
           subtipo: this.editedItem.subtipo,
         });

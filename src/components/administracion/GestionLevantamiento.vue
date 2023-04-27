@@ -112,7 +112,9 @@
       </template>
 
       <template #item.actions="{ item }">
-        <v-icon @click="editItem(item)"> mdi-pencil </v-icon>
+        <v-icon v-if="!item.fecha_eliminado" @click="editItem(item)">
+          mdi-pencil
+        </v-icon>
         <v-icon
           v-if="item.fecha_eliminado"
           @click="restoreItem(item)"
@@ -120,11 +122,7 @@
         >
           mdi-delete-restore
         </v-icon>
-        <v-icon
-          v-if="!item.fecha_eliminado"
-          color="red lighten-2"
-          @click="deleteItem(item)"
-        >
+        <v-icon v-else color="red lighten-2" @click="deleteItem(item)">
           mdi-delete
         </v-icon>
       </template>
@@ -273,10 +271,11 @@ export default {
 
     setItemValues(item) {
       this.editedIndex = this.items.indexOf(item);
-      const { id, fecha_vencimiento: fechaVencimiento } = item;
+      const { id, fecha_vencimiento: fechaVencimiento, codigo } = item;
 
       this.editedItem = {
         id,
+        codigo,
         fecha_vencimiento: fechaVencimiento,
       };
 
@@ -321,7 +320,7 @@ export default {
         if (!validate) {
           return;
         }
-        await this.axios.put(`levantamientos/${this.editedItem.id}`, {
+        await this.axios.put(`levantamientos/${this.editedItem.codigo}`, {
           ...this.editedItem,
         });
         this.$toast.success('Registro actualizado correctamente.');
@@ -335,7 +334,9 @@ export default {
 
     async handleRestore() {
       try {
-        await this.axios.post(`levantamientos/${this.editedItem.id}/restore`);
+        await this.axios.post(
+          `levantamientos/${this.editedItem.codigo}/restore`,
+        );
         this.$toast.info('Registro restaurado.');
       } catch (error) {
         console.log(error);
@@ -347,7 +348,7 @@ export default {
 
     async handleDelete() {
       try {
-        await this.axios.delete(`levantamientos/${this.editedItem.id}`);
+        await this.axios.delete(`levantamientos/${this.editedItem.codigo}`);
         this.$toast.success('Registro eliminado');
       } catch (error) {
         console.log(error);

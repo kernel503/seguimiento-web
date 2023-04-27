@@ -201,7 +201,9 @@
       </template>
 
       <template #item.actions="{ item }">
-        <v-icon @click="editItem(item)"> mdi-pencil </v-icon>
+        <v-icon v-if="!item.fecha_eliminado" @click="editItem(item)">
+          mdi-pencil
+        </v-icon>
         <v-icon
           v-if="item.fecha_eliminado"
           @click="restoreItem(item)"
@@ -210,7 +212,7 @@
           mdi-delete-restore
         </v-icon>
         <v-icon
-          v-if="!item.fecha_eliminado"
+          v-else
           color="red lighten-2"
           @click="deleteItem(item)"
         >
@@ -321,7 +323,7 @@ export default {
         },
         {
           text: 'Acciones',
-          align: 'start',
+          align: 'end',
           value: 'actions',
           sortable: false,
         },
