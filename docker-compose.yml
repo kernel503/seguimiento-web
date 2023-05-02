@@ -5,7 +5,8 @@ services:
   nginx:
     image: docker.io/bitnami/nginx:1.23
     ports:
-      - 80:8080
+      - 443:443
     volumes:
       - ./block/:/opt/bitnami/nginx/conf/server_blocks/
+      - ../certs:/certs
       - ./dist:/app
