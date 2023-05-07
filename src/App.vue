@@ -201,6 +201,11 @@ const items = [
         icon: 'mdi-folder-search-outline',
         path: { name: 'web:administracion:levantamiento' },
       },
+      {
+        title: 'Conteo vehicular',
+        icon: 'mdi-format-list-group-plus',
+        path: { name: 'web:administracion:conteo-vehicular' },
+      },
       /* {
         title: 'Clases Vehiculares',
         icon: 'mdi-car-info',
@@ -244,6 +249,13 @@ const items = [
         icon: 'mdi-map-search-outline',
         path: {
           name: 'web:levantamiento:marcador',
+        },
+      },
+      {
+        title: 'Conteo vehicular',
+        icon: 'mdi-map-search-outline',
+        path: {
+          name: 'web:conteo-vehicular:lista',
         },
       },
       // {

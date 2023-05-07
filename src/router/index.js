@@ -151,6 +151,14 @@ const routes = [
         ),
       },
       {
+        path: 'conteo-vehicular',
+        name: 'web:administracion:conteo-vehicular',
+        meta: { requiresAuth: true },
+        component: () => import(
+          /* webpackChunkName: "administracion:rutas-transportes" */ '@/components/administracion/GestionLevantamientoContador.vue'
+        ),
+      },
+      {
         path: 'table',
         name: 'administracion-marcadores',
         meta: { requiresAuth: true },
@@ -217,6 +225,22 @@ const routes = [
         meta: { requiresAuth: true },
         component: () => import(
           /* webpackChunkName: "web:desplazamiento:movil" */ '@/components/levantamiento/Marker.vue'
+        ),
+      },
+      {
+        path: 'conteo-vehicular',
+        name: 'web:conteo-vehicular:lista',
+        meta: { requiresAuth: true },
+        component: () => import(
+          /* webpackChunkName: "web:desplazamiento:movil" */ '@/components/conteo_vehicular/Listado.vue'
+        ),
+      },
+      {
+        path: 'conteo-vehicular/:codigo',
+        name: 'web:conteo-vehicular:detalle',
+        meta: { requiresAuth: true },
+        component: () => import(
+          /* webpackChunkName: "web:desplazamiento:movil" */ '@/components/conteo_vehicular/Tabla.vue'
         ),
       },
     ],
