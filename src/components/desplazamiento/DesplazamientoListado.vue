@@ -86,6 +86,10 @@
           <v-card-title class="mb-0 pb-0">
             Fecha registro:
             {{ desplazamiento.fecha_creado.split(".").at(0).replace("T", " ") }}
+            <v-spacer></v-spacer>
+            <div class="body-1">
+              Costo
+            </div>
           </v-card-title>
           <v-card-text class="my-0 py-0">
             <v-list>
@@ -106,6 +110,10 @@
 
                 <v-list-item-subtitle class="text-right">
                   {{ medio.duracion }}
+                </v-list-item-subtitle>
+
+                <v-list-item-subtitle class="text-right">
+                  {{ medio.costo }}
                 </v-list-item-subtitle>
               </v-list-item>
             </v-list>
