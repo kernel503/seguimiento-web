@@ -57,8 +57,27 @@
                         <v-textarea
                           v-model="editedItem.nombre_via"
                           outlined
-                          name="input-7-1"
-                          label="Nombre via"
+                          rows="2"
+                          label="Nombre vía"
+                        >
+                        </v-textarea>
+                        <v-text-field
+                          v-model="editedItem.identificacion_via"
+                          label="Identificación de la vía"
+                          outlined
+                        >
+                        </v-text-field>
+                        <v-text-field
+                          label="Categoria de la vía"
+                          outlined
+                          v-model="editedItem.categoria_via"
+                        >
+                        </v-text-field>
+                        <v-textarea
+                          v-model="editedItem.numero_carriles"
+                          outlined
+                          rows="2"
+                          label="Número de carriles"
                         >
                         </v-textarea>
                       </v-col>
@@ -170,9 +189,27 @@ export default {
           sortable: false,
         },
         {
-          text: 'Nombre via',
+          text: 'Nombre vía',
           align: 'start',
           value: 'nombre_via',
+          sortable: false,
+        },
+        {
+          text: 'Identificación de la vía',
+          align: 'start',
+          value: 'identificacion_via',
+          sortable: false,
+        },
+        {
+          text: 'Categoria de la vía',
+          align: 'start',
+          value: 'categoria_via',
+          sortable: false,
+        },
+        {
+          text: 'Número de carriles',
+          align: 'start',
+          value: 'numero_carriles',
           sortable: false,
         },
         {
@@ -264,12 +301,22 @@ export default {
 
     setItemValues(item) {
       this.editedIndex = this.items.indexOf(item);
-      const { id, nombre_via: puntoAforo, codigo } = item;
+      const {
+        id,
+        nombre_via: puntoAforo,
+        codigo,
+        identificacion_via: identificacionVia,
+        categoria_via: categoriaVia,
+        numero_carriles: numeroCarriles,
+      } = item;
 
       this.editedItem = {
         id,
         codigo,
         nombre_via: puntoAforo,
+        identificacion_via: identificacionVia,
+        categoria_via: categoriaVia,
+        numero_carriles: numeroCarriles,
       };
 
       if (this.$refs.form) {

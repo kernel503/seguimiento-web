@@ -40,7 +40,7 @@
                         <v-text-field
                           :rules="[fieldRule]"
                           v-model="editedItem.nombre"
-                          label="Ingrese el nombre*"
+                          label="Ingrese el nombre *"
                           outlined
                         >
                         </v-text-field>

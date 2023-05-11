@@ -181,7 +181,7 @@ const routes = [
     name: 'desplazamiento',
     meta: { requiresAuth: true },
     component: () => import(
-      /* webpackChunkName: "administracion" */ '@/views/administracion/Base.vue'
+      /* webpackChunkName: "desplazamiento" */ '@/views/administracion/Base.vue'
     ),
     children: [
       {
@@ -208,7 +208,7 @@ const routes = [
     name: 'levantamiento',
     meta: { requiresAuth: true },
     component: () => import(
-      /* webpackChunkName: "administracion" */ '@/views/administracion/Base.vue'
+      /* webpackChunkName: "levantamiento" */ '@/views/administracion/Base.vue'
     ),
     children: [
       {
