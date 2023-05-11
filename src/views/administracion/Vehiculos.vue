@@ -3,6 +3,7 @@
       <v-data-table
       :headers="headers"
       :items="items"
+      :server-items-length="total"
       sort-by="id"
       class="elevation-1"
       :footer-props="{
@@ -134,6 +135,9 @@ export default {
       dialog: false,
       dialogDelete: false,
       editedIndex: -1,
+      total: 0,
+      limit: 10,
+      page: 1,
       editedItem: {
       },
       defaultItem: {
@@ -158,9 +162,20 @@ export default {
     fieldRule: string('Debe ingresar un valor numerico'),
     numberRule: number('Debe ingresar un valor numerico'),
     async initialize() {
-      const response = await this.axios.get('/vehiculos');
-      this.items = response.data.data;
-      console.log(response.data.data);
+      const {
+        data: {
+          data,
+          meta: { total },
+        },
+      } = await this.axios.get('/vehiculos', {
+        params: {
+          with_trashed: this.withTrashed,
+          limit: 1000,
+          page: this.page,
+        },
+      });
+      this.items = data;
+      this.total = total;
     },
     async save() {
       try {
