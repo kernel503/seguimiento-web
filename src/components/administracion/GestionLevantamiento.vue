@@ -301,11 +301,12 @@ export default {
           return;
         }
 
-        await this.axios.post('levantamientos', {
+        const response = await this.axios.post('levantamientos', {
           ...this.editedItem,
           id: undefined,
         });
-        this.$toast.success('Registro creado.');
+        console.log(response);
+        this.$toast.success(`Código creado: ${response.codigo}`);
       } catch (error) {
         console.log(error);
         this.$toast.error('Error al crear el registro.');

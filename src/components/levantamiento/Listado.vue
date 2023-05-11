@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <div>
     <v-row>
       <i class="mdi mdi-facebook-box"></i>
       <v-col sm="12" md="6" lg="6" xl="6">
@@ -54,7 +54,7 @@
         </v-card>
       </v-col>
     </v-row>
-  </v-container>
+  </div>
 </template>
 <script>
 export default {
@@ -79,7 +79,11 @@ export default {
       const filters = [];
 
       if (this.form.codigo) {
-        filters.push({ field: 'codigo', operator: 'like', value: `%${this.codigo}%` });
+        filters.push({
+          field: 'codigo',
+          operator: 'like',
+          value: `%${this.codigo}%`,
+        });
       }
 
       try {
