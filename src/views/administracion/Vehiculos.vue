@@ -45,53 +45,11 @@
                           >
                           </v-text-field>
                         </v-col>
-                          <v-col class="pb-0" cols="12" sm="12">
-                              <v-autocomplete
-                                  v-model="editedItem.id_clase"
-                                  :rules="[integerRule]"
-                                  item-text="nombre"
-                                  item-value="id"
-                                  outlined
-                                  :items="clases"
-                              >
-                                  <template #label>
-                                  Selecciona clase
-                                  <span class="red--text"><strong>* </strong></span>
-                                  </template>
-                              </v-autocomplete>
-                          </v-col>
                         <v-col class="mt-2 pb-0" cols="12" sm="12">
                           <v-text-field
                             :rules="[fieldRule]"
                             v-model="editedItem.nomenclatura"
                             label="Ingrese la nomenclatura*"
-                            outlined
-                          >
-                          </v-text-field>
-                        </v-col>
-                        <v-col class="mt-2 pb-0" cols="12" sm="12">
-                          <v-text-field
-                            :rules="[integerRule]"
-                            v-model="editedItem.cantidad_ejes"
-                            label="Ingrese la cantidad de ejes*"
-                            outlined
-                          >
-                          </v-text-field>
-                        </v-col>
-                        <v-col class="mt-2 pb-0" cols="12" sm="6">
-                          <v-text-field
-                            :rules="[numberRule]"
-                            v-model="editedItem.peso_maximo"
-                            label="Ingrese peso máximo*"
-                            outlined
-                          >
-                          </v-text-field>
-                        </v-col>
-                        <v-col class="mt-2 pb-0" cols="12" sm="6">
-                          <v-text-field
-                            :rules="[numberRule]"
-                            v-model="editedItem.longitud_maxima"
-                            label="Ingrese longitud máxima*"
                             outlined
                           >
                           </v-text-field>
@@ -163,17 +121,6 @@ export default {
           value: 'nombre',
         },
         { text: 'Nomenclatura', align: 'center', value: 'nomenclatura' },
-        {
-          text: 'Cantidad de ejes',
-          align: 'start',
-          value: 'cantidad_ejes',
-        },
-        {
-          text: 'Peso máximo',
-          align: 'start',
-          value: 'peso_maximo',
-        },
-        { text: 'Logitud máxima', align: 'center', value: 'longitud_maxima' },
         { text: 'Descripción', align: 'center', value: 'descripcion' },
         {
           text: 'Acciones',
@@ -213,7 +160,7 @@ export default {
     async initialize() {
       const response = await this.axios.get('/vehiculos');
       this.items = response.data.data;
-      this.getClaseVehicular();
+      console.log(response.data.data);
     },
     async save() {
       try {
@@ -259,10 +206,6 @@ export default {
       } catch (error) {
         this.$toast.error('Error al eliminar vehiculo.');
       }
-    },
-    async getClaseVehicular() {
-      const response = await this.axios.get('/clases-vehicular');
-      this.clases = response.data.data;
     },
     close() {
       this.dialog = false;

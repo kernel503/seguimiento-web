@@ -206,16 +206,11 @@ const items = [
         icon: 'mdi-format-list-group-plus',
         path: { name: 'web:administracion:conteo-vehicular' },
       },
-      /* {
-        title: 'Clases Vehiculares',
-        icon: 'mdi-car-info',
-        path: { name: 'web:administracion:clases-vehiculares' },
-      }, */
-      /* {
+      {
         title: 'Vehiculos',
         icon: 'mdi-car-info',
         path: { name: 'web:administracion:vehiculos' },
-      } */
+      },
     ],
   },
   {
