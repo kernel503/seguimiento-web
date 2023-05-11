@@ -127,11 +127,6 @@ import { mapActions, mapState } from 'vuex';
 import Footer from '@/components/Footer.vue';
 
 const items = [
-  // {
-  //   title: 'Dashboard',
-  //   icon: 'mdi-view-dashboard',
-  //   path: { name: 'web:dashboard' },
-  // },
   {
     title: 'Administración',
     icon: 'mdi-database',
@@ -196,6 +191,18 @@ const items = [
         icon: 'mdi-bus-stop',
         path: { name: 'web:administracion:rutas-transporte' },
       },
+
+      {
+        title: 'Vehiculos',
+        icon: 'mdi-car-info',
+        path: { name: 'web:administracion:vehiculos' },
+      },
+    ],
+  },
+  {
+    title: 'Reportes',
+    icon: 'mdi-clipboard-outline',
+    children: [
       {
         title: 'Levantamiento',
         icon: 'mdi-folder-search-outline',
@@ -206,13 +213,9 @@ const items = [
         icon: 'mdi-format-list-group-plus',
         path: { name: 'web:administracion:conteo-vehicular' },
       },
-      {
-        title: 'Vehiculos',
-        icon: 'mdi-car-info',
-        path: { name: 'web:administracion:vehiculos' },
-      },
     ],
   },
+
   {
     title: 'Desplazamientos',
     icon: 'mdi-crosshairs-gps',
@@ -224,14 +227,6 @@ const items = [
           name: 'web:desplazamiento:movil',
         },
       },
-      // {
-      //   title: 'Dispositivo móvil',
-      //   icon: 'mdi-cellphone-marker',
-      //   path: {
-      //     name: 'web:desplazamiento:detalle',
-      //     params: { uuid: '22a3e45f-343e-4308-b42b-0cc2fe05873f' },
-      //   },
-      // },
     ],
   },
 
@@ -248,19 +243,11 @@ const items = [
       },
       {
         title: 'Conteo vehicular',
-        icon: 'mdi-map-search-outline',
+        icon: 'mdi-clipboard-edit-outline',
         path: {
           name: 'web:conteo-vehicular:lista',
         },
       },
-      // {
-      //   title: 'Dispositivo móvil',
-      //   icon: 'mdi-cellphone-marker',
-      //   path: {
-      //     name: 'web:desplazamiento:detalle',
-      //     params: { uuid: '22a3e45f-343e-4308-b42b-0cc2fe05873f' },
-      //   },
-      // },
     ],
   },
 ];

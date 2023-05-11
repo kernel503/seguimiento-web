@@ -61,30 +61,6 @@
                           label="Nombre via"
                         >
                         </v-textarea>
-                        <!-- <v-menu
-                          v-model="menuDatePicker"
-                          :close-on-content-click="false"
-                          :nudge-right="40"
-                          transition="scale-transition"
-                          offset-y
-                          min-width="auto"
-                        >
-                          <template v-slot:activator="{ on, attrs }">
-                            <v-text-field
-                              v-model="editedItem.nombre_via"
-                              label="Fecha vencimiento del código"
-                              prepend-icon="mdi-calendar"
-                              readonly
-                              clearable
-                              v-bind="attrs"
-                              v-on="on"
-                            ></v-text-field>
-                          </template>
-                          <v-date-picker
-                            v-model="editedItem.nombre_via"
-                            @input="menuDatePicker = false"
-                          ></v-date-picker>
-                        </v-menu> -->
                       </v-col>
                     </v-row>
                   </v-container>
@@ -118,8 +94,8 @@
         </v-toolbar>
       </template>
 
-      <template #item.periodo>
-        {{ periodo_inicio }} - {{ periodo_fin }}
+      <template #item.periodo="{ item }">
+        {{ item.periodo_inicio || '' }} - {{ item.periodo_fin || '' }}
       </template>
 
       <template #item.actions="{ item }">
