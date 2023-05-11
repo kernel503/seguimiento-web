@@ -55,10 +55,10 @@
                     <v-row>
                       <v-col cols="12" sm="12" class="my-0 py-0">
                         <v-textarea
-                          v-model="editedItem.punto_aforo"
+                          v-model="editedItem.nombre_via"
                           outlined
                           name="input-7-1"
-                          label="Punto de aforo"
+                          label="Nombre via"
                         >
                         </v-textarea>
                         <!-- <v-menu
@@ -71,7 +71,7 @@
                         >
                           <template v-slot:activator="{ on, attrs }">
                             <v-text-field
-                              v-model="editedItem.punto_aforo"
+                              v-model="editedItem.nombre_via"
                               label="Fecha vencimiento del código"
                               prepend-icon="mdi-calendar"
                               readonly
@@ -81,7 +81,7 @@
                             ></v-text-field>
                           </template>
                           <v-date-picker
-                            v-model="editedItem.punto_aforo"
+                            v-model="editedItem.nombre_via"
                             @input="menuDatePicker = false"
                           ></v-date-picker>
                         </v-menu> -->
@@ -194,9 +194,9 @@ export default {
           sortable: false,
         },
         {
-          text: 'Punto aforo',
+          text: 'Nombre via',
           align: 'start',
-          value: 'punto_aforo',
+          value: 'nombre_via',
           sortable: false,
         },
         {
@@ -226,11 +226,11 @@ export default {
       editedIndex: -1,
       editedItem: {
         id: '',
-        punto_aforo: null,
+        nombre_via: null,
       },
       defaultItem: {
         id: '',
-        punto_aforo: null,
+        nombre_via: null,
       },
     };
   },
@@ -288,12 +288,12 @@ export default {
 
     setItemValues(item) {
       this.editedIndex = this.items.indexOf(item);
-      const { id, punto_aforo: puntoAforo, codigo } = item;
+      const { id, nombre_via: puntoAforo, codigo } = item;
 
       this.editedItem = {
         id,
         codigo,
-        punto_aforo: puntoAforo,
+        nombre_via: puntoAforo,
       };
 
       if (this.$refs.form) {
