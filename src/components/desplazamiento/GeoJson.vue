@@ -159,12 +159,6 @@ export default {
 
         this.geojson = coleccion;
         this.geojsonLimite = limite;
-
-        // const arrayLimite = limite.features.map(
-        //   ({ geometry: { coordinates } }) => coordinates,
-        // );
-
-        // this.mapa.flyToBounds(arrayLimite);
       } catch (error) {
         console.log(error);
       }
