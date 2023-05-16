@@ -1,16 +1,40 @@
 <template>
   <v-card>
     <v-card-title>
-      <v-btn text class="mb-1 pb-1 pt-0 mt-0" color="red darken-2" @click="$router.go(-1)">
+      <v-btn
+        text
+        class="mb-1 pb-1 pt-0 mt-0"
+        color="red darken-2"
+        @click="$router.go(-1)"
+      >
         Regresar
       </v-btn>
     </v-card-title>
     <v-card-text>
       <v-img height="72vh" width="100vw">
-        <l-map v-if="!false" :style="{ position: 'absolute', height: '100%', width: '100%' }" :zoom="config.zoom"
-          :center="config.center" ref="map" @ready="ready">
-          <l-tile-layer :url="config.url" :attribution="config.attribution"></l-tile-layer>
-          <l-geo-json v-if="geojson" :geojson="geojson" :options="geojsonOptions">
+        <l-map
+          v-if="!false"
+          :style="{ position: 'absolute', height: '100%', width: '100%' }"
+          :zoom="config.zoom"
+          :center="config.center"
+          ref="map"
+          @ready="ready"
+        >
+          <l-tile-layer
+            :url="config.url"
+            :attribution="config.attribution"
+          ></l-tile-layer>
+          <l-geo-json
+            v-if="geojson"
+            :geojson="geojson"
+            :options="geojsonOptions"
+          >
+          </l-geo-json>
+          <l-geo-json
+            v-if="geojsonLimite"
+            :geojson="geojsonLimite"
+            :options="geojsonLimiteOptions"
+          >
           </l-geo-json>
         </l-map>
       </v-img>
@@ -18,10 +42,22 @@
   </v-card>
 </template>
 <script>
-import { LMap, LTileLayer, LGeoJson } from "vue2-leaflet";
+import { LMap, LTileLayer, LGeoJson } from 'vue2-leaflet';
+import * as L from 'leaflet';
+
+const color = {
+  1: 'rgba(255, 99, 132)',
+  2: 'rgba(255, 159, 64)',
+  3: 'rgba(255, 205, 86)',
+  4: 'rgba(75, 192, 192)',
+  5: 'rgba(54, 162, 235)',
+  6: 'rgba(153, 102, 255)',
+  7: 'rgb(92, 70, 156)',
+  8: 'rgb(176, 71, 89)',
+};
 
 export default {
-  name: "GeoJson",
+  name: 'GeoJson',
 
   components: {
     LMap,
@@ -30,47 +66,73 @@ export default {
   },
 
   data() {
-    // 3bfc0a52-2e00-4225-86e7-92fd2cbfc376
-    // 1,5,2,1
     return {
       selectedId: null,
       geojson: null,
+      geojsonLimite: null,
+      geojsonLimiteOptions: {
+        pointToLayer(feature, latlng) {
+          if (feature?.properties?.inicio_recorrido) {
+            return L.circleMarker(latlng, {
+              radius: 8,
+              fillColor: '#03C988',
+              color: '#000',
+              weight: 1,
+              opacity: 1,
+              fillOpacity: 0.8,
+            });
+          }
+          return L.circleMarker(latlng, {
+            radius: 8,
+            fillColor: 'rgba(255,26,104,1)',
+            color: '#000',
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8,
+          });
+        },
+        onEachFeature(feature, layer) {
+          const data = feature?.properties?.fecha_registro;
+          if (data) {
+            layer.bindPopup(data.replace('T', ' '));
+          }
+        },
+      },
       geojsonOptions: {
         style(feature) {
           return {
-            color: feature.properties.color || "rgba(255,26,104,1)",
+            color:
+              color[feature?.properties?.medios_desplazamiento?.id]
+              || 'rgba(255,26,104,1)',
             weight: 6,
           };
         },
         onEachFeature(feature, layer) {
-          console.log(layer);
-          console.log(feature);
-          // layer.bindPopup('Hi There!');
-          // setTimeout(() => {
-          //   // eslint-disable-next-line no-param-reassign
-          //   layer.options.weight = 30;
-          // }, 1000);
+          const data = feature?.properties?.medios_desplazamiento?.nombre;
+          if (data) {
+            layer.bindPopup(data);
+          }
         },
       },
       leafletProviders: [
         {
-          name: "OpenStreetMap",
+          name: 'OpenStreetMap',
           visible: true,
           attribution:
             '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-          url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+          url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         },
         {
-          name: "Stadia.AlidadeSmoothDark",
+          name: 'Stadia.AlidadeSmoothDark',
           visible: false,
-          url: "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png",
+          url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
           attribution:
             '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
         },
       ],
 
       config: {
-        url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         attribution:
           '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
         zoom: 10,
@@ -88,14 +150,24 @@ export default {
     },
 
     async fetchCoordenadas() {
-      const { uuid } = this.$route.params;
+      try {
+        const { uuid } = this.$route.params;
 
-      const {
-        data: { coleccion },
-      } = await this.axios.get(`desplazamiento/${uuid}`);
+        const {
+          data: { coleccion, limite },
+        } = await this.axios.get(`desplazamiento/${uuid}`);
 
-      this.geojson = coleccion;
-      // this.mapa.flyToBounds(limite);
+        this.geojson = coleccion;
+        this.geojsonLimite = limite;
+
+        // const arrayLimite = limite.features.map(
+        //   ({ geometry: { coordinates } }) => coordinates,
+        // );
+
+        // this.mapa.flyToBounds(arrayLimite);
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
