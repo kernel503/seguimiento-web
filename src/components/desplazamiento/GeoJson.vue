@@ -160,6 +160,9 @@ export default {
         this.geojson = coleccion;
         this.geojsonLimite = limite;
       } catch (error) {
+        this.$toast.error(
+          'Error al cargar los datos.',
+        );
         console.log(error);
       }
     },
