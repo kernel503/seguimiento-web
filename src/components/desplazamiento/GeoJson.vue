@@ -43,7 +43,7 @@
 </template>
 <script>
 import { LMap, LTileLayer, LGeoJson } from 'vue2-leaflet';
-import * as L from 'leaflet';
+import { circleMarker } from 'leaflet';
 
 const color = {
   1: 'rgba(255, 99, 132)',
@@ -67,24 +67,14 @@ export default {
 
   data() {
     return {
-      selectedId: null,
       geojson: null,
       geojsonLimite: null,
       geojsonLimiteOptions: {
         pointToLayer(feature, latlng) {
-          if (feature?.properties?.inicio_recorrido) {
-            return L.circleMarker(latlng, {
-              radius: 8,
-              fillColor: '#03C988',
-              color: '#000',
-              weight: 1,
-              opacity: 1,
-              fillOpacity: 0.8,
-            });
-          }
-          return L.circleMarker(latlng, {
+          const fillColor = feature?.properties?.inicio_recorrido ? '#03C988' : 'rgba(255,26,104,1)';
+          return circleMarker(latlng, {
             radius: 8,
-            fillColor: 'rgba(255,26,104,1)',
+            fillColor,
             color: '#000',
             weight: 1,
             opacity: 1,
@@ -160,9 +150,7 @@ export default {
         this.geojson = coleccion;
         this.geojsonLimite = limite;
       } catch (error) {
-        this.$toast.error(
-          'Error al cargar los datos.',
-        );
+        this.$toast.error('Error al cargar los datos.');
         console.log(error);
       }
     },
