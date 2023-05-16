@@ -197,7 +197,15 @@ const routes = [
         name: 'web:desplazamiento:detalle',
         meta: { requiresAuth: true },
         component: () => import(
-          /* webpackChunkName: "web:desplazamiento:movil" */ '@/components/desplazamiento/GeoJson.vue'
+          /* webpackChunkName: "web:desplazamiento:detalle" */ '@/components/desplazamiento/GeoJson.vue'
+        ),
+      },
+      {
+        path: 'geojson',
+        name: 'web:desplazamiento:geojson',
+        meta: { requiresAuth: true },
+        component: () => import(
+          /* webpackChunkName: "web:desplazamiento:movil" */ '@/components/desplazamiento/DesplazamientoListado.vue'
         ),
       },
     ],
@@ -216,7 +224,7 @@ const routes = [
         name: 'web:levantamiento:marcador',
         meta: { requiresAuth: true },
         component: () => import(
-          /* webpackChunkName: "web:desplazamiento:movil" */ '@/components/levantamiento/Listado.vue'
+          /* webpackChunkName: "web:levantamiento:marcador" */ '@/components/levantamiento/Listado.vue'
         ),
       },
       {
@@ -224,7 +232,7 @@ const routes = [
         name: 'web:levantamiento:detalle-marcador',
         meta: { requiresAuth: true },
         component: () => import(
-          /* webpackChunkName: "web:desplazamiento:movil" */ '@/components/levantamiento/Marker.vue'
+          /* webpackChunkName: "eb:levantamiento:marcador" */ '@/components/levantamiento/Marker.vue'
         ),
       },
       {
@@ -232,7 +240,7 @@ const routes = [
         name: 'web:conteo-vehicular:lista',
         meta: { requiresAuth: true },
         component: () => import(
-          /* webpackChunkName: "web:desplazamiento:movil" */ '@/components/conteo_vehicular/Listado.vue'
+          /* webpackChunkName: "web:levantamiento:detalle-marcador" */ '@/components/conteo_vehicular/Listado.vue'
         ),
       },
       {
@@ -240,7 +248,7 @@ const routes = [
         name: 'web:conteo-vehicular:detalle',
         meta: { requiresAuth: true },
         component: () => import(
-          /* webpackChunkName: "web:desplazamiento:movil" */ '@/components/conteo_vehicular/Tabla.vue'
+          /* webpackChunkName: "web:conteo-vehicular:detalle" */ '@/components/conteo_vehicular/Tabla.vue'
         ),
       },
     ],

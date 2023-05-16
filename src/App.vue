@@ -217,14 +217,21 @@ const items = [
   },
 
   {
-    title: 'Desplazamientos',
+    title: 'Recorridos',
     icon: 'mdi-crosshairs-gps',
     children: [
       {
-        title: 'Registros',
+        title: 'Individual',
         icon: 'mdi-cellphone-marker',
         path: {
           name: 'web:desplazamiento:movil',
+        },
+      },
+      {
+        title: 'Multiple',
+        icon: 'mdi-database-marker-outline',
+        path: {
+          name: 'web:desplazamiento:geojson',
         },
       },
     ],
