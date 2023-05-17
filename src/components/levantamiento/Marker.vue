@@ -96,6 +96,7 @@ export default {
 
         this.geojson = data;
       } catch (error) {
+        this.$toast.error('Error al mostrar los marcadores.');
         console.log(error);
       }
     },
