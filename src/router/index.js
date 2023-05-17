@@ -205,7 +205,7 @@ const routes = [
         name: 'web:desplazamiento:geojson',
         meta: { requiresAuth: true },
         component: () => import(
-          /* webpackChunkName: "web:desplazamiento:movil" */ '@/components/desplazamiento/DesplazamientoListado.vue'
+          /* webpackChunkName: "web:desplazamiento:movil" */ '@/components/desplazamiento/GeoJsonFiltro.vue'
         ),
       },
     ],
