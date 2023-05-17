@@ -25,27 +25,15 @@
             :attribution="config.attribution"
           ></l-tile-layer>
 
-          <l-marker
-            :key="marcador.id"
-            :lat-lng="marcador.markerLatLng"
-            v-for="marcador in marcadores"
-            :icon="icon"
-          >
-            <l-popup v-if="marcador.comentario">
-              {{ marcador.comentario }}
-            </l-popup>
-          </l-marker>
+          <l-geo-json :geojson="geojson" :options="geojsonOptions"></l-geo-json>
         </l-map>
       </v-img>
     </v-card-text>
   </v-card>
 </template>
 <script>
-import {
-  LMap, LTileLayer, LMarker, LPopup,
-} from 'vue2-leaflet';
-
-import * as L from 'leaflet';
+import { LMap, LTileLayer, LGeoJson } from 'vue2-leaflet';
+import { circleMarker } from 'leaflet';
 
 export default {
   name: 'LevantamientoMarker',
@@ -53,29 +41,11 @@ export default {
   components: {
     LMap,
     LTileLayer,
-    LMarker,
-    LPopup,
+    LGeoJson,
   },
 
   data() {
     return {
-      leafletProviders: [
-        {
-          name: 'OpenStreetMap',
-          visible: true,
-          attribution:
-            '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-          url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        },
-        {
-          name: 'Stadia.AlidadeSmoothDark',
-          visible: false,
-          url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
-          attribution:
-            '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
-        },
-      ],
-
       config: {
         url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         attribution:
@@ -84,22 +54,31 @@ export default {
         center: [13.794185, -88.89652999999998],
       },
       mapa: null,
-      marcadores: [],
-      icon: L.icon({
-        iconUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Aiga_bus_on_blue_circle.svg/1024px-Aiga_bus_on_blue_circle.svg.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        tooltipAnchor: [16, -28],
-        shadowSize: [41, 41],
-      }),
+      geojson: null,
+      geojsonOptions: {
+        pointToLayer(feature, latlng) {
+          const fillColor = 'rgba(255,26,104,1)';
+          return circleMarker(latlng, {
+            radius: 8,
+            fillColor,
+            color: '#000',
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8,
+          });
+        },
+
+        onEachFeature(feature, layer) {
+          const data = feature?.properties?.marcador?.nombre;
+          if (data) {
+            layer.bindPopup(data);
+          }
+        },
+      },
     };
   },
 
-  created() {
-    console.log(L);
-  },
+  created() {},
 
   methods: {
     ready(mapa) {
@@ -113,16 +92,9 @@ export default {
 
         const {
           data: { data },
-        } = await this.axios.post('reporte-marcadores/search', {
-          filters: [
-            { field: 'levantamiento.codigo', operator: '=', value: codigo },
-          ],
-        });
+        } = await this.axios.get(`/reporte-marcadores/${codigo}/geojson`);
 
-        this.marcadores = data.map((marker) => ({
-          ...marker,
-          markerLatLng: [marker.latitud, marker.longitud],
-        }));
+        this.geojson = data;
       } catch (error) {
         console.log(error);
       }
