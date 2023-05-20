@@ -80,6 +80,37 @@
                           label="Número de carriles"
                         >
                         </v-textarea>
+                        <v-menu
+                          ref="menu"
+                          v-model="menu"
+                          :close-on-content-click="false"
+                          transition="scale-transition"
+                          offset-y
+                          min-width="auto"
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-text-field
+                              ref="fechas"
+                              v-model="dateRangeText"
+                              placeholder="DD / MM / YYYY -- DD / MM / YYYY"
+                              prepend-inner-icon="mdi-calendar-month-outline"
+                              v-bind="attrs"
+                              v-on="on"
+                              readonly
+                              outlined
+                              @click:clear="dateRange = []"
+                              clearable
+                            ></v-text-field>
+                          </template>
+                          <v-date-picker
+                            :max="(new Date(Date.now() - (new Date()).getTimezoneOffset()
+                            * 60000)).toISOString().substr(0, 10)"
+                            locale="es"
+                            v-model="dateRange"
+                            range
+                            @change="save"
+                          ></v-date-picker>
+                        </v-menu>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -181,6 +212,8 @@ export default {
       limit: 10,
       page: 1,
       total: 0,
+      dateRange: [],
+      menu: false,
       headers: [
         {
           text: 'Código',
@@ -263,10 +296,30 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? 'Crear registro' : 'Editar registro';
     },
+    dateRangeText: {
+      get() {
+        if (!this.dateRange) return null;
+
+        if (this.dateRange.length === 2) {
+          const fechaInicio = this.formatDate(this.dateRange[0]);
+          const fechaFin = this.formatDate(this.dateRange[1]);
+
+          return `${fechaInicio} ~ ${fechaFin}`;
+        }
+        return '';
+      },
+      set() {
+        return '';
+      },
+    },
   },
 
   methods: {
     fieldRule: string('Debe completar el campo.'),
+
+    save(dateRange) {
+      this.$refs.menu.save(dateRange);
+    },
 
     async obtenerItems() {
       try {
@@ -308,6 +361,8 @@ export default {
         identificacion_via: identificacionVia,
         categoria_via: categoriaVia,
         numero_carriles: numeroCarriles,
+        periodo_inicio: periodoInicio,
+        periodo_fin: periodoFin,
       } = item;
 
       this.editedItem = {
@@ -318,6 +373,7 @@ export default {
         categoria_via: categoriaVia,
         numero_carriles: numeroCarriles,
       };
+      this.dateRange = [periodoInicio, periodoFin];
 
       if (this.$refs.form) {
         this.$refs.form.resetValidation();
@@ -341,8 +397,12 @@ export default {
           return;
         }
 
+        const [periodoInicio, periodoFin] = this.dateRange;
+
         await this.axios.post('conteo-vehicular', {
           ...this.editedItem,
+          periodo_inicio: periodoInicio,
+          periodo_fin: periodoFin,
           id: undefined,
         });
         this.$toast.success('Registro creado.');
@@ -416,6 +476,18 @@ export default {
         this.$refs.form.resetValidation();
         this.$refs.form.reset();
       }
+    },
+    formatDate(date) {
+      if (!date) return null;
+
+      const [year, month, day] = date.split('-');
+      return `${day}/${month}/${year}`;
+    },
+    parseDate(date) {
+      if (!date) return null;
+
+      const [month, day, year] = date.split('/');
+      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     },
   },
 };
