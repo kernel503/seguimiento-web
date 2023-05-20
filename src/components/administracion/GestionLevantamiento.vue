@@ -64,6 +64,7 @@
                         >
                           <template v-slot:activator="{ on, attrs }">
                             <v-text-field
+                              :rules="[fieldRule]"
                               v-model="editedItem.fecha_vencimiento"
                               label="Fecha vencimiento del código"
                               prepend-icon="mdi-calendar"
