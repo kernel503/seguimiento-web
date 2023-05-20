@@ -59,22 +59,26 @@
                           outlined
                           rows="2"
                           label="Nombre vía"
+                          :rules="[fieldRule]"
                         >
                         </v-textarea>
                         <v-select
                           v-model="editedItem.identificacion_via"
                           label="Identificación de la vía"
                           :items="['Urbana', 'Rural']"
+                          :rules="[fieldRule]"
                           outlined
                         ></v-select>
                         <v-select
                           v-model="editedItem.categoria_via"
                           label="Categoria de la vía"
                           :items="['Carretera', 'Calle','Camino vecinal']"
+                          :rules="[fieldRule]"
                           outlined
                         ></v-select>
                         <v-textarea
                           v-model="editedItem.numero_carriles"
+                          :rules="[fieldRule]"
                           outlined
                           rows="2"
                           label="Número de carriles"
@@ -90,6 +94,7 @@
                         >
                           <template v-slot:activator="{ on, attrs }">
                             <v-text-field
+                             :rules="[fieldRule]"
                               label="Periodo"
                               ref="fechas"
                               v-model="dateRangeText"
