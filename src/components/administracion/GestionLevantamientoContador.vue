@@ -61,18 +61,18 @@
                           label="Nombre vía"
                         >
                         </v-textarea>
-                        <v-text-field
+                        <v-select
                           v-model="editedItem.identificacion_via"
                           label="Identificación de la vía"
+                          :items="['Urbana', 'Rural']"
                           outlined
-                        >
-                        </v-text-field>
-                        <v-text-field
-                          label="Categoria de la vía"
-                          outlined
+                        ></v-select>
+                        <v-select
                           v-model="editedItem.categoria_via"
-                        >
-                        </v-text-field>
+                          label="Categoria de la vía"
+                          :items="['Carretera', 'Calle','Camino vecinal']"
+                          outlined
+                        ></v-select>
                         <v-textarea
                           v-model="editedItem.numero_carriles"
                           outlined
@@ -90,6 +90,7 @@
                         >
                           <template v-slot:activator="{ on, attrs }">
                             <v-text-field
+                              label="Periodo"
                               ref="fechas"
                               v-model="dateRangeText"
                               placeholder="DD / MM / YYYY -- DD / MM / YYYY"
@@ -361,9 +362,9 @@ export default {
         identificacion_via: identificacionVia,
         categoria_via: categoriaVia,
         numero_carriles: numeroCarriles,
-        periodo_inicio: periodoInicio,
-        periodo_fin: periodoFin,
       } = item;
+
+      this.dateRange = [item.periodo_inicio, item.periodo_fin];
 
       this.editedItem = {
         id,
@@ -373,7 +374,6 @@ export default {
         categoria_via: categoriaVia,
         numero_carriles: numeroCarriles,
       };
-      this.dateRange = [periodoInicio, periodoFin];
 
       if (this.$refs.form) {
         this.$refs.form.resetValidation();
@@ -416,6 +416,11 @@ export default {
 
     async handleUpdate() {
       try {
+        this.editedItem.periodo_inicio = `${this.dateRange[0]}`;
+        this.editedItem.periodo_fin = `${this.dateRange[1]}`;
+
+        console.log(this.editedItem);
+        console.log(this.dateRange[0]);
         const validate = this.$refs.form.validate();
         if (!validate) {
           return;
@@ -474,7 +479,7 @@ export default {
 
       if (this.$refs.form) {
         this.$refs.form.resetValidation();
-        this.$refs.form.reset();
+        // this.$refs.form.reset();
       }
     },
     formatDate(date) {

@@ -101,8 +101,8 @@
         <v-card-title class="text-h5">¿Está seguro que desea eliminar el registro?</v-card-title>
         <v-card-actions class="py-3">
         <v-spacer></v-spacer>
-        <v-btn class="default"  outlined color=""  @click="dialogDelete = false" >Cancelar</v-btn>
-        <v-btn class="red darken-2" @click="deleteItem()" >Eliminar</v-btn>
+        <v-btn text color="red darken-1" @click="deleteItem()" >Aceptar</v-btn>
+        <v-btn text color="gray darken-1"  @click="dialogDelete = false" >Cancelar</v-btn>
         <v-spacer></v-spacer>
         </v-card-actions>
         </v-card>
