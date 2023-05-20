@@ -61,18 +61,18 @@
                           label="Nombre vía"
                         >
                         </v-textarea>
-                        <v-text-field
+                        <v-select
                           v-model="editedItem.identificacion_via"
                           label="Identificación de la vía"
+                          :items="['Urbana', 'Rural']"
                           outlined
-                        >
-                        </v-text-field>
-                        <v-text-field
-                          label="Categoria de la vía"
-                          outlined
+                        ></v-select>
+                        <v-select
                           v-model="editedItem.categoria_via"
-                        >
-                        </v-text-field>
+                          label="Categoria de la vía"
+                          :items="['Carretera', 'Calle','Camino vecinal']"
+                          outlined
+                        ></v-select>
                         <v-textarea
                           v-model="editedItem.numero_carriles"
                           outlined
@@ -80,6 +80,38 @@
                           label="Número de carriles"
                         >
                         </v-textarea>
+                        <v-menu
+                          ref="menu"
+                          v-model="menu"
+                          :close-on-content-click="false"
+                          transition="scale-transition"
+                          offset-y
+                          min-width="auto"
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-text-field
+                              label="Periodo"
+                              ref="fechas"
+                              v-model="dateRangeText"
+                              placeholder="DD / MM / YYYY -- DD / MM / YYYY"
+                              prepend-inner-icon="mdi-calendar-month-outline"
+                              v-bind="attrs"
+                              v-on="on"
+                              readonly
+                              outlined
+                              @click:clear="dateRange = []"
+                              clearable
+                            ></v-text-field>
+                          </template>
+                          <v-date-picker
+                            :max="(new Date(Date.now() - (new Date()).getTimezoneOffset()
+                            * 60000)).toISOString().substr(0, 10)"
+                            locale="es"
+                            v-model="dateRange"
+                            range
+                            @change="save"
+                          ></v-date-picker>
+                        </v-menu>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -181,6 +213,8 @@ export default {
       limit: 10,
       page: 1,
       total: 0,
+      dateRange: [],
+      menu: false,
       headers: [
         {
           text: 'Código',
@@ -263,10 +297,30 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? 'Crear registro' : 'Editar registro';
     },
+    dateRangeText: {
+      get() {
+        if (!this.dateRange) return null;
+
+        if (this.dateRange.length === 2) {
+          const fechaInicio = this.formatDate(this.dateRange[0]);
+          const fechaFin = this.formatDate(this.dateRange[1]);
+
+          return `${fechaInicio} ~ ${fechaFin}`;
+        }
+        return '';
+      },
+      set() {
+        return '';
+      },
+    },
   },
 
   methods: {
     fieldRule: string('Debe completar el campo.'),
+
+    save(dateRange) {
+      this.$refs.menu.save(dateRange);
+    },
 
     async obtenerItems() {
       try {
@@ -310,6 +364,8 @@ export default {
         numero_carriles: numeroCarriles,
       } = item;
 
+      this.dateRange = [item.periodo_inicio, item.periodo_fin];
+
       this.editedItem = {
         id,
         codigo,
@@ -341,8 +397,12 @@ export default {
           return;
         }
 
+        const [periodoInicio, periodoFin] = this.dateRange;
+
         await this.axios.post('conteo-vehicular', {
           ...this.editedItem,
+          periodo_inicio: periodoInicio,
+          periodo_fin: periodoFin,
           id: undefined,
         });
         this.$toast.success('Registro creado.');
@@ -356,6 +416,11 @@ export default {
 
     async handleUpdate() {
       try {
+        this.editedItem.periodo_inicio = `${this.dateRange[0]}`;
+        this.editedItem.periodo_fin = `${this.dateRange[1]}`;
+
+        console.log(this.editedItem);
+        console.log(this.dateRange[0]);
         const validate = this.$refs.form.validate();
         if (!validate) {
           return;
@@ -414,8 +479,20 @@ export default {
 
       if (this.$refs.form) {
         this.$refs.form.resetValidation();
-        this.$refs.form.reset();
+        // this.$refs.form.reset();
       }
+    },
+    formatDate(date) {
+      if (!date) return null;
+
+      const [year, month, day] = date.split('-');
+      return `${day}/${month}/${year}`;
+    },
+    parseDate(date) {
+      if (!date) return null;
+
+      const [month, day, year] = date.split('/');
+      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     },
   },
 };
